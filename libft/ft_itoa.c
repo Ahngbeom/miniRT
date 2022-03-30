@@ -3,56 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/09 12:54:06 by jseol             #+#    #+#             */
-/*   Updated: 2021/07/11 16:41:42 by jseol            ###   ########.fr       */
+/*   Created: 2020/12/29 17:49:43 by bahn              #+#    #+#             */
+/*   Updated: 2021/08/22 14:42:15 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*putret(char *buf)
+static	size_t	ft_nbrlen(long long nbr)
 {
-	char	*ret;
-	int		i;
+	int			i;
+	size_t		length;
+	long long	num;
 
-	ret = (char *)malloc(sizeof(char) * (ft_strlen(buf) + 1));
-	if (ret == NULL)
-		return (NULL);
-	i = 0;
-	while (buf[i] != '\0')
+	i = 1;
+	length = 0;
+	if (nbr < 0)
+		num = nbr * -1;
+	else
+		num = nbr;
+	while (num / i >= 10)
 	{
-		ret[i] = buf[ft_strlen(buf) - i - 1];
-		i++;
+		i *= 10;
+		length++;
 	}
-	ret[i] = '\0';
-	return (ret);
+	return (++length);
+}
+
+static	void	ft_putnbr(char *ptr, long long nb, size_t len)
+{
+	size_t	i;
+	size_t	divisor;
+
+	i = 0;
+	divisor = 1;
+	while (++i < len)
+		divisor *= 10;
+	while (len-- > 0)
+	{
+		*ptr++ = '0' + (nb / divisor);
+		nb %= divisor;
+		divisor /= 10;
+	}
+	*ptr = '\0';
 }
 
 char	*ft_itoa(int n)
 {
-	char	buf[42];
-	int		i;
-	int		sign;
+	char		*nbr;
+	size_t		len;
+	long long	num;
 
-	sign = 1;
+	num = (long long)n;
+	len = ft_nbrlen(num);
 	if (n < 0)
-		sign *= -1;
-	i = 0;
-	while (1)
 	{
-		buf[i] = sign * ((n % 10)) + '0';
-		n /= 10;
-		i++;
-		if (n == 0)
-			break ;
+		nbr = (char *)malloc(sizeof(char) * (len + 2));
+		if (nbr == NULL)
+			return (NULL);
+		*nbr = '-';
+		ft_putnbr(nbr + sizeof(char), num * -1, len);
 	}
-	if (sign == -1)
+	else
 	{
-		buf[i] = '-';
-		i++;
+		nbr = (char *)malloc(sizeof(char) * (len + 1));
+		if (nbr == NULL)
+			return (NULL);
+		ft_putnbr(nbr, num, len);
 	}
-	buf[i] = '\0';
-	return (putret(buf));
+	return (nbr);
 }

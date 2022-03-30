@@ -3,37 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/09 08:11:33 by jseol             #+#    #+#             */
-/*   Updated: 2021/11/07 14:01:08 by jseol            ###   ########.fr       */
+/*   Created: 2021/08/22 14:40:23 by bahn              #+#    #+#             */
+/*   Updated: 2021/08/22 14:40:31 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+static	char	*ft_isspace(char *str)
 {
-	int	i;
-	int	sign;
-	int	ret;
+	while (*str != '\0' && (*str == ' ' || *str == '\f' || *str == '\n' || \
+			*str == '\r' || *str == '\t' || *str == '\v'))
+	{
+		str++;
+	}
+	return (str);
+}
 
-	i = 0;
-	while (ft_isspace(str[i]))
-		i++;
+int	ft_atoi(char *str)
+{
+	long long	sign;
+	long long	nbr;
+
 	sign = 1;
-	if (str[i] == '-' || str[i] == '+')
+	nbr = 0;
+	str = ft_isspace(str);
+	if (*str == '-' || *str == '+')
 	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
+		if (*str == '-')
+			sign *= -1;
+		else if (*str == '+')
+			sign *= 1;
+		str++;
 	}
-	ret = 0;
-	while (('0' <= str[i]) && (str[i] <= '9'))
+	while ((*str != '\0') && (*str >= '0' && *str <= '9'))
 	{
-		ret *= 10;
-		ret += (str[i] - '0') * sign;
-		i++;
+		nbr = (nbr * 10) + (*str - 48);
+		if (nbr * sign > 2147483647)
+			return (-1);
+		else if (nbr * sign < -2147483648)
+			return (0);
+		str++;
 	}
-	return (ret);
+	return (nbr * sign);
 }

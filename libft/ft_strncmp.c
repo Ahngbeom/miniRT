@@ -3,27 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/09 07:58:54 by jseol             #+#    #+#             */
-/*   Updated: 2021/07/11 17:05:06 by jseol            ###   ########.fr       */
+/*   Created: 2020/12/21 15:43:04 by bahn              #+#    #+#             */
+/*   Updated: 2021/01/01 17:17:08 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(char *s1, char *s2, size_t n)
 {
-	size_t	i;
+	unsigned char	*ptr1;
+	unsigned char	*ptr2;
+	size_t			i;
 
-	if (n == 0)
-		return (0);
+	ptr1 = (unsigned char *)s1;
+	ptr2 = (unsigned char *)s2;
 	i = 0;
-	while (s1[i] != '\0' && i + 1 < n)
+	while (i < n && ptr1[i] != '\0')
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		if (ptr1[i] == ptr2[i])
+			i++;
+		else
+			return (ptr1[i] - ptr2[i]);
 	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if (ptr1[i] == '\0' && i != n)
+		return (ptr1[i] - ptr2[i]);
+	return (0);
 }

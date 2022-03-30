@@ -3,72 +3,97 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+         #
+#    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/03/06 23:30:59 by jaeyu             #+#    #+#              #
-#    Updated: 2022/03/30 17:09:24 by jaeyu            ###   ########.fr        #
+#    Created: 2021/05/14 13:30:16 by bahn              #+#    #+#              #
+#    Updated: 2022/03/30 17:23:35 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= miniRT
+NAME		=	miniRT
 
-# src / obj files
-SRC		=	main.c	\
-			parse.c	\
-			parse_objects.c	\
-			
+OS			=	$(shell uname -s)
 
-OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
+ifeq ($(OS), Linux)
+	MLX_PATH	= ./minilibx-linux
+	MLX_FLAGS	= -Lminilibx-linux/ -lmlx -lX11 -lXext -lm -lbsd -O3
+else
+	MLX_PATH	= ./minilibx_opengl_20191021
+	MLX_FLAGS	= -Lminilibx_opengl_20191021/ -lmlx -lm -framework OpenGL -framework AppKit -O3
+	
+# MLX_PATH	= ./minilibx_mms_20200219
+# MLX_FLAGS	= -Lminilibx_mms_20200219/ -lmlx -lm -framework OpenGL -framework AppKit -O3
+endif
 
-# compiler
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+LIBFT_PATH		= ./libft/
+LIBFT_LINK		= -Llibft -lft
 
-# mlx library
-MLX		= ./miniLibx/
-MLX_LIB	= $(addprefix $(MLX),mlx.a)
-MLX_INC	= -I ./miniLibx
-MLX_LNK	= -L ./miniLibx -lmlx -framework OpenGL -framework AppKit
+CC			=	gcc
+CFLAGS		=	-Wall -Wextra -Werror -g
 
-# ft library
-FT		= ./libft/
-FT_LIB	= $(addprefix $(FT),libft.a)
-FT_INC	= -I ./libft
-FT_LNK	= -L ./libft -lft
+INCFLAGS	=	-I./includes -I./libft
 
-# directories
-SRCDIR	= ./src/
-INCDIR	= ./include/
-OBJDIR	= ./obj/
+ifeq ($(OS), Linux)
+INCFLAGS	+=	-I./minilibx-linux
+else
+INCFLAGS	+=	-I./minilibx_opengl_20191021
+#INCFLAGS	+=	-I./minilibx_mms_20200219
+endif
 
-all: obj $(FT_LIB) $(MLX_LIB) $(NAME)
+SRCS_DIR	=	./srcs/
+OBJS_DIR	=	./objs/
+SRCS_FNAME	=	hooks/minirt_close.c \
+				hooks/minirt_esc.c \
+				hooks/camera_movement.c \
+				color/color.c \
+				vector/vector.c \
+				vector/vector_operation.c \
+				ray/ray.c \
+				camera/camera.c \
+				canvas/canvas.c \
+				concept/concept.c \
+				object/object.c \
+				object/hit.c \
+				object/set_face_normal.c \
+				object/sphere/sphere.c \
+				object/plane/plane.c \
+				object/cylinder/cylinder.c \
+				object/square/square.c \
+				main.c \
+				minirt_world.c \
+				minirt_free.c
+SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_FNAME))
+OBJS		=	$(SRCS:.c=.o)
 
-obj:
-	@mkdir -p $(OBJDIR)
+ifeq ($(OS), Linux)
+.c.o : $(SRCS)
+	$(CC) $(CFLAGS) -c $< $(INCFLAGS) $(MLX_FLAGS) $(LIBFT_LINK) -o $@
+else
+.c.o : $(SRCS)
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
+endif
 
-$(OBJDIR)%.o:$(SRCDIR)%.c
-	$(CC) $(CFLAGS) $(MLX_INC) $(FT_INC) -I $(INCDIR) -o $@ -c $<
+$(NAME)		:	$(OBJS)
+			$(MAKE) all -C $(MLX_PATH)
+			$(MAKE) all -C $(LIBFT_PATH)
+ifeq ($(OS), Linux)
+			$(CC) $(CFLAGS) $^ $(INCFLAGS) $(LIBFT_LINK) $(MLX_FLAGS) -o $@
+else
+			$(CC) $(CFLAGS) $(INCFLAGS) $(LIBFT_LINK) $(MLX_FLAGS) -o $@ $^
+endif
 
-$(FT_LIB):
-	@make -C $(FT)
+all			:	$(NAME)
 
-$(MLX_LIB):
-	@make -C $(MLX)
-	@cp $(MLX)libmlx.dylib ./
+clean		:	
+				$(RM) $(OBJS) 
+				$(MAKE) clean -C $(LIBFT_PATH)
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME)
+fclean		:	clean
+				$(RM)
+				$(RM) $(NAME)
+				$(MAKE) clean -C $(MLX_PATH)
+				$(MAKE) fclean -C $(LIBFT_PATH)
 
-clean:
-	rm -rf $(OBJDIR)
-	make -C $(FT) clean
-	make -C $(MLX) clean
+re			:	fclean all
 
-fclean: clean
-	rm -rf $(NAME)
-	make -C $(FT) fclean
-	rm -rf libmlx.dylib
-
-re: fclean all
-
-.PHONY: all clean fclean re
+.PHONY		:	all clean fclean re

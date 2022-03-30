@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/09 09:59:31 by jseol             #+#    #+#             */
-/*   Updated: 2021/07/11 16:38:51 by jseol            ###   ########.fr       */
+/*   Created: 2020/12/28 13:50:13 by bahn              #+#    #+#             */
+/*   Updated: 2021/08/22 16:03:01 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,20 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*ret;
 	size_t	i;
-	size_t	s_len;
-	size_t	size;
+	char	*ptr;
 
-	if (s == NULL)
-		return (NULL);
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-		return (ft_strdup(""));
-	if (s_len - start > len)
-		size = len;
-	else
-		size = s_len - start;
-	ret = (char *)malloc(sizeof(char) * (size + 1));
-	if (ret == NULL)
-		return (NULL);
 	i = 0;
-	while (i < len && i + start < s_len)
+	if ((size_t)ft_strlen((char *)s) < start)
+		return ("\0");
+	else
 	{
-		ret[i] = s[start + i];
-		i++;
+		ptr = malloc(len + 1);
+		if (ptr == NULL)
+			return (NULL);
+		while (i < len && s[start] != '\0')
+			ptr[i++] = s[start++];
+		ptr[i] = '\0';
 	}
-	ret[i] = '\0';
-	return (ret);
+	return (ptr);
 }
