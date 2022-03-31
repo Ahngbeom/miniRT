@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:17:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/30 19:28:49 by bahn             ###   ########.fr       */
+/*   Updated: 2022/03/31 14:55:36 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_ray		ray_primary(t_camera *cam, double u, double v) // 가장 처음 카메라
 	return (ray);
 }
 
-t_color 	ray_color(t_object *world, t_ray *ray)
+t_color3 	ray_color(t_object *world, t_ray *ray)
 {
 	double			t;
 	t_hit_record	rec;
@@ -60,7 +60,7 @@ t_color 	ray_color(t_object *world, t_ray *ray)
 	return (vsum(vmul_t(1.0 - t, vector_init(1.0, 1.0, 1.0)), vmul_t(t, vector_init(0.5, 0.7, 1.0))));
 }
 
-// t_color 	ray_color(int type, void *obj, t_ray *r) // 광선이 최종적으로 얻게 된 픽셀의 색상 값 반환. 색상 결정
+// t_color3 	ray_color(int type, void *obj, t_ray *r) // 광선이 최종적으로 얻게 된 픽셀의 색상 값 반환. 색상 결정
 // {
 //     double			t;
 // 	t_vec3			normal;

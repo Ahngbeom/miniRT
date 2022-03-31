@@ -6,27 +6,27 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/30 16:04:59 by bahn             ###   ########.fr       */
+/*   Updated: 2022/03/31 16:17:35 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_STRUCTURE_H
 # define MINIRT_STRUCTURE_H
 
-typedef struct s_minirt		t_minirt;
-
 typedef struct s_vars		t_vars;
 typedef	struct s_img_data	t_img_data;
 
 typedef struct s_vec3		t_vec3;
 typedef struct s_vec3		t_point3;
-typedef struct s_vec3		t_color;
+typedef struct s_vec3		t_color3;
 
 typedef struct s_ray		t_ray;
 
 typedef	struct s_camera		t_camera;
 
 typedef	struct s_canvas		t_canvas;
+
+typedef struct s_object		t_object;
 
 typedef struct s_sphere		t_sphere;
 typedef struct s_plane		t_plane;
@@ -35,24 +35,9 @@ typedef struct s_square		t_square;
 
 typedef struct s_hit_record	t_hit_record;
 
-typedef struct s_object		t_object;
+typedef struct s_light		t_light;
 
-struct s_minirt
-{
-	t_vars		*vars;
-	t_img_data	*img_data;
-	t_camera	*camera;
-	t_canvas	*canvas;
-	t_ray		*ray;
-
-	int			fd;	
-};
-
-struct s_vars
-{
-	void	*mlx; // miniLibX 포인터
-	void	*win; // miniLibX Window 포인터
-};
+typedef struct s_scene		t_scene;
 
 struct s_img_data
 {
@@ -61,6 +46,13 @@ struct s_img_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+};
+
+struct s_vars
+{
+	void		*mlx; // miniLibX 포인터
+	void		*win; // miniLibX Window 포인터
+	t_img_data	*img_data; // miniLibX Image 포인터
 };
 
 struct s_vec3
@@ -127,7 +119,8 @@ struct s_object
 {
 	t_object_type	type;
 	void			*element;
-	t_color			color;
+	t_color3		color;
+	t_color3		albedo;
 	void			*next;
 };
 
@@ -139,6 +132,25 @@ struct s_hit_record
     double		tmax;       // 카메라 앞쪽에 있을 경우의 근 최댓값 
     double		t;          // 광선의 원점과 교점 사이의 거리
     int			front_face; // 광선의 방향벡터와 교점의 법선벡터 간 내적 연산하여 광선이 오브젝트에 부딪히는 면의 위치 판단
+	t_color3	albedo;
+};
+
+struct s_light
+{
+	t_point3	orig;
+	t_color3		light_color;
+	double		bright_ratio;
+};
+
+struct s_scene
+{
+	t_vars		*vars;
+	// t_img_data	*img_data;
+	t_camera	camera;
+	t_canvas	canvas;
+	t_ray		ray;
+
+	int			fd;	
 };
 
 #endif

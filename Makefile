@@ -6,7 +6,7 @@
 #    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 13:30:16 by bahn              #+#    #+#              #
-#    Updated: 2022/03/30 17:23:35 by bahn             ###   ########.fr        #
+#    Updated: 2022/03/31 14:57:36 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRCS_FNAME	=	hooks/minirt_close.c \
 				object/plane/plane.c \
 				object/cylinder/cylinder.c \
 				object/square/square.c \
+				light/light.c \
 				main.c \
 				minirt_world.c \
 				minirt_free.c

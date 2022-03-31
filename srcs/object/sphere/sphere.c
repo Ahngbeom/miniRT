@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:34:04 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/29 13:33:54 by bahn             ###   ########.fr       */
+/*   Updated: 2022/03/31 15:01:28 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_bool		hit_sphere(t_object *world, t_ray *r, t_hit_record *rec) // 짝수 근�
 	rec->p = ray_at(r, rec->t); // 광선과 구의 교점 벡터
 	rec->normal = vdiv(vsub(rec->p, sp->center), sp->radius); // 법선 벡터 정규화
 	set_face_normal(r, rec); // hit record 법선 벡터와 광선의 법선 벡터를 비교하여 앞면/뒷면 판단
+	rec->albedo = world->albedo;
 	return (TRUE);
 }
 

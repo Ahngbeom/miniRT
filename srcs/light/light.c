@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt_free.c                                      :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 20:57:16 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 15:56:31 by bahn             ###   ########.fr       */
+/*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
+/*   Updated: 2022/03/31 14:56:37 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	nullcheck_free(void *data)
+t_light	*light_init(t_point3 light_origin, t_color3 light_color, double bright_ratio)
 {
-	if (data != NULL)
-		free(data);
+	t_light	*light;
+
+	light = ft_calloc(sizeof(t_light), 1);
+	if (light == NULL)
+		return (NULL);
+	light->orig = light_origin;
+	light->light_color = light_color;
+	light->bright_ratio = bright_ratio;
+	return (light);
 }

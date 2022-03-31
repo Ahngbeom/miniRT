@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:51:10 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/30 13:30:18 by bahn             ###   ########.fr       */
+/*   Updated: 2022/03/31 14:55:36 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	minirt_pixel_put(t_img_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	minirt_pixel_put_vector(t_img_data *data, int x, int y, t_color color)
+void	minirt_pixel_put_vector(t_img_data *data, int x, int y, t_color3 color)
 {
 	char	*dst;
 
@@ -28,7 +28,7 @@ void	minirt_pixel_put_vector(t_img_data *data, int x, int y, t_color color)
 	*(unsigned int*)dst = (int)(color.x) << 16 | (int)(color.y) << 8 | (int)(color.z);
 }
 
-t_color	write_color(int fd, t_color color)
+t_color3	write_color(int fd, t_color3 color)
 {
 	if (fd > 0)
 	{
