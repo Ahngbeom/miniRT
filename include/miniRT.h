@@ -6,7 +6,7 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 13:25:42 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/03/30 19:35:04 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/03/31 15:04:34 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,40 @@ typedef struct			s_scene
 	t_list				*object;
 }						t_scene;
 
+/*
+parse_file.c
+*/
+t_scene	*parse_file(char *filename);
 void	parse_line(t_scene *scene, char **split);
 void	init_scene(t_scene *scene);
-int		split_size(char **split);
 int		check_line(char *line);
 int		allowed_symbol(char c);
-int		check_color3(t_color3 rgb);
-void	parse_color3(t_color3 *ret, char *color);
+
+/*
+parse_scene
+*/
 void	parse_coords(t_vec3 *point, char *vec);
 void	parse_light(t_scene *scene, char **split);
 void	parse_camera(t_scene *scene, char **split);
 void	parse_ambient(t_scene *scene, char **split);
+
+/*
+parse_objects
+*/
 void	parse_sphere(t_scene *scene, char **split);
 void	parse_plane(t_scene *scene, char **split);
 void	parse_cylinder(t_scene *scene, char **split);
+
+/*
+parse_color3
+*/
+int		check_color3(t_color3 rgb);
+void	parse_color3(t_color3 *ret, char *color);
+
+/*
+split_utils
+*/
+int		split_size(char **split);
+char	**ft_split2(char const *s, char c1, char c2);
+
 #endif

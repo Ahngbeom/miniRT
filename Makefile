@@ -6,7 +6,7 @@
 #    By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/06 23:30:59 by jaeyu             #+#    #+#              #
-#    Updated: 2022/03/30 17:09:24 by jaeyu            ###   ########.fr        #
+#    Updated: 2022/03/31 15:03:57 by jaeyu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,11 @@ NAME	= miniRT
 
 # src / obj files
 SRC		=	main.c	\
-			parse.c	\
+			parse_file.c	\
+			parse_scene.c	\
 			parse_objects.c	\
+			parse_color3.c	\
+			split_utils.c	\
 			
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
