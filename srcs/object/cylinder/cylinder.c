@@ -19,7 +19,7 @@ t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal)
 	cy = ft_calloc(sizeof(t_plane), 1);
 	if (cy == NULL)
 		return (NULL);
-	cy->orig = orig;
+	cy->coord = orig;
 	cy->normal = normal;
 	cy->diameter = 14.2;
 	cy->height = 21.42;
@@ -37,7 +37,7 @@ t_bool		hit_cylinder(t_object *world, t_ray *r, t_hit_record *rec)
 	if (denom > 1e-6)
 		return (FALSE);
 	// printf("denom : %f\n", denom);
-	t = vdot(vsub(cy->orig, r->orig), cy->normal) / denom;
+	t = vdot(vsub(cy->coord, r->orig), cy->normal) / denom;
 	// printf("t : %f\n", t);
 	if (t > rec->tmin && t < rec->tmax)
 	{

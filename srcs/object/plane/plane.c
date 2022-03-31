@@ -19,7 +19,7 @@ t_plane		*plane_init(t_point3 orig, t_vec3 normal)
 	plane = ft_calloc(sizeof(t_plane), 1);
 	if (plane == NULL)
 		return (NULL);
-	plane->orig = orig;
+	plane->coord = orig;
 	plane->normal = normal;
 	return (plane);
 }
@@ -35,7 +35,7 @@ t_bool		hit_plane(t_object *world, t_ray *r, t_hit_record *rec)
 	if (denom > 1e-6)
 		return (FALSE);
 	// printf("denom : %f\n", denom);
-	t = vdot(vsub(plane->orig, r->orig), plane->normal) / denom;
+	t = vdot(vsub(plane->coord, r->orig), plane->normal) / denom;
 	// printf("t : %f\n", t);
 	if (t > rec->tmin && t < rec->tmax)
 	{
@@ -60,7 +60,7 @@ t_bool	intersect_plane(t_plane *plane, t_ray *ray, t_hit_record *rec)
 	double	t;
 
 	denom = vdot(plane->normal, ray->dir);
-	nom = vdot(vsub(ray->orig, plane->orig), plane->normal);
+	nom = vdot(vsub(ray->orig, plane->coord), plane->normal);
 	if (denom > 1e-6)
 	{
 		t = -nom / denom;

@@ -17,7 +17,10 @@ void	camera_init(t_scene *scene, t_point3 origin)
 	// scene->camera = ft_calloc(sizeof(t_camera), 1);
 	// if (scene->camera == NULL)
 	// 	minirt_close(0, scene);
-	scene->camera.orig = origin; // 카메라 원점
+	
+	(void)origin;
+	// scene->camera.orig = origin; // 카메라 원점
+	
 	scene->camera.viewport_height = 2.0; // 뷰포트 높이
 	scene->camera.viewport_width = scene->camera.viewport_height * scene->canvas.aspect_ratio; // 뷰포트 너비
 	scene->camera.focal_length = 1.0; // 카메라와 뷰포트 간의 거리. 초점 거리

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT_CLOSE.c                                     :+:      :+:    :+:   */
+/*   minirt_close.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:17:00 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 16:33:13 by bahn             ###   ########.fr       */
+/*   Updated: 2022/03/31 20:27:54 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	minirt_close(int keycode, t_scene *scene)
 		// mlx_destroy_window(scene->vars->mlx, scene->vars->win);
 		// nullcheck_free(scene->vars->mlx);
 	// }
-	system("leaks miniRT");
+	// system("leaks miniRT");
 	if (keycode != -1)
 		exit(0);
 	else

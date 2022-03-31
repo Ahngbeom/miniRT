@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 15:57:22 by bahn             ###   ########.fr       */
+/*   Updated: 2022/03/31 20:35:19 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_light		*light_init(t_point3 light_origin, t_color3 light_color, double bright_
 
 
 // Sphere
-t_sphere	*sphere_init(t_point3 center, double radius);
+t_sphere	*sphere_init(t_point3 center, double diameter);
 int			hit_sphere(t_object *sphere, t_ray *r, t_hit_record *rec);
 
 // Plane
@@ -99,5 +99,34 @@ void		minirt_world(t_scene *scene);
 void		minirt_plane_in_the_sky(t_scene *scene);
 
 void		nullcheck_free(void *data);
+
+
+
+
+// Jseol .rt Parse
+void	parse_file(t_scene *scene, const char *filename);
+void	parse_color3(t_color3 *ret, char *color);
+int		check_color3(t_color3 rgb);
+
+void	parse_ambient(t_scene *scene, char **split);
+void	parse_coords(t_vec3 *point, char *vec);
+void	parse_camera(t_scene *scene, char **split);
+void	parse_light(t_scene *scene, char **split);
+void	parse_sphere(t_scene *scene, char **split);
+void	parse_plane(t_scene *scene, char **split);
+void	parse_cylinder(t_scene *scene, char **split);
+
+double	ft_atod(char *str);
+int		ft_isspace(const char c);
+char	**ft_split2(char const *s, char c1, char c2);
+int		split_size(char **split);
+
+int		get_next_line(int fd, char **line);
+char	*ft_gnl_strjoin(char *s1, char *s2);
+char	*ft_gnl_strdup(char *s);
+size_t	ft_gnl_strlcat(char *dst, const char *src, size_t dstsize);
+size_t	ft_gnl_strlen(char *s);
+
+
 
 #endif

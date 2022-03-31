@@ -15,7 +15,7 @@
 static void	scene_init(t_scene *scene, int argc, char const *argv[])
 {
 	scene->fd = -1;
-	if (argc == 2 || argc > 3)
+	if (argc > 3)
 	{
 		printf("Invalid Arguments\n");
 		printf("./miniRT\n");
@@ -23,9 +23,9 @@ static void	scene_init(t_scene *scene, int argc, char const *argv[])
 		printf("./miniRT [.rt file path] [--save]\n");
 		exit(1);
 	}
-	else if (argc == 3)
+	else if (argc >= 2)
 	{
-		if (ft_strncmp((char*)argv[2], "--save", 6))
+		if (argc == 3 && ft_strncmp((char*)argv[2], "--save", 6))
 		{
 			printf("Invalid Arguments\n");
 			printf("./miniRT\n");
@@ -33,21 +33,28 @@ static void	scene_init(t_scene *scene, int argc, char const *argv[])
 			printf("./miniRT [.rt file path] [--save]\n");
 			exit(1);
 		}
-		scene->fd = open(argv[1], O_CREAT | O_TRUNC | O_RDWR, 00777);
-		if (scene->fd == -1)
-		{
-			printf("Invalid File path or File\n");
-			exit(1);
-		}
-		else
-		{
-			ft_putendl_fd("P3", scene->fd);
-			ft_putnbr_fd(WIDTH, scene->fd);
-			ft_putchar_fd(' ', scene->fd);
-			ft_putnbr_fd(HEIGHT, scene->fd);
-			ft_putchar_fd('\n', scene->fd);
-			ft_putendl_fd("255", scene->fd);
-		}
+		scene->objects = NULL;
+		parse_file(scene, argv[1]);
+		// scene->fd = open(argv[1], O_CREAT | O_TRUNC | O_RDWR, 00777);
+		// if (scene->fd == -1)
+		// {
+		// 	printf("Invalid File path or File\n");
+		// 	exit(1);
+		// }
+		// else
+		// {
+		// 	ft_putendl_fd("P3", scene->fd);
+		// 	ft_putnbr_fd(WIDTH, scene->fd);
+		// 	ft_putchar_fd(' ', scene->fd);
+		// 	ft_putnbr_fd(HEIGHT, scene->fd);
+		// 	ft_putchar_fd('\n', scene->fd);
+		// 	ft_putendl_fd("255", scene->fd);
+		// }
+	}
+	else
+	{
+		printf("Error\n");
+		exit(1);
 	}
 	scene->vars = ft_calloc(sizeof(t_vars), 1);
 	scene->vars->mlx = mlx_init();
@@ -59,7 +66,7 @@ static void	scene_init(t_scene *scene, int argc, char const *argv[])
 												&scene->vars->img_data->bits_per_pixel, \
 												&scene->vars->img_data->line_length, \
 												&scene->vars->img_data->endian);
-												
+
 	canvas_init(scene, WIDTH, HEIGHT);
 	camera_init(scene, vector_init(0, 0, 0));
 	
@@ -68,9 +75,51 @@ static void	scene_init(t_scene *scene, int argc, char const *argv[])
 
 int main(int argc, char const *argv[])
 {
-	t_scene	scene;
-
+	t_scene		scene;
+	
 	scene_init(&scene, argc, argv);
+	
+	// printf("Ambient Ratio : %f\n", scene.ambient.ratio);
+	// printf("Ambient Color : %f, %f, %f\n\n", scene.ambient.color.x, scene.ambient.color.y, scene.ambient.color.z);
+
+	// printf("Camera Viewpoint : %f, %f, %f\n", scene.camera.orig.x, scene.camera.orig.y, scene.camera.orig.z);
+	// printf("Camera Direction : %f, %f, %f\n", scene.camera.dir.x, scene.camera.dir.y, scene.camera.dir.z);
+	// printf("Camera FOV : %d\n\n", scene.camera.fov);
+
+	// printf("Light Point : %f, %f, %f\n", scene.light.orig.x, scene.light.orig.y, scene.light.orig.z);
+	// printf("Light Ratio : %f\n", scene.light.bright_ratio);
+	// printf("Light Color : %f, %f, %f\n\n", scene.light.light_color.x, scene.light.light_color.y, scene.light.light_color.z);
+	
+	// t_object *list = scene.objects;
+	// while (list != NULL)
+	// {
+	// 	if (list->type == SPHERE)
+	// 	{
+	// 		printf("Type : SPHERE(%d)\n", list->type);
+	// 		printf("Center : %f, %f, %f\n", ((t_sphere*)list->element)->center.x, ((t_sphere*)list->element)->center.y, ((t_sphere*)list->element)->center.z);
+	// 		printf("Diameter : %f\n", ((t_sphere*)list->element)->diameter);
+	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
+	// 	}
+	// 	else if (list->type == PLANE)
+	// 	{
+	// 		printf("Type : PLANE(%d)\n", list->type);
+	// 		printf("Coodinates : %f, %f, %f\n", ((t_plane*)list->element)->coord.x, ((t_plane*)list->element)->coord.y, ((t_plane*)list->element)->coord.z);
+	// 		printf("Normal Vector : %f, %f, %f\n", ((t_plane*)list->element)->normal.x, ((t_plane*)list->element)->normal.y, ((t_plane*)list->element)->normal.z);
+	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
+	// 	}
+	// 	else if(list->type == CYLINDER)
+	// 	{
+	// 		printf("Type : CYLINDER(%d)\n", list->type);
+	// 		printf("Coodinates : %f, %f, %f\n", ((t_cylinder*)list->element)->coord.x, ((t_cylinder*)list->element)->coord.y, ((t_cylinder*)list->element)->coord.z);
+	// 		printf("Normal Vector : %f, %f, %f\n", ((t_cylinder*)list->element)->normal.x, ((t_cylinder*)list->element)->normal.y, ((t_cylinder*)list->element)->normal.z);
+	// 		printf("Diameter : %f\n", ((t_cylinder*)list->element)->diameter);
+	// 		printf("Height : %f\n", ((t_cylinder*)list->element)->height);
+	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
+	// 	}
+	// 	list = list->next;
+	// }
+	// exit(0);
+	
 	
 	// minirt_background(scene.img_data, WIDTH, HEIGHT, vector_init(255, 255, 0));
 	// minirt_gradation(&scene);

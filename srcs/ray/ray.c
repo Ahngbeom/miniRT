@@ -38,19 +38,19 @@ t_ray		ray_primary(t_camera *cam, double u, double v) // 가장 처음 카메라
 	return (ray);
 }
 
-t_color3 	ray_color(t_object *world, t_ray *ray)
+t_color3 	ray_color(t_object *objects, t_ray *ray)
 {
 	double			t;
 	t_hit_record	rec;
 
-	if (world != NULL && world->element != NULL && world->type >= 0)
+	if (objects != NULL && objects->type >= 0 && objects->element != NULL)
 	{
 		rec.tmin = 0; // 오브젝트와 카메라 간 거리 최솟값
 		rec.tmax = INFINITY; // 오브젝트와 카메라 간 거리 최댓값
 		rec.front_face = 0; // 오브젝트 교점 위치(앞면 / 뒷면) 판단
-		if (hit(world, ray, &rec) == TRUE)
+		if (hit(objects, ray, &rec) == TRUE)
 		{
-			return (vmul_t(0.5, vsum(rec.normal, world->color)));
+			return (vmul_t(0.5, vsum(rec.normal, objects->color)));
 		}
 	}
 	// 광선의 방향 단위 벡터 y축을 통해 색상 결정

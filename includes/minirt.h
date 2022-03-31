@@ -24,6 +24,14 @@
 # define __USE_XOPEN // M_PI
 # include <math.h> // sqrt
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 512
+# endif
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 10240
+# endif
+
 # define WIDTH	800
 # define HEIGHT	600
 

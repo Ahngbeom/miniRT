@@ -62,7 +62,17 @@ SRCS_FNAME	=	hooks/minirt_close.c \
 				light/light.c \
 				main.c \
 				minirt_world.c \
-				minirt_free.c
+				minirt_free.c \
+				\
+				parse_jseol/get_next_line_utils.c \
+				parse_jseol/get_next_line.c \
+				parse_jseol/parse_color3.c \
+				parse_jseol/parse_file.c \
+				parse_jseol/parse_objects.c \
+				parse_jseol/parse_scene.c \
+				parse_jseol/split_utils.c \
+				parse_jseol/ft_atod.c \
+				parse_jseol/ft_isspace.c
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_FNAME))
 OBJS		=	$(SRCS:.c=.o)
 

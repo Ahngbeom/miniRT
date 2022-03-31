@@ -78,6 +78,10 @@ struct s_camera
 	t_vec3		horizontal; // 수평 길이 벡터
 	t_vec3		vertical; // 수직 길이 벡터
 	t_vec3		lower_left_corner; // 왼쪽 아래 코너 점
+	
+	t_vec3		dir;
+
+	int			fov;
 };
 
 struct s_canvas
@@ -90,19 +94,19 @@ struct s_canvas
 struct s_sphere
 {
 	t_point3	center;
-	double		radius;
-	double		radius2;
+	double		diameter;
+	double		diameter2;
 };
 
 struct s_plane
 {
-	t_point3	orig;
+	t_point3	coord;
 	t_vec3		normal;	// 정규화 법선 벡터 ?
 };
 
 struct s_cylinder
 {
-	t_point3	orig;
+	t_point3	coord;
 	t_vec3		normal;
 	double		diameter;
 	double		height;
@@ -135,20 +139,30 @@ struct s_hit_record
 	t_color3	albedo;
 };
 
+typedef struct	s_ambient
+{
+	t_color3	color;
+	double		ratio;
+}				t_ambient;
+
 struct s_light
 {
 	t_point3	orig;
-	t_color3		light_color;
+	t_color3	light_color;
 	double		bright_ratio;
 };
 
 struct s_scene
 {
-	t_vars		*vars;
-	// t_img_data	*img_data;
-	t_camera	camera;
-	t_canvas	canvas;
-	t_ray		ray;
+	t_vars			*vars;
+	t_camera		camera;
+	t_canvas		canvas;
+	t_ray			ray;
+	t_hit_record	rec;
+
+	t_object		*objects;
+	t_ambient		ambient;
+	t_light			light;
 
 	int			fd;	
 };
