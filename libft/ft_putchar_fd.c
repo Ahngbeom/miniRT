@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/09 16:27:59 by jseol             #+#    #+#             */
-/*   Updated: 2021/05/10 19:01:23 by jseol            ###   ########.fr       */
+/*   Created: 2020/12/30 14:23:07 by bahn              #+#    #+#             */
+/*   Updated: 2021/01/02 13:52:24 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, sizeof(char));
+	if (fd < 0)
+		return ;
+	write(fd, &c, 1);
 }

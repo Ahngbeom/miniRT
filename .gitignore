@@ -1,0 +1,4 @@
+**/*.o
+libft/libft.a
+miniRT
+.vscode/

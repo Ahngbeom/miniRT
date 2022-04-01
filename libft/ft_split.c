@@ -3,83 +3,102 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/09 12:13:23 by jseol             #+#    #+#             */
-/*   Updated: 2021/07/11 16:35:59 by jseol            ###   ########.fr       */
+/*   Created: 2020/12/28 21:22:04 by bahn              #+#    #+#             */
+/*   Updated: 2021/08/22 16:06:24 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_set(char c, char set)
+static	size_t	ft_countstrs(char *s, char c)
 {
-	if (c == set)
-		return (1);
-	else
-		return (0);
-}
+	size_t	cnt;
 
-static int	get_size(char const *s, char set)
-{
-	int		i;
-	int		size;
-
-	i = 0;
-	size = 0;
-	while (s[i])
-	{
-		if (is_set(s[i], set))
-		{
-			i++;
-			continue ;
-		}
-		size++;
-		while (!is_set(s[i], set) && s[i])
-			i++;
-	}
-	return (size);
-}
-
-static char	**putret(char **ret, char const *s, char c)
-{
-	int		i;
-	int		cnt;
-	int		pivot;
-
-	i = 0;
 	cnt = 0;
-	while (s[i] != '\0')
+	while (*s != '\0')
 	{
-		if (is_set(s[i], c))
+		if (*s != c)
 		{
-			i++;
-			continue ;
+			cnt++;
+			while (*(++s) != c)
+			{
+				if (*s == '\0')
+					break ;
+			}
 		}
-		pivot = i;
-		while (!is_set(s[i], c) && s[i] != '\0')
-			i++;
-		ret[cnt] = (char *)malloc(sizeof(char) * (i - pivot + 1));
-		if (ret[cnt] == NULL)
-			return (NULL);
-		ft_memcpy(ret[cnt], s + pivot, i - pivot);
-		ret[cnt][i - pivot] = '\0';
-		cnt++;
+		else
+			s++;
 	}
-	ret[cnt] = NULL;
-	return (ret);
+	return (cnt);
+}
+
+static	char	*ft_findstr(char *s, char c)
+{
+	while (*s != '\0')
+	{
+		if (*s == c)
+			s++;
+		else
+			return (s);
+	}
+	return (0);
+}
+
+static	size_t	ft_strclen(char *s, char c)
+{
+	size_t	length;
+	char	*ptr;
+
+	length = 0;
+	ptr = s;
+	while (*ptr != '\0' && *ptr != c)
+	{
+		length++;
+		ptr++;
+	}
+	return (length);
+}
+
+static	char	**ft_splitter(char **pptr, char *str_ptr, char c, \
+		size_t str_cnt)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < str_cnt)
+	{
+		pptr[i] = (char *)malloc(ft_strclen(ft_findstr(str_ptr, c), c) + 1);
+		if (pptr[i] == NULL)
+		{
+			while (pptr[i] != NULL)
+				free(pptr[i++]);
+			free(pptr);
+			return (pptr);
+		}
+		ft_strlcpy(pptr[i], ft_findstr(str_ptr, c), \
+				ft_strclen(ft_findstr(str_ptr, c), c) + 1);
+		str_ptr = ft_findstr(ft_findstr(str_ptr, c) + \
+				ft_strclen(ft_findstr(str_ptr, c), c), c);
+		i++;
+	}
+	pptr[i] = NULL;
+	return (pptr);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**ret;
-	int		ret_size;
+	char	**result;
+	char	*sptr;
+	size_t	cnt_strs;
 
-	if (s == 0)
-		return (0);
-	ret_size = get_size(s, c);
-	ret = (char **)malloc(sizeof(char *) * (ret_size + 1));
-	if (ret == NULL)
+	if (!s)
 		return (NULL);
-	return (putret(ret, s, c));
+	sptr = (char *)s;
+	cnt_strs = ft_countstrs(sptr, c);
+	result = (char **)malloc(sizeof(char *) * (cnt_strs + 1));
+	if (result == NULL)
+		return (NULL);
+	return (ft_splitter(result, sptr, c, cnt_strs));
 }

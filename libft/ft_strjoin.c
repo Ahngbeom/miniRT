@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/09 11:02:51 by jseol             #+#    #+#             */
-/*   Updated: 2021/07/11 16:29:28 by jseol            ###   ########.fr       */
+/*   Created: 2020/12/28 14:18:25 by bahn              #+#    #+#             */
+/*   Updated: 2021/01/01 20:02:20 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,18 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*ret;
 	size_t	s1_len;
 	size_t	s2_len;
-	size_t	len;
+	char	*ptr;
 
-	if (s1 == 0 || s2 == 0)
-		return (0);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	len = s1_len + s2_len;
-	ret = (char *)malloc(sizeof(char) * (len + 1));
-	if (ret == NULL)
+	if (!s1 || !s2)
 		return (NULL);
-	ft_memcpy(ret, s1, s1_len);
-	ft_memcpy(ret + s1_len, s2, s2_len);
-	ret[len] = '\0';
-	return (ret);
+	s1_len = ft_strlen((char *)s1);
+	s2_len = ft_strlen((char *)s2);
+	ptr = malloc(s1_len + s2_len + 1);
+	if (!ptr)
+		return (NULL);
+	ft_strlcpy(ptr, (char *)s1, s1_len + 1);
+	ft_strlcat(ptr, (char *)s2, s1_len + s2_len + 1);
+	return (ptr);
 }

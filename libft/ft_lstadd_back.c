@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/10 09:30:46 by jseol             #+#    #+#             */
-/*   Updated: 2021/07/11 16:27:41 by jseol            ###   ########.fr       */
+/*   Created: 2020/12/31 13:54:08 by bahn              #+#    #+#             */
+/*   Updated: 2021/01/05 21:50:29 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if (!lst || !new)
-		return ;
-	if (*lst == 0)
-		*lst = new;
-	else
-		(ft_lstlast(*lst)->next = new);
+	t_list	*org_last;
+
+	if (lst)
+	{
+		if (*lst)
+		{
+			org_last = ft_lstlast(*lst);
+			org_last->next = new;
+		}
+		else
+			*lst = new;
+	}
 }

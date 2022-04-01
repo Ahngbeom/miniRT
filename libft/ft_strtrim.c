@@ -3,54 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/09 11:21:59 by jseol             #+#    #+#             */
-/*   Updated: 2021/07/11 16:39:41 by jseol            ###   ########.fr       */
+/*   Created: 2020/12/28 16:01:24 by bahn              #+#    #+#             */
+/*   Updated: 2022/01/24 15:18:20 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_set(char c, char const *set)
+static char	*start_point(char const *first, char const *set)
 {
-	size_t	i;
+	char	*start;
+	char	*last;
 
-	i = 0;
-	while (set[i])
+	start = (char *)first;
+	last = start + ft_strlen(start) - 1;
+	while (ft_strchr((char *)set, *start) && start < last)
+		start++;
+	return (start);
+}
+
+static char	*last_point(char const *first, char const *set)
+{
+	char	*last;
+
+	last = (char *)(first + ft_strlen((char *)first) - 1);
+	while (ft_strchr((char *)set, *last) && last > first)
+		last--;
+	return (last);
+}
+
+static int	set_checker(char *str, char const *set)
+{
+	char	*ptr;
+
+	if (ft_strlen(str) == 0)
+		return (1);
+	ptr = (char *)set;
+	if (ft_strlen(str) == 1)
 	{
-		if (c == set[i])
-			return (1);
-		i++;
+		while (*ptr != '\0')
+		{
+			if (*ptr == *str)
+				return (1);
+			ptr++;
+		}
+		return (0);
 	}
 	return (0);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*ret;
-	size_t	start;
-	size_t	end;
-	size_t	i;
-	size_t	s_len;
+	char	*result;
+	char	*s1_first;
+	char	*s1_last;
 
-	if (s1 == 0 || set == 0)
-		return (0);
-	i = 0;
-	while (is_set(s1[i], set))
-		i++;
-	start = i;
-	s_len = ft_strlen(s1);
-	if (s1[i] == '\0')
-		return (ft_strdup(""));
-	i = 0;
-	while (is_set(s1[s_len - i - 1], set))
-		i++;
-	end = i;
-	ret = (char *)malloc(sizeof(char) * (s_len - start - end + 1));
-	if (ret == NULL)
+	if (!s1)
 		return (NULL);
-	ft_memcpy(ret, s1 + start, s_len - start - end);
-	ret[s_len - start - end] = 0;
-	return (ret);
+	s1_first = start_point(s1, set);
+	s1_last = last_point(s1, set);
+	if (set_checker((char *)s1, set) || s1_first > s1_last)
+		return (ft_strdup(""));
+	else
+	{
+		result = (char *)malloc(s1_last - s1_first + 2);
+		if (result == NULL)
+			return (NULL);
+		ft_strlcpy(result, s1_first, s1_last - s1_first + 2);
+	}
+	return (result);
 }
