@@ -35,6 +35,7 @@ typedef struct s_square		t_square;
 
 typedef struct s_hit_record	t_hit_record;
 
+typedef struct s_ambient	t_ambient;
 typedef struct s_light		t_light;
 
 typedef struct s_scene		t_scene;
@@ -139,11 +140,11 @@ struct s_hit_record
 	t_color3	albedo;
 };
 
-typedef struct	s_ambient
+struct	s_ambient
 {
 	t_color3	color;
 	double		ratio;
-}				t_ambient;
+};
 
 struct s_light
 {

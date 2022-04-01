@@ -46,5 +46,5 @@ void	minirt_world(t_scene *scene)
 		h--;
 	}
 	mlx_put_image_to_window(scene->vars->mlx, scene->vars->win, scene->vars->img_data->img, 0, 0);
-	object_clear(&scene->objects);
+	// object_clear(&scene->objects);
 }
