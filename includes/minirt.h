@@ -32,8 +32,8 @@
 #  define OPEN_MAX 10240
 # endif
 
-# define WIDTH	800
-# define HEIGHT	600
+# define WIDTH	1280
+# define HEIGHT	720
 
 # define FALSE	0
 # define TRUE	1

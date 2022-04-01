@@ -73,6 +73,8 @@ t_bool		hit_object(t_object *world, t_ray *ray, t_hit_record *rec);
 t_light		*light_init(t_point3 light_origin, t_color3 light_color, double bright_ratio);
 t_color3	phong_lighting(t_scene *scene);
 
+// Shadow
+t_bool		in_shadow(t_object *objects, t_ray ray, double light_length);
 
 // Sphere
 t_sphere	*sphere_init(t_point3 center, double diameter);

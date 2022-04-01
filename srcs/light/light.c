@@ -32,12 +32,21 @@ t_color3	phong_lighting(t_scene *scene)
 	t_vec3		light_dir;
 	double		kd;
 
+	double		light_len;
+	t_ray		light_ray;
+
 	light_color = color_init(0, 0, 0);
 	
 	light_dir = vunit(vsub(scene->light.orig, scene->rec.p));
 	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
 	diffuse = vmul_t(kd, vmul_t(1.0 / 255.0, scene->light.light_color));	
 	
+	// Shadow
+	light_len = vlength(vsub(scene->light.orig, scene->rec.p));
+	light_ray = ray_init(vsum(scene->rec.p, vmul_t(EPSILON, scene->rec.normal)), light_dir);
+	if (in_shadow(scene->objects, light_ray, light_len))
+		return (color_init(0, 0, 0));
+
 	light_color = vsum(light_color, diffuse);
 
 	scene->ambient.color = vmul_t(scene->ambient.ratio, vmul_t(1.0 / 255.0, scene->ambient.color));
