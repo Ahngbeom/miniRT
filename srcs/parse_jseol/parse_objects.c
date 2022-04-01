@@ -25,7 +25,7 @@ void	parse_sphere(t_scene *scene, char **split)
 	sphere->diameter = ft_atod(split[2]);
 	sphere->diameter2 = pow(sphere->diameter, 2.0);
 	
-	object = object_init(SPHERE, sphere, color_init(0, 0, 0), color_init(0, 0, 0));
+	object = object_init(SPHERE, sphere, color_init(0, 0, 0), color_init(0, 0.5, 0));
 
 	parse_color3(&(object->color), split[3]);
 	if (!check_color3(object->color))

@@ -48,14 +48,13 @@ t_vec3		vdiv(t_vec3 v, double t);
 double		vdot(t_vec3 u, t_vec3 v);
 t_vec3		vcross(t_vec3 u, t_vec3 v);
 t_vec3		vunit(t_vec3 v);
+t_vec3		vmin(t_vec3 u, t_vec3 v);
 
 // Ray
 t_ray		ray_init(t_point3 origin, t_vec3 direction);
 t_point3	ray_at(t_ray *r, double t);
 t_ray		ray_primary(t_camera *cam, double u, double v);
-// t_color3 	ray_color(t_sphere *sp, t_ray *r);
-// t_color3 	ray_color(int type, void *obj, t_ray *r);
-t_color3 	ray_color(t_object *world, t_ray *r);
+t_color3 	ray_color(t_scene *scene);
 
 void    	set_face_normal(t_ray *r, t_hit_record *rec);
 
@@ -72,6 +71,7 @@ t_bool		hit_object(t_object *world, t_ray *ray, t_hit_record *rec);
 
 // Light
 t_light		*light_init(t_point3 light_origin, t_color3 light_color, double bright_ratio);
+t_color3	phong_lighting(t_scene *scene);
 
 
 // Sphere

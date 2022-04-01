@@ -23,7 +23,7 @@ t_bool	hit(t_object *world, t_ray *ray, t_hit_record *rec)
 	{
 		if (hit_object(world, ray, &tmp_rec) > 0)
 		{
-			printf("Hit !!!\n");
+			// printf("Hit !!!\n");
 			hit_anything = TRUE;
 			*rec = tmp_rec;
 			tmp_rec.tmax = tmp_rec.t;

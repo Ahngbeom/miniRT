@@ -38,23 +38,28 @@ t_ray		ray_primary(t_camera *cam, double u, double v) // 가장 처음 카메라
 	return (ray);
 }
 
-t_color3 	ray_color(t_object *objects, t_ray *ray)
+t_color3 	ray_color(t_scene *scene)
 {
 	double			t;
-	t_hit_record	rec;
+	// t_hit_record	rec;
+	// t_color3		color;
 
-	if (objects != NULL && objects->type >= 0 && objects->element != NULL)
+	// color = vdiv(vsum(objects->color, color_init(1, 1, 1)), 256);
+	// printf("%f, %f, %f\n", color.x, color.y, color.z);
+	if (scene->objects != NULL && scene->objects->type >= 0 && scene->objects->element != NULL)
 	{
-		rec.tmin = 0; // 오브젝트와 카메라 간 거리 최솟값
-		rec.tmax = INFINITY; // 오브젝트와 카메라 간 거리 최댓값
-		rec.front_face = 0; // 오브젝트 교점 위치(앞면 / 뒷면) 판단
-		if (hit(objects, ray, &rec) == TRUE)
+		scene->rec.tmin = EPSILON; // 오브젝트와 카메라 간 거리 최솟값
+		scene->rec.tmax = INFINITY; // 오브젝트와 카메라 간 거리 최댓값
+		scene->rec.front_face = 0; // 오브젝트 교점 위치(앞면 / 뒷면) 판단
+		if (hit(scene->objects, &scene->ray, &scene->rec) == TRUE)
 		{
-			return (vmul_t(0.5, vsum(rec.normal, objects->color)));
+			// printf("%f, %f, %f\n", vmul_t(0.5, vsum(rec.normal, objects->color)).x, vmul_t(0.5, vsum(rec.normal, objects->color)).y, vmul_t(0.5, vsum(rec.normal, objects->color)).z);
+			// return (vmul_t(0.5, vsum(rec.normal, objects->color)));
+			return (phong_lighting(scene));
 		}
 	}
 	// 광선의 방향 단위 벡터 y축을 통해 색상 결정
-	t = 0.5 * (ray->dir.y + 1.0);
+	t = 0.5 * (scene->ray.dir.y + 1.0);
 
 	// ((1 - t) * 흰색) + (t * 하늘색)
 	return (vsum(vmul_t(1.0 - t, vector_init(1.0, 1.0, 1.0)), vmul_t(t, vector_init(0.5, 0.7, 1.0))));

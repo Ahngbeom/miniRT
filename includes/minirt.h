@@ -46,6 +46,8 @@ typedef	int	t_object_type;
 # define CYLINDER	2
 # define SQUARE		3
 
+# define EPSILON	1e-6
+
 # include "minirt_structure.h"
 # include "minirt_function.h"
 

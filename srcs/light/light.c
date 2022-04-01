@@ -24,3 +24,29 @@ t_light	*light_init(t_point3 light_origin, t_color3 light_color, double bright_r
 	light->bright_ratio = bright_ratio;
 	return (light);
 }
+
+t_color3	phong_lighting(t_scene *scene)
+{
+	t_color3	light_color;
+	t_color3	diffuse;
+	t_vec3		light_dir;
+	double		kd;
+
+	light_color = color_init(0, 0, 0);
+	
+	light_dir = vunit(vsub(scene->light.orig, scene->rec.p));
+	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
+	diffuse = vmul_t(kd, scene->light.light_color);	
+	
+	light_color = vsum(light_color, diffuse);
+
+	// scene->ambient.color = vmul(scene->ambient.color, scene->o)
+	scene->ambient.color = vmul_t(scene->ambient.ratio, scene->ambient.color);
+	light_color = vsum(light_color, scene->ambient.color);
+	// printf("Albedo : %f, %f, %f\n", scene->rec.albedo.x, scene->rec.albedo.y, scene->rec.albedo.z);
+	// printf("Light Color : %f, %f, %f\n", light_color.x, light_color.y, light_color.z);
+	// printf("%f, %f, %f\n", vmul(scene->rec.albedo, light_color).x, vmul(scene->rec.albedo, light_color).y, vmul(scene->rec.albedo, light_color).z);
+	// sleep(1);
+	return (vmin(vmul(scene->rec.albedo, light_color), color_init(1, 1, 1)));
+	// lights = scene->light
+}

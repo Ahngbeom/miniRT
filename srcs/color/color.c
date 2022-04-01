@@ -39,5 +39,6 @@ t_color3	write_color(int fd, t_color3 color)
 		ft_putnbr_fd((int)(255.999 * color.z), fd);
 		ft_putchar_fd('\n', fd);
 	}
+	// return (vector_init(255.999 * color.x, 255.999 * color.y, 255.999 * color.z));
 	return (vector_init(255.999 * color.x, 255.999 * color.y, 255.999 * color.z));
 }

@@ -51,7 +51,6 @@ SRCS_FNAME	=	hooks/minirt_close.c \
 				ray/ray.c \
 				camera/camera.c \
 				canvas/canvas.c \
-				concept/concept.c \
 				object/object.c \
 				object/hit.c \
 				object/set_face_normal.c \

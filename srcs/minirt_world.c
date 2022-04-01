@@ -26,7 +26,7 @@ void	minirt_world(t_scene *scene)
 	// object_add(&world, object_init(SQUARE, square_init(point_init(-4, 0, -7), vector_init(1, 0, 0), 2.0), color_init(0, 0, 0)));
 	// object_add(&world, object_init(SQUARE, square_init(point_init(4, 0, -7), vector_init(1, 0, 0), 2.0), color_init(0, 0, 0)));
 	
-	// object_add(&world, object_init(SPHERE, sphere_init(point_init(2, 0, -5), 2)));
+	// object_add(&scene->objects, object_init(SPHERE, sphere_init(point_init(2, 0, -5), 2), color_init(1, 1, 1), color_init(1, 1, 1)));
 	// object_add(&world, object_init(SPHERE, sphere_init(point_init(0, -1000, 0), 999), color_init(0, 0, 0), color_init(1, 1, 1)));
 
 	// object_add(&world, object_init(PLANE, plane_init(point_init(0, 0, -1), vector_init(0, 0, 1)), color_init(0, 0, 0)));
@@ -40,7 +40,7 @@ void	minirt_world(t_scene *scene)
 			u = (double)w / (scene->canvas.width - 1);
 			v = (double)h / (scene->canvas.height - 1);
 			scene->ray = ray_primary(&scene->camera, u, v);
-			minirt_pixel_put_vector(scene->vars->img_data, w, scene->canvas.height - 1 - h, write_color(scene->fd, ray_color(scene->objects, &scene->ray)));
+			minirt_pixel_put_vector(scene->vars->img_data, w, scene->canvas.height - 1 - h, write_color(scene->fd, ray_color(scene)));
 			w++;
 		}
 		h--;
