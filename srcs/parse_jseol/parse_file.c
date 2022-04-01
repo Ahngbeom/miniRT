@@ -71,6 +71,7 @@ void	parse_file(t_scene *scene, const char *filename)
 	int		ret;
 	char	*line;
 	char	**split;
+	int		i;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -83,10 +84,18 @@ void	parse_file(t_scene *scene, const char *filename)
 		if (!check_line(line))
 			printf("Error\n");// 에러출력
 		parse_line(scene, split);
-		free (line);
+		free(line);
+		i = -1;
+		while (split[++i] != NULL)
+			free(split[i]);
+		free(split);
 	}
 	split = ft_split2(line, ' ', '\t');
 	parse_line(scene, split);
-	free (line);
+	free(line);
+	i = -1;
+	while (split[++i] != NULL)
+		free(split[i]);
+	free(split);
 	close(fd);
 }

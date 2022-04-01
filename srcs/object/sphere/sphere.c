@@ -63,9 +63,7 @@ t_bool		hit_sphere(t_object *objects, t_ray *r, t_hit_record *rec) // 짝수 근
 	rec->normal = vdiv(vsub(rec->p, sp->center), sp->diameter); // 법선 벡터 정규화
 	set_face_normal(r, rec); // hit record 법선 벡터와 광선의 법선 벡터를 비교하여 앞면/뒷면 판단
 	
-	// rec->albedo = objects->albedo;
-	rec->albedo = objects->color;
-	// rec->albedo = vmul_t(1 / 255, objects->color);
+	rec->albedo = vmul_t(1.0 / 255.0, objects->color);
 	return (TRUE);
 }
 

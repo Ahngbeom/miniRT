@@ -41,11 +41,7 @@ t_ray		ray_primary(t_camera *cam, double u, double v) // 가장 처음 카메라
 t_color3 	ray_color(t_scene *scene)
 {
 	double			t;
-	// t_hit_record	rec;
-	// t_color3		color;
 
-	// color = vdiv(vsum(objects->color, color_init(1, 1, 1)), 256);
-	// printf("%f, %f, %f\n", color.x, color.y, color.z);
 	if (scene->objects != NULL && scene->objects->type >= 0 && scene->objects->element != NULL)
 	{
 		scene->rec.tmin = EPSILON; // 오브젝트와 카메라 간 거리 최솟값
@@ -53,8 +49,6 @@ t_color3 	ray_color(t_scene *scene)
 		scene->rec.front_face = 0; // 오브젝트 교점 위치(앞면 / 뒷면) 판단
 		if (hit(scene->objects, &scene->ray, &scene->rec) == TRUE)
 		{
-			// printf("%f, %f, %f\n", vmul_t(0.5, vsum(rec.normal, objects->color)).x, vmul_t(0.5, vsum(rec.normal, objects->color)).y, vmul_t(0.5, vsum(rec.normal, objects->color)).z);
-			// return (vmul_t(0.5, vsum(rec.normal, objects->color)));
 			return (phong_lighting(scene));
 		}
 	}

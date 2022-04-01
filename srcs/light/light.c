@@ -36,17 +36,16 @@ t_color3	phong_lighting(t_scene *scene)
 	
 	light_dir = vunit(vsub(scene->light.orig, scene->rec.p));
 	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
-	diffuse = vmul_t(kd, scene->light.light_color);	
+	diffuse = vmul_t(kd, vmul_t(1.0 / 255.0, scene->light.light_color));	
 	
 	light_color = vsum(light_color, diffuse);
 
-	// scene->ambient.color = vmul(scene->ambient.color, scene->o)
-	scene->ambient.color = vmul_t(scene->ambient.ratio, scene->ambient.color);
+	scene->ambient.color = vmul_t(scene->ambient.ratio, vmul_t(1.0 / 255.0, scene->ambient.color));
 	light_color = vsum(light_color, scene->ambient.color);
+
 	// printf("Albedo : %f, %f, %f\n", scene->rec.albedo.x, scene->rec.albedo.y, scene->rec.albedo.z);
 	// printf("Light Color : %f, %f, %f\n", light_color.x, light_color.y, light_color.z);
 	// printf("%f, %f, %f\n", vmul(scene->rec.albedo, light_color).x, vmul(scene->rec.albedo, light_color).y, vmul(scene->rec.albedo, light_color).z);
 	// sleep(1);
 	return (vmin(vmul(scene->rec.albedo, light_color), color_init(1, 1, 1)));
-	// lights = scene->light
 }

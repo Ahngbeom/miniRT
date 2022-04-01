@@ -23,6 +23,7 @@ int		check_color3(t_color3 rgb)
 void	parse_color3(t_color3 *ret, char *color)
 {
 	char **split;
+	int		i;
 
 	split = ft_split(color, ',');
 	if (split_size(split) != 3)
@@ -30,4 +31,8 @@ void	parse_color3(t_color3 *ret, char *color)
 	ret->x = (double)ft_atoi(split[0]);
 	ret->y = (double)ft_atoi(split[1]);
 	ret->z = (double)ft_atoi(split[2]);
+	i = -1;
+	while (split[++i] != NULL)
+		free(split[i]);
+	free(split);
 }

@@ -31,13 +31,18 @@ void	parse_ambient(t_scene *scene, char **split)
 void	parse_coords(t_vec3 *point, char *vec)
 {
 	char **coords;
-
+	int		i;
+	
 	coords = ft_split(vec, ',');
 	if (split_size(coords) != 3)
 		printf("Coords format: x,y,z");
 	point->x = ft_atod(coords[0]);
 	point->y = ft_atod(coords[1]);
 	point->z = ft_atod(coords[2]);
+	i = -1;
+	while (coords[++i] != NULL)
+		free(coords[i]);
+	free(coords);
 }
 
 void	parse_camera(t_scene *scene, char **split)
