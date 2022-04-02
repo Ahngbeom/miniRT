@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:51:10 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 14:55:36 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/02 21:25:12 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	minirt_pixel_put_vector(t_img_data *data, int x, int y, t_color3 color)
 
 t_color3	write_color(int fd, t_color3 color)
 {
-	if (fd > 0)
+	if (fd >= 0)
 	{
 		ft_putnbr_fd((int)(255.999 * color.x), fd);
 		ft_putchar_fd(' ', fd);

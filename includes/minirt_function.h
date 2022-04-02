@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 20:35:19 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/02 21:44:50 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,13 @@ t_object	*object_last(t_object *list);
 void		object_clear(t_object **list);
 
 // Determining Hittable Object
-t_bool		hit(t_object *world, t_ray *ray, t_hit_record *rec);
-t_bool		hit_object(t_object *world, t_ray *ray, t_hit_record *rec);
+t_bool		hit(t_object *objects, t_ray *ray, t_hit_record *rec);
+t_bool		hit_object(t_object *objects, t_ray *ray, t_hit_record *rec);
 
 // Light
 t_light		*light_init(t_point3 light_origin, t_color3 light_color, double bright_ratio);
 t_color3	phong_lighting(t_scene *scene);
+t_color3	get_point_light(t_scene *scene, t_light *light);
 
 // Shadow
 t_bool		in_shadow(t_object *objects, t_ray ray, double light_length);
@@ -82,16 +83,16 @@ int			hit_sphere(t_object *sphere, t_ray *r, t_hit_record *rec);
 
 // Plane
 t_plane		*plane_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_plane(t_object *world, t_ray *r, t_hit_record *rec);
-t_bool		intersect_plane(t_plane *plane, t_ray *ray, t_hit_record *rec);
+t_bool		hit_plane(t_object *objects, t_ray *r, t_hit_record *rec);
+t_bool		intersect_plane(t_object *objects, t_ray *ray, t_hit_record *rec);
 
 // Cylinder
 t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_cylinder(t_object *world, t_ray *r, t_hit_record *rec);
+t_bool		hit_cylinder(t_object *objects, t_ray *r, t_hit_record *rec);
 
 // Square
 t_square	*square_init(t_point3 center, t_vec3 normal, double side_len);
-t_bool		hit_square(t_object *world, t_ray *ray, t_hit_record *rec);
+t_bool		hit_square(t_object *objects, t_ray *ray, t_hit_record *rec);
 
 // Concept
 void		minirt_background(t_img_data *data, int width, int height, t_vec3 color);

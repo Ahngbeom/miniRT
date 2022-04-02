@@ -101,8 +101,8 @@ struct s_sphere
 
 struct s_plane
 {
-	t_point3	coord;
-	t_vec3		normal;	// 정규화 법선 벡터 ?
+	t_point3	coord;	// 평면 상 어느 한 지점.
+	t_vec3		normal;	// 평면이 가리키는 방향, 기울임 방향 및 정도
 };
 
 struct s_cylinder
@@ -162,10 +162,8 @@ struct s_scene
 	t_hit_record	rec;
 
 	t_object		*objects;
-	t_ambient		ambient;
-	t_light			light;
-
-	int			fd;	
+	t_ambient		ambient; // 주변 조명
+	t_light			light; // 광원
 };
 
 #endif

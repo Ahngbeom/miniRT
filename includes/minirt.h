@@ -21,8 +21,9 @@
 # include <fcntl.h> // open
 # include <sys/stat.h> // open mode
 # include <stdio.h> // printf
-# define __USE_XOPEN // M_PI
+
 # include <math.h> // sqrt
+# define __USE_XOPEN // M_PI
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 512
