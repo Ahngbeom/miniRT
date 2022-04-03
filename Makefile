@@ -6,7 +6,7 @@
 #    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 13:30:16 by bahn              #+#    #+#              #
-#    Updated: 2022/04/02 21:29:38 by bahn             ###   ########.fr        #
+#    Updated: 2022/04/03 20:55:16 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ SRCS_FNAME	=	hooks/minirt_close.c \
 				light/light_util.c \
 				shadow/shadow.c \
 				main.c \
-				minirt_world.c \
+				output_scene.c \
 				minirt_free.c \
 				\
 				parse_jseol/get_next_line_utils.c \
