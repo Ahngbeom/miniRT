@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/03 20:57:26 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/03 22:48:00 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		canvas_init(t_scene *scene, int width, int height);
 
 // Camera
 void		camera_init(t_scene *scene);
+void		init_camera(t_scene *scene, int fov);
 
 // Vector
 t_vec3		vector_init(double x, double y, double z);
