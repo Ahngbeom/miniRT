@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:19:28 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/30 15:40:02 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/03 17:45:08 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 # include <math.h> // sqrt
 # define __USE_XOPEN // M_PI
+
+# define MINIRT_PI 3.14159265358979323846
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 512
