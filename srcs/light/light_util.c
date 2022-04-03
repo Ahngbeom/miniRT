@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/03 01:13:20 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/03 15:58:50 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ static t_color3	diffuse_calculator(t_vec3 light_dir, t_color3 light_color, t_vec
 
 static t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal)
 {
-	t_vec3		view_dir;
-	t_vec3		reflect_dir;
-	double		spec;
-	double		ksn;
-	double		ks;
+	t_vec3		view_dir; 		// 교점에서 카메라 원점으로 향하는 벡터
+	t_vec3		reflect_dir;	// 교점의 법선 벡터를 기준으로 light_dir을 대칭시킨 벡터
+	double		ksn; 			// 오브젝트의 반짝거리는 정도
+	double		ks; 			// 정반사광 강도
+	double		spec; 			// specular
 	
 	view_dir = vunit(vmul_t(-1.0, ray_dir));
 	reflect_dir = reflect(vmul_t(-1.0, light_dir), rec_normal);
-	ksn = 2;
-	ks = 0.5;
+	ksn = 2; // Shininess Value
+	ks = 0.5; // Specular Strength
 	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), ksn);
-	return (vmul_t(spec, vmul_t(ks, light_color)));
+	return (vmul_t(spec, vmul_t(ks, vmul_t(1.0 / 255.0, light_color))));
 }
 
 t_color3	get_point_light(t_scene *scene, t_light *light)
