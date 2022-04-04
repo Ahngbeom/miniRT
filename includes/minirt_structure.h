@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 16:17:35 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/03 18:54:02 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_square		t_square;
 
 typedef struct s_hit_record	t_hit_record;
 
+typedef struct s_ambient	t_ambient;
 typedef struct s_light		t_light;
 
 typedef struct s_scene		t_scene;
@@ -100,8 +101,8 @@ struct s_sphere
 
 struct s_plane
 {
-	t_point3	coord;
-	t_vec3		normal;	// 정규화 법선 벡터 ?
+	t_point3	coord;	// 평면 상 어느 한 지점.
+	t_vec3		normal;	// 평면이 가리키는 방향, 기울임 방향 및 정도
 };
 
 struct s_cylinder
@@ -132,18 +133,18 @@ struct s_hit_record
 {
     t_point3	p;          // 교점의 좌표
     t_vec3		normal;     // 교점에서의 법선 벡터
-    double		tmin;       // 카메라 뒤쪽에 있을 경우의 근 최솟값
-    double		tmax;       // 카메라 앞쪽에 있을 경우의 근 최댓값 
+    double		tmin;       // 오브젝트가 카메라 뒤쪽에 있을 경우 최소 거리
+    double		tmax;       // 오브젝트가 카메라 앞쪽에 있을 경우 최대 거리 
     double		t;          // 광선의 원점과 교점 사이의 거리
     int			front_face; // 광선의 방향벡터와 교점의 법선벡터 간 내적 연산하여 광선이 오브젝트에 부딪히는 면의 위치 판단
 	t_color3	albedo;
 };
 
-typedef struct	s_ambient
+struct	s_ambient
 {
 	t_color3	color;
 	double		ratio;
-}				t_ambient;
+};
 
 struct s_light
 {
@@ -161,10 +162,8 @@ struct s_scene
 	t_hit_record	rec;
 
 	t_object		*objects;
-	t_ambient		ambient;
-	t_light			light;
-
-	int			fd;	
+	t_ambient		ambient; // 주변 조명
+	t_light			light; // 광원
 };
 
 #endif

@@ -23,7 +23,6 @@ t_bool	hit(t_object *world, t_ray *ray, t_hit_record *rec)
 	{
 		if (hit_object(world, ray, &tmp_rec) > 0)
 		{
-			// printf("Hit !!!\n");
 			hit_anything = TRUE;
 			*rec = tmp_rec;
 			tmp_rec.tmax = tmp_rec.t;
@@ -40,12 +39,13 @@ t_bool	hit_object(t_object *world, t_ray *ray, t_hit_record *rec)
 	hit_result = FALSE;
 	if (world->type == SPHERE)
 		hit_result = hit_sphere(world, ray, rec);
-	else if (world->type == PLANE)
-		// hit_result = hit_plane(world, ray, rec);
-		hit_result = intersect_plane(world->element, ray, rec);
-	else if (world->type == CYLINDER)
-		hit_result = hit_cylinder(world, ray, rec);
 	else if (world->type == SQUARE)	
 		hit_result = hit_square(world, ray, rec);
+	else if (world->type == CYLINDER)
+		hit_result = hit_cylinder(world, ray, rec);	
+	else if (world->type == PLANE) {
+		// hit_result = hit_plane(world, ray, rec);
+		hit_result = intersect_plane(world, ray, rec);
+	}
 	return hit_result;
 }

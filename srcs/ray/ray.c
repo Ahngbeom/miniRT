@@ -58,37 +58,3 @@ t_color3 	ray_color(t_scene *scene)
 	// ((1 - t) * 흰색) + (t * 하늘색)
 	return (vsum(vmul_t(1.0 - t, vector_init(1.0, 1.0, 1.0)), vmul_t(t, vector_init(0.5, 0.7, 1.0))));
 }
-
-// t_color3 	ray_color(int type, void *obj, t_ray *r) // 광선이 최종적으로 얻게 된 픽셀의 색상 값 반환. 색상 결정
-// {
-//     double			t;
-// 	t_vec3			normal;
-// 	t_hit_record	rec;
-
-// 	if (type >= 0 && obj != NULL)
-// 	{
-// 		rec.tmin = 0;
-// 		rec.tmax = INFINITY;
-// 		rec.front_face = 0;
-// 		if (type == SPHERE)// && ((t_sphere*)obj)->hit_func(obj, r))
-// 		{
-// 			// t = ((t_sphere*)obj)->hit_func(obj, r);
-// 			// t = hit_sphere_record(obj, r, &rec);
-// 			if (hit_sphere_record(obj, r, &rec) > 0)
-// 			{
-// 				// 정규화된 구 표면에서의 법선 벡터
-// 				normal = vunit(vsub(ray_at(r, rec.t), ((t_sphere*)obj)->center));
-				
-// 				return (vmul_t(0.5, color_init(normal.x + 1, normal.y + 1, normal.z + 1)));
-// 				// return (color_init(0, 1, 0));
-// 			}
-// 		}
-// 		else if (type == PLANE && ((t_plane*)obj)->hit_func(obj, r))
-// 			return (color_init(1, 0, 0));
-// 	}
-// 	// 광선의 방향 단위 벡터 y축을 통해 색상 결정
-// 	t = 0.5 * (r->dir.y + 1.0);
-
-// 	// ((1 - t) * 흰색) + (t * 하늘색)
-// 	return (vsum(vmul_t(1.0 - t, vector_init(1.0, 1.0, 1.0)), vmul_t(t, vector_init(0.5, 0.7, 1.0))));
-// }

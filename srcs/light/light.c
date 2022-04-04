@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 14:56:37 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/02 22:00:18 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,10 @@ t_light	*light_init(t_point3 light_origin, t_color3 light_color, double bright_r
 
 t_color3	phong_lighting(t_scene *scene)
 {
-	t_color3	light_color;
-	t_color3	diffuse;
-	t_vec3		light_dir;
-	double		kd;
+	t_color3	light_color; // 빛의 양, 정도를 저장하기 위한 변수
 
-	light_color = color_init(0, 0, 0);
-	
-	light_dir = vunit(vsub(scene->light.orig, scene->rec.p));
-	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
-	diffuse = vmul_t(kd, vmul_t(1.0 / 255.0, scene->light.light_color));	
-	
-	light_color = vsum(light_color, diffuse);
+	light_color = color_init(0, 0, 0); // 광원이 없을 경우, 빛의 양은 0
+	light_color = vsum(light_color, get_point_light(scene, &scene->light)); // diffuse, specular 계산
 
 	scene->ambient.color = vmul_t(scene->ambient.ratio, vmul_t(1.0 / 255.0, scene->ambient.color));
 	light_color = vsum(light_color, scene->ambient.color);

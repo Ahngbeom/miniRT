@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:24:38 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 16:03:17 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/03 20:47:21 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	camera_move(int keycode, t_scene *scene)
 	
 	scene->camera.lower_left_corner = vsub(vsub(vsub(scene->camera.orig, vdiv(scene->camera.horizontal, 2)), vdiv(scene->camera.vertical, 2)), vector_init(0, 0, scene->camera.focal_length));
 	
-	minirt_world(scene);
+	output_scene(scene);
 	
 	printf("Camera Info\n");
 	printf("Origin : %f, %f, %f\n", scene->camera.orig.x, scene->camera.orig.y, scene->camera.orig.z);
@@ -47,7 +47,7 @@ int	camera_zoom(int keycode, int x, int y, t_scene *scene)
 	else
 		return (0);
 	scene->camera.lower_left_corner = vsub(vsub(vsub(scene->camera.orig, vdiv(scene->camera.horizontal, 2)), vdiv(scene->camera.vertical, 2)), vector_init(0, 0, scene->camera.focal_length));
-	minirt_world(scene);
+	output_scene(scene);
 	
 	printf("Camera Info\n");
 	printf("Origin Point: %f, %f, %f\n", scene->camera.orig.x, scene->camera.orig.y, scene->camera.orig.z);

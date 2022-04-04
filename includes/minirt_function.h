@@ -6,7 +6,7 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/04 16:40:15 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/04 19:06:43 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINIRT_FUNCTION_H
 
 # include "minirt_structure.h"
+
+void		output_scene(t_scene *scene);
 
 // Exit Hooks
 int			minirt_close(int keycode, t_scene *scene);
@@ -30,12 +32,13 @@ t_color3	write_color(int fd, t_color3 color);
 void		canvas_init(t_scene *scene, int width, int height);
 
 // Camera
-void		camera_init(t_scene *scene, t_point3 origin);
+void		camera_init(t_scene *scene);
+void		init_camera(t_scene *scene, int fov);
 
 // Vector
 t_vec3		vector_init(double x, double y, double z);
 t_point3	point_init(double x, double y, double z);
-t_color3		color_init(double r, double g, double b);
+t_color3	color_init(double r, double g, double b);
 
 // Vector Operation
 double		vlength(t_vec3 v);
@@ -58,7 +61,6 @@ t_color3 	ray_color(t_scene *scene);
 
 void    	set_face_normal(t_ray *r, t_hit_record *rec);
 
-
 // Object
 t_object	*object_init(t_object_type type, void *element, t_color3 color, t_color3 albedo);
 void		object_add(t_object **list, t_object *new);
@@ -66,13 +68,16 @@ t_object	*object_last(t_object *list);
 void		object_clear(t_object **list);
 
 // Determining Hittable Object
-t_bool		hit(t_object *world, t_ray *ray, t_hit_record *rec);
-t_bool		hit_object(t_object *world, t_ray *ray, t_hit_record *rec);
+t_bool		hit(t_object *objects, t_ray *ray, t_hit_record *rec);
+t_bool		hit_object(t_object *objects, t_ray *ray, t_hit_record *rec);
 
 // Light
 t_light		*light_init(t_point3 light_origin, t_color3 light_color, double bright_ratio);
 t_color3	phong_lighting(t_scene *scene);
+t_color3	get_point_light(t_scene *scene, t_light *light);
 
+// Shadow
+t_bool		shadow_checker(t_object *objects, t_light light, t_vec3 light_dir, t_hit_record rec);
 
 // Sphere
 t_sphere	*sphere_init(t_point3 center, double diameter);
@@ -80,29 +85,20 @@ int			hit_sphere(t_object *sphere, t_ray *r, t_hit_record *rec);
 
 // Plane
 t_plane		*plane_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_plane(t_object *world, t_ray *r, t_hit_record *rec);
-t_bool		intersect_plane(t_plane *plane, t_ray *ray, t_hit_record *rec);
+t_bool		hit_plane(t_object *objects, t_ray *r, t_hit_record *rec);
+t_bool		intersect_plane(t_object *objects, t_ray *ray, t_hit_record *rec);
 
 // Cylinder
 t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_cylinder(t_object *world, t_ray *r, t_hit_record *rec);
+t_bool		hit_cylinder(t_object *objects, t_ray *r, t_hit_record *rec);
 
 // Square
 t_square	*square_init(t_point3 center, t_vec3 normal, double side_len);
-t_bool		hit_square(t_object *world, t_ray *ray, t_hit_record *rec);
+t_bool		hit_square(t_object *objects, t_ray *ray, t_hit_record *rec);
 
-// Concept
-void		minirt_background(t_img_data *data, int width, int height, t_vec3 color);
-void		minirt_gradation(t_scene *scene);
-void		minirt_sky(t_scene	*scene);
-void		minirt_world(t_scene *scene);
-void		minirt_plane_in_the_sky(t_scene *scene);
-
+// Utils
 void		nullcheck_free(void *data);
 void		split_free(char **s);
-
-
-
 
 // Jseol .rt Parse
 void	parse_file(t_scene *scene, const char *filename);
