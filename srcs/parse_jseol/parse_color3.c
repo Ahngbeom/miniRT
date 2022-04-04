@@ -6,7 +6,7 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:49:39 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/03/31 15:04:05 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:39:49 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parse_color3(t_color3 *ret, char *color)
 
 	split = ft_split(color, ',');
 	if (split_size(split) != 3)
-		printf("Color format: R,G,B");
+		print_error("Color format: R,G,B");
 	ret->x = (double)ft_atoi(split[0]);
 	ret->y = (double)ft_atoi(split[1]);
 	ret->z = (double)ft_atoi(split[2]);

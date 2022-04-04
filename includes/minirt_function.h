@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_function.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 20:35:19 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/04 16:40:15 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ double	ft_atod(char *str);
 int		ft_isspace(const char c);
 char	**ft_split2(char const *s, char c1, char c2);
 int		split_size(char **split);
+void	print_error(char *s);
 
 int		get_next_line(int fd, char **line);
 char	*ft_gnl_strjoin(char *s1, char *s2);
