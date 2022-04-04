@@ -42,7 +42,16 @@ endif
 
 SRCS_DIR	=	./srcs/
 OBJS_DIR	=	./objs/
-SRCS_FNAME	=	hooks/minirt_close.c \
+SRCS_FNAME	=	parse/get_next_line_utils.c \
+				parse/get_next_line.c \
+				parse/parse_color3.c \
+				parse/parse_file.c \
+				parse/parse_objects.c \
+				parse/parse_scene.c \
+				parse/split_utils.c \
+				parse/ft_atod.c \
+				parse/ft_isspace.c \
+				hooks/minirt_close.c \
 				hooks/minirt_esc.c \
 				hooks/camera_movement.c \
 				color/color.c \
@@ -61,19 +70,9 @@ SRCS_FNAME	=	hooks/minirt_close.c \
 				light/light.c \
 				light/light_util.c \
 				shadow/shadow.c \
-				main.c \
-				output_scene.c \
-				minirt_free.c \
-				\
-				parse_jseol/get_next_line_utils.c \
-				parse_jseol/get_next_line.c \
-				parse_jseol/parse_color3.c \
-				parse_jseol/parse_file.c \
-				parse_jseol/parse_objects.c \
-				parse_jseol/parse_scene.c \
-				parse_jseol/split_utils.c \
-				parse_jseol/ft_atod.c \
-				parse_jseol/ft_isspace.c
+				scene/output_scene.c \
+				utils/minirt_free.c \
+				main.c
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_FNAME))
 OBJS		=	$(SRCS:.c=.o)
 
