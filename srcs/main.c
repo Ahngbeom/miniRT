@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/03 22:48:20 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/04 11:57:39 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	// printf("Ambient Ratio : %f\n", scene.ambient.ratio);
 	// printf("Ambient Color : %f, %f, %f\n\n", scene.ambient.color.x, scene.ambient.color.y, scene.ambient.color.z);
 
-	// printf("Camera Viewpoint : %f, %f, %f\n", scene.camera.orig.x, scene.camera.orig.y, scene.camera.orig.z);
-	// printf("Camera Direction : %f, %f, %f\n", scene.camera.dir.x, scene.camera.dir.y, scene.camera.dir.z);
-	// printf("Camera FOV : %d\n", scene.camera.fov);
+	printf("Camera Viewpoint : %f, %f, %f\n", scene->camera.orig.x, scene->camera.orig.y, scene->camera.orig.z);
+	printf("Camera Direction : %f, %f, %f\n", scene->camera.dir.x, scene->camera.dir.y, scene->camera.dir.z);
+	printf("Camera FOV : %d\n", scene->camera.fov);
 	// printf("Camera Lower left corner point : %f, %f, %f\n\n", scene.camera.lower_left_corner.x, scene.camera.lower_left_corner.y, scene.camera.lower_left_corner.z);
+	
 	// printf("Light Point : %f, %f, %f\n", scene.light.orig.x, scene.light.orig.y, scene.light.orig.z);
 	// printf("Light Ratio : %f\n", scene.light.bright_ratio);
 	// printf("Light Color : %f, %f, %f\n\n", scene.light.light_color.x, scene.light.light_color.y, scene.light.light_color.z);
