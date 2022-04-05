@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_function.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/03 22:48:00 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/04 19:06:43 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_bool		hit_square(t_object *objects, t_ray *ray, t_hit_record *rec);
 
 // Utils
 void		nullcheck_free(void *data);
+void		split_free(char **s);
 
 // Jseol .rt Parse
 void	parse_file(t_scene *scene, const char *filename);
@@ -116,6 +117,7 @@ double	ft_atod(char *str);
 int		ft_isspace(const char c);
 char	**ft_split2(char const *s, char c1, char c2);
 int		split_size(char **split);
+void	print_error(char *s);
 
 int		get_next_line(int fd, char **line);
 char	*ft_gnl_strjoin(char *s1, char *s2);

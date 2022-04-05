@@ -6,11 +6,18 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:52:11 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/03/31 15:17:02 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:51:49 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	print_error(char *s)
+{
+	printf("Error\n");
+	printf("%s\n", s);
+	exit(1);
+}
 
 int		allowed_symbol(char c)
 {
@@ -40,7 +47,7 @@ void	parse_line(t_scene *scene, char **split)
 	if (split_size(split) == 0)
 		return ;
 	else if (split_size(split) < 3)
-		printf("Error\n");//	구성이 최소 3개
+		print_error("Unknown element in the scene");
 	if (ft_strncmp(split[0], "A", 1) == 0)
 		parse_ambient(scene, split);
 	else if (ft_strncmp(split[0], "C", 1) == 0)
@@ -54,16 +61,8 @@ void	parse_line(t_scene *scene, char **split)
 	else if (ft_strncmp(split[0], "cy", 2) == 0)
 		parse_cylinder(scene, split);
 	else
-		printf("Error\n");// 존재하지 않는
+		print_error("Unknown element in the scene");
 }
-
-// void	init_scene(t_scene *scene)
-// {
-// 	scene->ambient = NULL;
-// 	scene->camera = NULL;
-// 	scene->light = NULL;
-// 	scene->object = NULL;
-// }
 
 void	parse_file(t_scene *scene, const char *filename)
 {
@@ -71,31 +70,22 @@ void	parse_file(t_scene *scene, const char *filename)
 	int		ret;
 	char	*line;
 	char	**split;
-	int		i;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return ;
-	// scene = malloc(sizeof(t_scene));
-	// init_scene(scene);
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		split = ft_split2(line, ' ', '\t');
 		if (!check_line(line))
-			printf("Error\n");// 에러출력
+			print_error("Forbidden symbol in the scene");
 		parse_line(scene, split);
 		free(line);
-		i = -1;
-		while (split[++i] != NULL)
-			free(split[i]);
-		free(split);
+		split_free(split);
 	}
 	split = ft_split2(line, ' ', '\t');
 	parse_line(scene, split);
 	free(line);
-	i = -1;
-	while (split[++i] != NULL)
-		free(split[i]);
-	free(split);
+	split_free(split);
 	close(fd);
 }

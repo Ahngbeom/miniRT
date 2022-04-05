@@ -6,7 +6,7 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 17:07:57 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/03/31 15:04:04 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/04 16:39:02 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	parse_sphere(t_scene *scene, char **split)
 	t_sphere	*sphere;
 
 	if (split_size(split) != 4)
-		printf("Sphere format: sp [origin x,y,z] [diameter] [R,G,B]");
+		print_error("Sphere format: sp [origin x,y,z] [diameter] [R,G,B]");
 	// object = malloc(sizeof(t_object));
 	sphere = malloc(sizeof(t_sphere));
 	parse_coords(&(sphere->center), split[1]);
@@ -29,7 +29,7 @@ void	parse_sphere(t_scene *scene, char **split)
 
 	parse_color3(&(object->color), split[3]);
 	if (!check_color3(object->color))
-		printf("Sphere RGB must be in range [0,255]");
+		print_error("Sphere RGB must be in range [0,255]");
 
 	if (scene->objects == NULL)
 		scene->objects = object;
@@ -49,7 +49,7 @@ void	parse_plane(t_scene *scene, char **split)
 	t_plane		*plane;
 
 	if (split_size(split) != 4)
-		printf("Plane format: pl [origin x,y,z] [normal x,y,z] [R,G,B]");
+		print_error("Plane format: pl [origin x,y,z] [normal x,y,z] [R,G,B]");
 	// object = malloc(sizeof(t_object));
 	plane = malloc(sizeof(t_plane));
 	parse_coords(&(plane->coord), split[1]);
@@ -60,7 +60,7 @@ void	parse_plane(t_scene *scene, char **split)
 	
 	parse_color3(&(object->color), split[3]);
 	if (!check_color3(object->color))
-		printf("Plane RGB must be in range [0,255]");
+		print_error("Plane RGB must be in range [0,255]");
 	
 	if (scene->objects == NULL)
 		scene->objects = object;
@@ -78,7 +78,7 @@ void	parse_cylinder(t_scene *scene, char **split)
 	t_cylinder	*cylinder;
 
 	if (split_size(split) != 6)
-		printf("Cylinder format: cy [x,y,z] [normal x,y,z] [d] [h] [RGB]");
+		print_error("Cylinder format: cy [x,y,z] [normal x,y,z] [d] [h] [RGB]");
 	// object = malloc(sizeof(t_object));
 
 	cylinder = malloc(sizeof(t_cylinder));
@@ -92,7 +92,7 @@ void	parse_cylinder(t_scene *scene, char **split)
 
 	parse_color3(&(object->color), split[5]);
 	if (!check_color3(object->color))
-		printf("Cylinder RGB must be in range [0,255]");
+		print_error("Cylinder RGB must be in range [0,255]");
 	
 	if (scene->objects == NULL)
 		scene->objects = object;
