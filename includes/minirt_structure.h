@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_structure.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/03 18:54:02 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/05 19:29:05 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@ struct s_camera
 	t_vec3		dir;
 
 	int			fov;
+
+	t_vec3		vup;
+	t_vec3		w;
+	t_vec3		u;
+	t_vec3		v;
 };
 
 struct s_canvas

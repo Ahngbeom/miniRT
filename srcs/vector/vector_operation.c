@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_operation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:39:46 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/28 17:27:57 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/05 17:00:47 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_vec3	vunit(t_vec3 v) // 단위 벡터 반환
 	double	len;
 
 	len = vlength(v);
+	
 	if (len == 0)
 	{
 		printf("Error\n:Devider is 0");
