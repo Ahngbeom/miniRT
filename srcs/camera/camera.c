@@ -6,7 +6,7 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:11:41 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/05 19:30:23 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/05 23:42:18 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void	init_camera(t_scene *scene, int fov)
 
 
 	// 왼쪽 아래 코너점 좌표. origin - (horiziontal / 2) - (vertical / 2) - vecter(0, 0, focal_length)
-	scene->camera.lower_left_corner = vsub(vsub(vsub(scene->camera.orig, vdiv(scene->camera.horizontal, 2)), vdiv(scene->camera.vertical, 2)), vector_init(0, 0, scene->camera.focal_length));
+	scene->camera.lower_left_corner = vsub(vsub(vsub(scene->camera.orig, vdiv(scene->camera.horizontal, 2)), vdiv(scene->camera.vertical, 2)), scene->camera.w);
 }
