@@ -6,27 +6,11 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:11:41 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/05 23:58:08 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 00:21:08 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-void	camera_init(t_scene *scene)
-{
-	// orig (coordinates of the view point)
-	// normal (normalized orientation vector)
-	// fov (Horizontal field of view)
-	
-	scene->camera.viewport_height = 2.0; // 뷰포트 높이
-	scene->camera.viewport_width = scene->camera.viewport_height * scene->canvas.aspect_ratio; // 뷰포트 너비
-	scene->camera.focal_length = 1.0; // 카메라와 뷰포트 간의 거리. 초점 거리
-	scene->camera.horizontal = vector_init(scene->camera.viewport_width, 0, 0); // 뷰포트 수평(너비) 길이 벡터
-	scene->camera.vertical = vector_init(0, scene->camera.viewport_height, 0); // 뷰포트 수직(높이) 길이 벡터
-	
-	// 왼쪽 아래 코너점 좌표. origin - (horiziontal / 2) - (vertical / 2) - vecter(0, 0, focal_length)
-	scene->camera.lower_left_corner = vsub(vsub(vsub(scene->camera.orig, vdiv(scene->camera.horizontal, 2)), vdiv(scene->camera.vertical, 2)), vector_init(0, 0, scene->camera.focal_length));
-}
 
 void	init_camera(t_scene *scene, int fov)
 {
@@ -63,6 +47,6 @@ void	init_camera(t_scene *scene, int fov)
 	printf("Camera u : %f, %f, %f\n", scene->camera.u.x, scene->camera.u.y, scene->camera.u.z);
 	printf("Camera v : %f, %f, %f\n", scene->camera.v.x, scene->camera.v.y, scene->camera.v.z);
 	printf("Camera horizontal : %f, %f, %f\n", scene->camera.horizontal.x, scene->camera.horizontal.y, scene->camera.horizontal.z);
-	printf("Camera vertical : %f, %f, %f\n\n", scene->camera.vertical.x, scene->camera.vertical.y, scene->camera.vertical.z);
-	// printf("Lower left Corner Point: %f, %f, %f\n", scene->camera.lower_left_corner.x, scene->camera.lower_left_corner.y, scene->camera.lower_left_corner.z);
+	printf("Camera vertical : %f, %f, %f\n", scene->camera.vertical.x, scene->camera.vertical.y, scene->camera.vertical.z);
+	printf("Lower left Corner Point: %f, %f, %f\n\n", scene->camera.lower_left_corner.x, scene->camera.lower_left_corner.y, scene->camera.lower_left_corner.z);
 }

@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/05 21:18:21 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 00:21:21 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 												&scene->vars->img_data->line_length, \
 												&scene->vars->img_data->endian);
 
-	canvas_init(scene, WIDTH, HEIGHT);
+	init_canvas(scene, WIDTH, HEIGHT);
 	camera_init(scene);
 	init_camera(scene, scene->camera.fov);
 

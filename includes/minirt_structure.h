@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_structure.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/05 19:29:05 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/06 00:20:49 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ struct s_camera
 {
 	double viewport_height;	// Viewport 세로 길이
 	double viewport_width; // Viewport 가로 길이
-	double focal_length; // 초점 거리
+	// double focal_length; // 초점 거리
 	
 	t_point3	orig;
 	t_vec3		horizontal; // 수평 길이 벡터

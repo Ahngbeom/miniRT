@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_function.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/04 19:06:43 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/06 00:21:21 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ void		minirt_pixel_put_vector(t_img_data *data, int x, int y, t_color3 color);
 t_color3	write_color(int fd, t_color3 color);
 
 // Canvas
-void		canvas_init(t_scene *scene, int width, int height);
+void		init_canvas(t_scene *scene, int width, int height);
 
 // Camera
-void		camera_init(t_scene *scene);
 void		init_camera(t_scene *scene, int fov);
 
 // Vector
