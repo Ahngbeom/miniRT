@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:39:46 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/28 17:27:57 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/05 19:07:03 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	vset(t_vec3 *vec, double x, double y, double z) // 벡터 값 설정 함수
 	vec->z = z;
 }
 
-double	vlength(t_vec3 v) // 벡터 길이 함수
+double	vlength(t_vec3 v) // 벡터의 크기/길이 추출 함수
 {
 	return (sqrt(vlength2(v)));
 }
 
-double	vlength2(t_vec3 v) // 벡터 길이 제곱 함수
+double	vlength2(t_vec3 v) // 벡터 크기/길이 제곱 추출 함수
 {
 	return (v.x * v.x + v.y * v.y + v.z * v.z);
 }
