@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/03 18:42:44 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 19:50:57 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ static t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 l
 
 t_color3	get_point_light(t_scene *scene, t_light *light)
 {
-	t_vec3		light_dir; // 교점에서 출발하여 광원을 향하는 정규화 벡터
+	t_vec3		light_dir;
 	t_color3	diffuse;
 	t_color3	specular;
 	double		brightness;
 
 	// Light Direction
-	light_dir = vunit(vsub(scene->light.orig, scene->rec.p));
+	light_dir = vunit(vsub(scene->light.orig, scene->rec.p)); // 교점에서 출발하여 광원을 향하는 정규화 벡터
 
 	// Shadow
 	if (shadow_checker(scene->objects, scene->light, light_dir, scene->rec))

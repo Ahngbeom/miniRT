@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/03 18:54:02 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 17:03:40 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ struct s_camera
 {
 	double viewport_height;	// Viewport 세로 길이
 	double viewport_width; // Viewport 가로 길이
-	double focal_length; // 초점 거리
+	// double focal_length; // 초점 거리
 	
 	t_point3	orig;
 	t_vec3		horizontal; // 수평 길이 벡터
@@ -83,6 +83,11 @@ struct s_camera
 	t_vec3		dir;
 
 	int			fov;
+
+	t_vec3		vup;
+	t_vec3		w;
+	t_vec3		u;
+	t_vec3		v;
 };
 
 struct s_canvas
@@ -102,7 +107,7 @@ struct s_sphere
 struct s_plane
 {
 	t_point3	coord;	// 평면 상 어느 한 지점.
-	t_vec3		normal;	// 평면이 가리키는 방향, 기울임 방향 및 정도
+	t_vec3		dir;	// 평면이 가리키는 방향, 기울임 방향 및 정도
 };
 
 struct s_cylinder

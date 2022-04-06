@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/04 11:57:39 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 17:03:40 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,12 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 												&scene->vars->img_data->line_length, \
 												&scene->vars->img_data->endian);
 
-	canvas_init(scene, WIDTH, HEIGHT);
-	camera_init(scene);
+	init_canvas(scene, WIDTH, HEIGHT);
 	init_camera(scene, scene->camera.fov);
 
 	// printf("Ambient Ratio : %f\n", scene.ambient.ratio);
 	// printf("Ambient Color : %f, %f, %f\n\n", scene.ambient.color.x, scene.ambient.color.y, scene.ambient.color.z);
 
-	printf("Camera Viewpoint : %f, %f, %f\n", scene->camera.orig.x, scene->camera.orig.y, scene->camera.orig.z);
-	printf("Camera Direction : %f, %f, %f\n", scene->camera.dir.x, scene->camera.dir.y, scene->camera.dir.z);
-	printf("Camera FOV : %d\n", scene->camera.fov);
-	// printf("Camera Lower left corner point : %f, %f, %f\n\n", scene.camera.lower_left_corner.x, scene.camera.lower_left_corner.y, scene.camera.lower_left_corner.z);
-	
 	// printf("Light Point : %f, %f, %f\n", scene.light.orig.x, scene.light.orig.y, scene.light.orig.z);
 	// printf("Light Ratio : %f\n", scene.light.bright_ratio);
 	// printf("Light Color : %f, %f, %f\n\n", scene.light.light_color.x, scene.light.light_color.y, scene.light.light_color.z);
@@ -81,7 +75,7 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	// 	{
 	// 		printf("Type : PLANE(%d)\n", list->type);
 	// 		printf("Coodinates : %f, %f, %f\n", ((t_plane*)list->element)->coord.x, ((t_plane*)list->element)->coord.y, ((t_plane*)list->element)->coord.z);
-	// 		printf("Normal Vector : %f, %f, %f\n", ((t_plane*)list->element)->normal.x, ((t_plane*)list->element)->normal.y, ((t_plane*)list->element)->normal.z);
+	// 		printf("Normal Vector : %f, %f, %f\n", ((t_plane*)list->element)->dir.x, ((t_plane*)list->element)->dir.y, ((t_plane*)list->element)->dir.z);
 	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
 	// 	}
 	// 	else if(list->type == CYLINDER)
