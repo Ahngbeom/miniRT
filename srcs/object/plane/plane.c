@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:17:09 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/30 19:27:59 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 17:03:40 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_plane		*plane_init(t_point3 orig, t_vec3 normal)
 	if (plane == NULL)
 		return (NULL);
 	plane->coord = orig;
-	plane->normal = normal;
+	plane->dir = normal;
 	return (plane);
 }
 
@@ -32,8 +32,8 @@ t_bool		hit_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
 	double	root;	// 판별식 결과 값
 	
 	plane = objects->element;
-	denom = vdot(plane->normal, ray->dir);
-	numer = vdot(vsub(plane->coord, ray->orig), plane->normal);
+	denom = vdot(plane->dir, ray->dir);
+	numer = vdot(vsub(plane->coord, ray->orig), plane->dir);
 	root = numer / denom;
 
 	// printf("Plane Coodinates : %f, %f, %f\n", plane->coord.x, plane->coord.y, plane->coord.z);
@@ -53,7 +53,7 @@ t_bool		hit_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
 
 	rec->t = root;
 	rec->p = ray_at(ray, root);
-	rec->normal = plane->normal;
+	rec->normal = plane->dir;
 	
 	// if (vdot(ray->dir, plane->normal) > 0)
 	// 	rec->normal = vmul_t(-1, plane->normal);
@@ -67,13 +67,13 @@ t_bool		hit_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
 t_bool	intersect_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
 {
 	t_plane	*plane;
-	double	denom;
-	double	nom;
-	double	t;
+	double	denom; // Denominator : 분모. 판별식의 분모
+	double	numer; // Numerator : 분자. 판별식의 분자
+	double	t; // 평면 방정식 결과 값
 
 	plane = objects->element;
-	denom = vdot(ray->dir, plane->normal);
-	nom = vdot(vsub(ray->orig, plane->coord), plane->normal);
+	denom = vdot(ray->dir, plane->dir); // 광선 단위 벡터와 평면의 방향 벡터 내적 연산
+	numer = vdot(vsub(ray->orig, plane->coord), plane->dir);
 
 	// printf("Plane Normal : %f, %f, %f\n", plane->normal.x, plane->normal.y, plane->normal.z);
 	// printf("Ray Direction : %f, %f, %f\n", ray->dir.x, ray->dir.y, ray->dir.z);
@@ -82,20 +82,20 @@ t_bool	intersect_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
 	// printf("Ray Coodinates : %f, %f, %f\n", ray->orig.x, ray->orig.y, ray->orig.z);
 	// printf("Plane Coodinates : %f, %f, %f\n", plane->coord.x, plane->coord.y, plane->coord.z);
 	// printf("Plane Normal : %f, %f, %f\n", plane->normal.x, plane->normal.y, plane->normal.z);
-	// printf("nom : %f\n\n", nom);
+	// printf("numer : %f\n\n", numer);
 
-	// printf("t : %f\n\n", -nom / denom);
+	// printf("t : %f\n\n", -numer / denom);
 	// printf("tmin : %f\n\n", rec->tmin);
 	// printf("tmax : %f\n\n", rec->tmax);
 
 	// sleep(1);
-	if (denom < EPSILON)
+	if (denom < EPSILON) // 분모가 음수라면 t는 양수.
 	{
-		t = -nom / denom;
+		t = -numer / denom;
 		if (t > EPSILON && t < rec->tmax)
 		{
 			rec->t = t;
-			rec->normal = plane->normal;
+			rec->normal = plane->dir;
 			rec->p = ray_at(ray, t);
 			rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 			rec->albedo = vmul_t(1.0 / 255.0, objects->color);

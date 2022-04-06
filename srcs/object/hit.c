@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 14:28:54 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 16:28:05 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,17 @@ t_bool	hit_object(t_object *world, t_ray *ray, t_hit_record *rec)
 	int	hit_result;
 
 	hit_result = FALSE;
-	if (world->type == SPHERE)
-		hit_result = hit_sphere(world, ray, rec);
-	else if (world->type == SQUARE)	
-		hit_result = hit_square(world, ray, rec);
-	else if (world->type == CYLINDER)
-		hit_result = hit_cylinder(world, ray, rec);	
-	else if (world->type == PLANE) {
+	
+	if (world->type == PLANE)
+	{
 		// hit_result = hit_plane(world, ray, rec);
 		hit_result = intersect_plane(world, ray, rec);
 	}
+	else if (world->type == SPHERE)
+		hit_result = hit_sphere(world, ray, rec);
+	else if (world->type == CYLINDER)
+		hit_result = hit_cylinder(world, ray, rec);	
+	// else if (world->type == SQUARE)	
+	// 	hit_result = hit_square(world, ray, rec);
 	return hit_result;
 }

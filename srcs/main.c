@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 00:24:52 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 17:03:40 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	// 	{
 	// 		printf("Type : PLANE(%d)\n", list->type);
 	// 		printf("Coodinates : %f, %f, %f\n", ((t_plane*)list->element)->coord.x, ((t_plane*)list->element)->coord.y, ((t_plane*)list->element)->coord.z);
-	// 		printf("Normal Vector : %f, %f, %f\n", ((t_plane*)list->element)->normal.x, ((t_plane*)list->element)->normal.y, ((t_plane*)list->element)->normal.z);
+	// 		printf("Normal Vector : %f, %f, %f\n", ((t_plane*)list->element)->dir.x, ((t_plane*)list->element)->dir.y, ((t_plane*)list->element)->dir.z);
 	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
 	// 	}
 	// 	else if(list->type == CYLINDER)
