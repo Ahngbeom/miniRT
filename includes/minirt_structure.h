@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 21:38:55 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/08 23:05:01 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,12 @@ struct s_plane
 struct s_cylinder
 {
 	t_point3	coord;
-	t_vec3		normal;
+	t_vec3		dir;
 	double		diameter;
 	double		height;
+	
+	t_point3	coord_top;
+	t_point3	coord_bot;
 };
 
 struct s_square

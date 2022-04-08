@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:17:09 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 17:03:40 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/08 14:17:27 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ t_plane		*plane_init(t_point3 orig, t_vec3 normal)
 	return (plane);
 }
 
-t_bool		hit_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
+t_bool		hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec, t_color3 color)
 {
-	t_plane	*plane;
 	double	numer;	// Numerator : 분자. 판별식의 분자
 	double	denom;	// Denominator : 분모. 판별식의 분모
 	double	root;	// 판별식 결과 값
 	
-	plane = objects->element;
 	denom = vdot(plane->dir, ray->dir);
 	numer = vdot(vsub(plane->coord, ray->orig), plane->dir);
 	root = numer / denom;
@@ -60,18 +58,16 @@ t_bool		hit_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
 	// else
 		// rec->normal = plane->normal;
 	
-	rec->albedo = vmul_t(1.0 / 255.0, objects->color);
+	rec->albedo = vmul_t(1.0 / 255.0, color);
 	return (TRUE);
 }
 
-t_bool	intersect_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
+t_bool	intersect_plane(t_plane *plane, t_ray *ray, t_hit_record *rec, t_color3 color)
 {
-	t_plane	*plane;
 	double	denom; // Denominator : 분모. 판별식의 분모
 	double	numer; // Numerator : 분자. 판별식의 분자
 	double	t; // 평면 방정식 결과 값
 
-	plane = objects->element;
 	denom = vdot(ray->dir, plane->dir); // 광선 단위 벡터와 평면의 방향 벡터 내적 연산
 	numer = vdot(vsub(ray->orig, plane->coord), plane->dir);
 
@@ -98,7 +94,7 @@ t_bool	intersect_plane(t_object *objects, t_ray *ray, t_hit_record *rec)
 			rec->normal = plane->dir;
 			rec->p = ray_at(ray, t);
 			rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
-			rec->albedo = vmul_t(1.0 / 255.0, objects->color);
+			rec->albedo = vmul_t(1.0 / 255.0, color);
 			return (TRUE);
 		}
 	}

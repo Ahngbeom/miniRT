@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 17:07:57 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/04/06 17:03:40 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/08 14:47:01 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	parse_cylinder(t_scene *scene, char **split)
 	cylinder = malloc(sizeof(t_cylinder));
 	parse_coords(&(cylinder->coord), split[1]);
 	// parse_coords(&(cylinder->direction), split[2]);
-	parse_coords(&(cylinder->normal), split[2]);
+	parse_coords(&(cylinder->dir), split[2]);
 	cylinder->diameter = ft_atod(split[3]);
 	cylinder->height = ft_atod(split[4]);
 

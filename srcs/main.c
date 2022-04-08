@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 17:03:40 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/08 23:53:38 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,34 +61,34 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	// printf("Light Ratio : %f\n", scene.light.bright_ratio);
 	// printf("Light Color : %f, %f, %f\n\n", scene.light.light_color.x, scene.light.light_color.y, scene.light.light_color.z);
 	
-	// t_object *list = scene.objects;
-	// while (list != NULL)
-	// {
-	// 	if (list->type == SPHERE)
-	// 	{
-	// 		printf("Type : SPHERE(%d)\n", list->type);
-	// 		printf("Center : %f, %f, %f\n", ((t_sphere*)list->element)->center.x, ((t_sphere*)list->element)->center.y, ((t_sphere*)list->element)->center.z);
-	// 		printf("Diameter : %f\n", ((t_sphere*)list->element)->diameter);
-	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
-	// 	}
-	// 	else if (list->type == PLANE)
-	// 	{
-	// 		printf("Type : PLANE(%d)\n", list->type);
-	// 		printf("Coodinates : %f, %f, %f\n", ((t_plane*)list->element)->coord.x, ((t_plane*)list->element)->coord.y, ((t_plane*)list->element)->coord.z);
-	// 		printf("Normal Vector : %f, %f, %f\n", ((t_plane*)list->element)->dir.x, ((t_plane*)list->element)->dir.y, ((t_plane*)list->element)->dir.z);
-	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
-	// 	}
-	// 	else if(list->type == CYLINDER)
-	// 	{
-	// 		printf("Type : CYLINDER(%d)\n", list->type);
-	// 		printf("Coodinates : %f, %f, %f\n", ((t_cylinder*)list->element)->coord.x, ((t_cylinder*)list->element)->coord.y, ((t_cylinder*)list->element)->coord.z);
-	// 		printf("Normal Vector : %f, %f, %f\n", ((t_cylinder*)list->element)->normal.x, ((t_cylinder*)list->element)->normal.y, ((t_cylinder*)list->element)->normal.z);
-	// 		printf("Diameter : %f\n", ((t_cylinder*)list->element)->diameter);
-	// 		printf("Height : %f\n", ((t_cylinder*)list->element)->height);
-	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
-	// 	}
-	// 	list = list->next;
-	// }
+	t_object *list = scene->objects;
+	while (list != NULL)
+	{
+		if (list->type == SPHERE)
+		{
+			printf("Type : SPHERE(%d)\n", list->type);
+			printf("Center : %f, %f, %f\n", ((t_sphere*)list->element)->center.x, ((t_sphere*)list->element)->center.y, ((t_sphere*)list->element)->center.z);
+			printf("Diameter : %f\n", ((t_sphere*)list->element)->diameter);
+			printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
+		}
+		else if (list->type == PLANE)
+		{
+			printf("Type : PLANE(%d)\n", list->type);
+			printf("Coodinates : %f, %f, %f\n", ((t_plane*)list->element)->coord.x, ((t_plane*)list->element)->coord.y, ((t_plane*)list->element)->coord.z);
+			printf("Normal Vector : %f, %f, %f\n", ((t_plane*)list->element)->dir.x, ((t_plane*)list->element)->dir.y, ((t_plane*)list->element)->dir.z);
+			printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
+		}
+		else if(list->type == CYLINDER)
+		{
+			printf("Type : CYLINDER(%d)\n", list->type);
+			printf("Coodinates : %f, %f, %f\n", ((t_cylinder*)list->element)->coord.x, ((t_cylinder*)list->element)->coord.y, ((t_cylinder*)list->element)->coord.z);
+			printf("Normal Vector : %f, %f, %f\n", ((t_cylinder*)list->element)->dir.x, ((t_cylinder*)list->element)->dir.y, ((t_cylinder*)list->element)->dir.z);
+			printf("Diameter : %f\n", ((t_cylinder*)list->element)->diameter);
+			printf("Height : %f\n", ((t_cylinder*)list->element)->height);
+			printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
+		}
+		list = list->next;
+	}
 	// exit(0);
 }
 
@@ -103,8 +103,8 @@ int main(int argc, char const *argv[])
 	mlx_hook(scene.vars->win, 2, 1L << 0, minirt_esc, &scene);
 	mlx_hook(scene.vars->win, 17, 1L << 2, minirt_close, &scene);
 
-	mlx_key_hook(scene.vars->win, camera_move, &scene);
-	mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
+	// mlx_key_hook(scene.vars->win, camera_move, &scene);
+	// mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
 
 	mlx_loop(scene.vars->mlx);
 	// mlx_loop_end(scene.vars->mlx);

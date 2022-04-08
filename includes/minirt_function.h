@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 00:21:21 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/08 23:45:16 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,21 @@ t_color3	get_point_light(t_scene *scene, t_light *light);
 // Shadow
 t_bool		shadow_checker(t_object *objects, t_light light, t_vec3 light_dir, t_hit_record rec);
 
-// Sphere
-t_sphere	*sphere_init(t_point3 center, double diameter);
-int			hit_sphere(t_object *sphere, t_ray *r, t_hit_record *rec);
-
 // Plane
 t_plane		*plane_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_plane(t_object *objects, t_ray *r, t_hit_record *rec);
-t_bool		intersect_plane(t_object *objects, t_ray *ray, t_hit_record *rec);
+// t_bool		hit_plane(t_object *objects, t_ray *r, t_hit_record *rec);
+t_bool		hit_plane(t_plane *plane, t_ray *r, t_hit_record *rec, t_color3 color);
+t_bool		intersect_plane(t_plane *plane, t_ray *ray, t_hit_record *rec, t_color3 color);
+
+// Sphere
+t_sphere	*sphere_init(t_point3 center, double diameter);
+int			hit_sphere(t_sphere *sphere, t_ray *r, t_hit_record *rec, t_color3 color);
 
 // Cylinder
 t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_cylinder(t_object *objects, t_ray *r, t_hit_record *rec);
+t_bool		hit_cylinder(t_cylinder *cylinder, t_ray *r, t_hit_record *rec, t_color3 color);
+t_bool		hit_cylinder2(t_cylinder *cylinder, t_ray *r, t_hit_record *rec, t_color3 color);
+t_bool		hit_cylinder_cap(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 color);
 
 // Square
 t_square	*square_init(t_point3 center, t_vec3 normal, double side_len);
