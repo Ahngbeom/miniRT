@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/08 23:53:38 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/09 01:52:36 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int main(int argc, char const *argv[])
 	mlx_hook(scene.vars->win, 2, 1L << 0, minirt_esc, &scene);
 	mlx_hook(scene.vars->win, 17, 1L << 2, minirt_close, &scene);
 
-	// mlx_key_hook(scene.vars->win, camera_move, &scene);
-	// mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
+	mlx_key_hook(scene.vars->win, camera_move, &scene);
+	mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
 
 	mlx_loop(scene.vars->mlx);
 	// mlx_loop_end(scene.vars->mlx);

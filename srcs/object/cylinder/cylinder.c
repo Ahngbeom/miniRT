@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/08 23:46:19 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/09 02:03:55 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,10 +174,18 @@ t_bool		hit_cylinder_cap(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 c
 		return (FALSE);
 		
 	if (t_top < t_bot)
-		rec->t = t_top;
+	{
+		if (t_top < rec->t)
+			rec->t = t_top;
+	}
 	else
-		rec->t = t_bot;
-	
+	{
+		if (t_bot < rec->t)
+			rec->t = t_bot;
+	}
+	rec->p = ray_at(r, rec->t);
+	rec->normal = vdiv(vsub(rec->p, vsum(cy->coord, vmul_t(cy->height, cy->dir))), cy->diameter / 2);
+	set_face_normal(r, rec);
 	rec->albedo = vmul_t(1.0 / 255.0, color);
 	return (TRUE);
 }
