@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/09 02:03:55 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/09 13:54:12 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,15 @@ t_bool		hit_cylinder2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 colo
 	t_vec3		h_unit;
 	// double		h_len;
 
+	cy->coord_top = vsum(cy->coord, vmul_t(cy->height / 2, cy->dir));
+	cy->coord_bot = vsub(cy->coord, vmul_t(cy->height / 2, cy->dir));
+
 	h_unit = vunit(cy->dir);
+	h_unit = cy->dir;
 	oc = vsub(r->orig, cy->coord);
-	// a = vlength2(r->dir) - pow(vdot(r->dir, h_unit), 2.0);
-	a = pow(vdot(r->dir, h_unit), 2.0);
-	// half_b = vdot(r->dir, oc) - (vdot(r->dir, h_unit) * vdot(oc, h_unit));
-	half_b = vdot(r->dir, h_unit) * vdot(oc, h_unit);
-	// c = vlength2(oc) - pow(vdot(oc, h_unit), 2.0) - pow(cy->diameter / 2, 2.0);
-	c = pow(vdot(oc, h_unit), 2.0) - pow(cy->diameter / 2, 2.0);
+	a = vlength2(vcross(r->dir, h_unit));
+	half_b = vdot(vcross(r->dir, h_unit), vcross(oc, h_unit));
+	c = vlength2(vcross(oc, h_unit)) - pow(cy->diameter / 2, 2.0);
 	discriminant = pow(half_b, 2.0) - a * c;
 	
 	if (discriminant < 0)
@@ -133,6 +134,11 @@ t_bool		hit_cylinder2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 colo
 		if (root < rec->tmin || root > rec->tmax)
 			return (FALSE);
 	}
+
+	if (vdot(cy->coord, vsub(vsum(r->orig, ray_at(r, root)), cy->coord_top)) > 0)
+		return (FALSE);
+	if (vdot(cy->coord, vsub(vsum(r->orig, ray_at(r, root)), cy->coord_bot)) > 0)
+		return (FALSE);
 	
 	rec->t = root;
 	rec->p = ray_at(r, rec->t);
@@ -151,9 +157,6 @@ t_bool		hit_cylinder_cap(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 c
 	double	t_top;
 	double	t_bot;
 
-	cy->coord_top = vsum(cy->coord, vmul_t(cy->height / 2, cy->dir));
-	cy->coord_bot = vsub(cy->coord, vmul_t(cy->height / 2, cy->dir));
-	
 	denom = vdot(r->dir, cy->dir);
 	if (denom == 0 || denom == EPSILON)
 		return (FALSE);

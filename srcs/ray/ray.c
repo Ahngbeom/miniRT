@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:17:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 16:02:07 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/09 12:59:03 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_color3 	ray_color(t_scene *scene)
 	{
 		scene->rec.tmin = EPSILON; // 오브젝트와 카메라 간 거리 최솟값
 		scene->rec.tmax = INFINITY; // 오브젝트와 카메라 간 거리 최댓값
+		scene->rec.front_face = 0; // 오브젝트와 카메라 간 거리 최댓값
 		if (hit(scene->objects, &scene->ray, &scene->rec) == TRUE)
 		{
 			return (phong_lighting(scene));
