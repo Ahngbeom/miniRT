@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/09 13:31:43 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/10 15:49:11 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 	{
 		// hit_result = hit_cylinder(objects->element, ray, rec, objects->color);	
 		hit_result = hit_cylinder2(objects->element, ray, rec, objects->color);
-		// hit_result += hit_cylinder_cap(objects->element, ray, rec, objects->color);
+		hit_result += hit_cylinder_cap(objects->element, ray, rec, objects->color);
 	}
 	// else if (objects->type == SQUARE)	
 	// 	hit_result = hit_square(objects, ray, rec);

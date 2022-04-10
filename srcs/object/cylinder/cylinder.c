@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/09 13:54:12 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/10 15:57:36 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,15 @@ t_bool		hit_cylinder2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 colo
 	
 	rec->t = root;
 	rec->p = ray_at(r, rec->t);
-	rec->normal = vdiv(vsub(rec->p, vsum(cy->coord, vmul_t(cy->height, cy->dir))), cy->diameter / 2);
+	// rec->normal = vdiv(vsub(rec->p, vsum(cy->coord, cy->dir)), cy->diameter / 2);
+	rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
 	set_face_normal(r, rec);
 	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 	rec->albedo = vmul_t(1.0 / 255.0, color);
+
+	printf("rec->t: %f\n", rec->t);
+	printf("rec->p: %f, %f, %f\n", rec->p.x, rec->p.y, rec->p.z);
+	printf("rec->normal: %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
 	return (TRUE);
 }
 
@@ -158,33 +163,41 @@ t_bool		hit_cylinder_cap(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 c
 	double	t_bot;
 
 	denom = vdot(r->dir, cy->dir);
-	if (denom == 0 || denom == EPSILON)
+	if (denom == 0)
 		return (FALSE);
 	
 	oc_top = vsub(cy->coord_top, r->orig);
 	t_top = vdot(oc_top, cy->dir) / denom;
-	if (vlength(vsub(ray_at(r, t_top), cy->coord_top)) > pow(cy->diameter / 2, 2.0))
+	if (vlength(vsub(vmul_t(t_top, r->orig), cy->coord_top)) > pow(cy->diameter / 2, 2.0))
 		return (FALSE);
 		
 	oc_bot = vsub(cy->coord_bot, r->orig);
 	t_bot = vdot(oc_bot, cy->dir) / denom;
-	if (vlength(vsub(ray_at(r, t_bot), cy->coord_bot)) > pow(cy->diameter / 2, 2.0))
+	if (vlength(vsub(vmul_t(t_bot, r->orig), cy->coord_bot)) > pow(cy->diameter / 2, 2.0))
 		return (FALSE);
 
-	if (t_top <= rec->tmin || t_top > rec->tmax)
+	if (t_top < rec->tmin || t_top > rec->tmax)
 		return (FALSE);
-	if (t_bot <= rec->tmin || t_bot > rec->tmax)
+	if (t_bot < rec->tmin || t_bot > rec->tmax)
 		return (FALSE);
 		
 	if (t_top < t_bot)
 	{
 		if (t_top < rec->t)
+		{
 			rec->t = t_top;
+			rec->p = vsum(r->orig, vmul_t(rec->t, r->dir));
+			rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
+		}
 	}
 	else
 	{
 		if (t_bot < rec->t)
+		{
 			rec->t = t_bot;
+			rec->p = vsum(r->orig, vmul_t(rec->t, r->dir));
+			rec->normal = cy->dir;
+		}
 	}
 	rec->p = ray_at(r, rec->t);
 	rec->normal = vdiv(vsub(rec->p, vsum(cy->coord, vmul_t(cy->height, cy->dir))), cy->diameter / 2);
