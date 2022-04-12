@@ -6,7 +6,7 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/05 19:29:05 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/09 16:41:40 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,10 @@ struct s_cylinder
 	t_vec3		normal;
 	double		diameter;
 	double		height;
+
+	double		radius;
+	t_point3	top_center;
+	t_point3	bottom_center;
 };
 
 struct s_square

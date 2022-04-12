@@ -6,7 +6,7 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 17:07:57 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/04/04 16:39:02 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/09 16:23:50 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	parse_cylinder(t_scene *scene, char **split)
 	parse_coords(&(cylinder->normal), split[2]);
 	cylinder->diameter = ft_atod(split[3]);
 	cylinder->height = ft_atod(split[4]);
+	cylinder->radius = cylinder->diameter / 2;
+	cylinder->top_center = vsum(cylinder->coord, vmul_t(cylinder->height / 2, cylinder->normal));
+	cylinder->bottom_center = vsub(cylinder->coord, vmul_t(cylinder->height / 2, cylinder->normal));
 
 	object = object_init(CYLINDER, cylinder, color_init(0, 0, 0), color_init(0, 0, 0));
 
