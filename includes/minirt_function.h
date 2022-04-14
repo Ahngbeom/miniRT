@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/12 21:13:39 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/14 21:34:12 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_color3 	ray_color(t_scene *scene);
 void    	set_face_normal(t_ray *r, t_hit_record *rec);
 
 // Object
-t_object	*object_init(t_object_type type, void *element, t_color3 color, t_color3 albedo);
+t_object	*object_init(t_object_type type, void *element, t_color3 color);
 void		object_add(t_object **list, t_object *new);
 t_object	*object_last(t_object *list);
 void		object_clear(t_object **list);
@@ -90,7 +90,7 @@ int			hit_sphere(t_sphere *sphere, t_ray *r, t_hit_record *rec, t_color3 color);
 
 // Cylinder
 t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_cylinder_rectangle(t_cylinder *cylinder, t_ray *r, t_hit_record *rec, t_color3 color);
+t_bool		hit_cylinder_surface(t_cylinder *cylinder, t_ray *r, t_hit_record *rec, t_color3 color);
 t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 color);
 
 // Square

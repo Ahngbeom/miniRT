@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:34:04 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/08 14:19:10 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/14 22:21:19 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ t_sphere	*sphere_init(t_point3 center, double diameter)
 		return (NULL);
 	sp->center = center;
 	sp->diameter = diameter;
-	sp->diameter2 = diameter * diameter;
-	// sp->hit_func = hit_sphere;
+	sp->radius = sp->diameter / 2.0;
 	return (sp);
 }
 
@@ -36,12 +35,10 @@ t_bool		hit_sphere(t_sphere *sp, t_ray *r, t_hit_record *rec, t_color3 color) //
 	double		sqrtd; // 판별식에서 제곱근 식의 결과 값 저장
 	double		root; // 근의 공식 결과 값 저장. 두 근
 
-	// printf("SPHERE CHECK\n");
-
 	oc = vsub(r->orig, sp->center); // 카메라에서 시작된 광선 시작점 - 구의 중심 = 구의 중심 방향 벡터
 	a = vlength2(r->dir); 			// a = D * D
 	half_b = vdot(oc, r->dir); 		// b / 2 = D * (O - C)
-	c = vlength2(oc) - sp->diameter2; // c = (O - C) * (O - C) - r^2
+	c = vlength2(oc) - pow(sp->radius, 2.0); // c = (O - C) * (O - C) - r^2
 	discriminant = pow(half_b, 2.0) - (a * c); // discriminant = b^2 - a * c
 	
 	if (discriminant < 0) // 실근이 없는 경우
@@ -57,7 +54,8 @@ t_bool		hit_sphere(t_sphere *sp, t_ray *r, t_hit_record *rec, t_color3 color) //
 	}
 	rec->t = root; // t에 짝수 근의 공식의 작은 근 대입
 	rec->p = ray_at(r, rec->t); // 광선과 구의 교점 벡터
-	rec->normal = vdiv(vsub(rec->p, sp->center), sp->diameter); // 법선 벡터 정규화
+	// rec->normal = vdiv(vsub(rec->p, sp->center), sp->diameter); // 법선 벡터 정규화
+	rec->normal = vdiv(vsub(rec->p, sp->center), sp->radius); // 법선 벡터 정규화
 	set_face_normal(r, rec); // hit record 법선 벡터와 광선의 법선 벡터를 비교하여 앞면/뒷면 판단
 	
 	rec->albedo = vmul_t(1.0 / 255.0, color);

@@ -6,13 +6,13 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:08:08 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 14:59:48 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/14 21:34:18 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_object	*object_init(t_object_type type, void *element, t_color3 color, t_color3 albedo)
+t_object	*object_init(t_object_type type, void *element, t_color3 color)
 {
 	t_object	*new;
 	
@@ -22,7 +22,7 @@ t_object	*object_init(t_object_type type, void *element, t_color3 color, t_color
 	new->type = type;
 	new->element = element;
 	new->color = color;
-	new->albedo = albedo;
+	// new->albedo = albedo;
 	new->next = NULL;
 	return (new);
 }

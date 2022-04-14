@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/08 23:05:01 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/14 22:20:36 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ struct s_sphere
 {
 	t_point3	center;
 	double		diameter;
-	double		diameter2;
+	double		radius;
 };
 
 struct s_plane
@@ -132,7 +132,6 @@ struct s_object
 	t_object_type	type;
 	void			*element;
 	t_color3		color;
-	t_color3		albedo;
 	void			*next;
 };
 

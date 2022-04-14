@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/12 21:13:39 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/14 16:34:14 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 		hit_result = hit_sphere(objects->element, ray, rec, objects->color);
 	else if (objects->type == CYLINDER)
 	{
-		hit_result |= hit_cylinder_rectangle(objects->element, ray, rec, objects->color);
+		hit_result |= hit_cylinder_surface(objects->element, ray, rec, objects->color);
 		hit_result |= hit_cylinder_circle(objects->element, ray, rec, objects->color);
 	}
 	// else if (objects->type == SQUARE)	

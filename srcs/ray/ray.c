@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:17:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/09 12:59:03 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/14 16:18:33 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_ray		ray_init(t_point3 origin, t_vec3 direction) // ray 정규화, 초기화
 	return (ray);
 }
 
-t_point3	ray_at(t_ray *r, double t) // 광선의 원점부터 방향 벡터만큼 떨어진 점 반환
+t_point3	ray_at(t_ray *r, double t) // 광선의 원점부터 광선의 방향으로 t만큼 떨어진 점 반환
 {
 	return (vsum(r->orig, vmul_t(t, r->dir)));
 }
