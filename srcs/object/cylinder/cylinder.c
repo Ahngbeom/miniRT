@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/14 22:58:54 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/15 01:00:54 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_colo
 	// RGB 벡터 albedo에 0 ~ 1 범위의 원기둥 오브젝트의 RGB 색상 값 대입
 	rec->t = root;
 	rec->p = ray_at(r, rec->t);
-	rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
+	// rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
+	rec->normal = vunit(vsub(vsub(rec->p, cy->coord), vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir)));
 	set_face_normal(r, rec);
 	rec->albedo = vmul_t(1.0 / 255.0, color);
 
