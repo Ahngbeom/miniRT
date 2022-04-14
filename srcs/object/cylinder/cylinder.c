@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/14 22:41:10 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/14 22:58:54 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_colo
 	cy->coord_bot = vsub(cy->coord, vmul_t(cy->height / 2, cy->dir));
 
 	oc = vsub(r->orig, cy->coord); // 카메라 원점에서 원기둥의 중심점까지의 방향 벡터
-	
-	a = vlength2(vcross(r->dir, cy->dir));
-	half_b = vdot(vcross(r->dir, cy->dir), vcross(oc, cy->dir));
-	c = vlength2(vcross(oc, cy->dir)) - pow(cy->diameter / 2, 2.0);
-	discriminant = pow(half_b, 2.0) - a * c;
 	
 	a = vlength2(r->dir) - pow(vdot(r->dir, cy->dir), 2.0);
 	half_b = vdot(r->dir, oc) - (vdot(r->dir, cy->dir) * vdot(oc, cy->dir));
