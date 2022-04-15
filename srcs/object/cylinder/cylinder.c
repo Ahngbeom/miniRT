@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/15 01:00:54 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/15 14:46:42 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal)
 	return (cy);
 }
 
-t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 color)
+t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 {
 	t_vec3		oc;
 	
@@ -36,10 +36,6 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_colo
 	double		discriminant;
 	double		root;
 	
-	// 원기둥의 중심점에서 원기둥의 방향에 맞게 원기둥의 높이/2 만큼 더해주거나 빼주어 원기둥의 윗면/아랫면의 좌표를 구한다.
-	cy->coord_top = vsum(cy->coord, vmul_t(cy->height / 2, cy->dir));
-	cy->coord_bot = vsub(cy->coord, vmul_t(cy->height / 2, cy->dir));
-
 	oc = vsub(r->orig, cy->coord); // 카메라 원점에서 원기둥의 중심점까지의 방향 벡터
 	
 	a = vlength2(r->dir) - pow(vdot(r->dir, cy->dir), 2.0);
@@ -77,55 +73,38 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_colo
 	// rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
 	rec->normal = vunit(vsub(vsub(rec->p, cy->coord), vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir)));
 	set_face_normal(r, rec);
-	rec->albedo = vmul_t(1.0 / 255.0, color);
-
-	// printf("rec->t: %f\n", rec->t);
-	// printf("rec->p: %f, %f, %f\n", rec->p.x, rec->p.y, rec->p.z);
-	// printf("rec->normal: %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
 	return (TRUE);
 }
 
-t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_color3 color)
+t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point3 center)
 {
-	t_vec3	oc_top;
-	t_vec3	oc_bot;
 	double	denom;
-	double	t_top;
-	double	t_bot;
+	t_vec3	oc;
+	double	t;
 
+	// 광선과 원기둥의 법선 벡터의 내적이 0이라면 평행. 광선은 윗면이나 아랫면과 교차하지않는다.
+	// 광선과 원기둥의 사이각이 윗면과 아랫면의 t를 구하기 위한 분모로 활용된다.
 	denom = vdot(r->dir, cy->dir);
 	if (denom == 0)
 		return (FALSE);
 	
-	oc_top = vsub(cy->coord_top, r->orig);
-	t_top = vdot(oc_top, cy->dir) / denom;
+	oc = vsub(center, r->orig); // 광선의 원점에서 윗면 또는 아랫면의 중심점까지의 벡터
+	t = vdot(oc, cy->dir) / denom; // 윗면 또는 아랫면의 t : oc와 원기둥의 법선 벡터의 내적 값을 denom으로 나눈다.
 	
-	if (vlength2(vsub(vsum(r->orig, vmul_t(t_top, r->dir)), cy->coord_top)) > pow(cy->diameter / 2, 2.0))
-		t_top = INFINITY;
-		
-	oc_bot = vsub(cy->coord_bot, r->orig);
-	t_bot = vdot(oc_bot, cy->dir) / denom;
-	
-	if (vlength2(vsub(vsum(r->orig, vmul_t(t_bot, r->dir)), cy->coord_bot)) > pow(cy->diameter / 2, 2.0))
-		t_bot = INFINITY;
-
-	if (t_top < rec->tmin || t_top > rec->tmax)
-		t_top = INFINITY;
-	if (t_bot < rec->tmin || t_bot > rec->tmax)
-		t_bot = INFINITY;
-		
-	if (t_top == INFINITY && t_bot == INFINITY)
+	// 광원에서부터 t 만큼 떨어진 지점이 윗면 또는 아랫면의 중심점과의 거리가 원기둥의 반지름보다 높을 경우 광선과 원기둥의 윗면 또는 아랫면은 교차하지 않는다.
+	if (vlength(vsub(vsum(r->orig, vmul_t(t, r->dir)), center)) > cy->diameter / 2)
 		return (FALSE);
-
-	if (t_top < t_bot && t_top < rec->t)
-		rec->t = t_top;
-	else if (t_bot < t_top && t_bot < rec->t)
-		rec->t = t_bot;
+		
+	// 윗면 또는 아랫면의 t와 tmin, tmax를 비교하여 최소/최대 거리 범위에 속하는지 검사한다.
+	if (t < rec->tmin || t > rec->tmax)
+		return (FALSE);
+	
+	if (t < rec->t)
+		rec->t = t; // 가장 작은 근 대입
 	else
-		return (TRUE);
-	rec->p = vsum(r->orig, vmul_t(rec->t, r->dir));
-	rec->normal = cy->dir;
+		return (TRUE); // 광선의 방향으로 교차 투영은 되지만 실질적인 교점은 아니다. 하지만 그림자를 생성하기 위해 TRUE를 반환한다.
+	rec->p = ray_at(r, rec->t);
+	rec->normal = cy->dir; // 원기둥의 법선 벡터를 교점의 법선 벡터에 그대로 대입
 	set_face_normal(r, rec);
-	rec->albedo = vmul_t(1.0 / 255.0, color);
 	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:34:04 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/14 22:21:19 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/15 14:47:54 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_sphere	*sphere_init(t_point3 center, double diameter)
 	return (sp);
 }
 
-t_bool		hit_sphere(t_sphere *sp, t_ray *r, t_hit_record *rec, t_color3 color) // 짝수 근의 공식 전환 및 교점 정보 별도 저장
+t_bool		hit_sphere(t_sphere *sp, t_ray *r, t_hit_record *rec) // 짝수 근의 공식 전환 및 교점 정보 별도 저장
 {
 	t_vec3		oc; // 방향 벡터로 나타낸 구의 중심
 	double		a; // a 계수
@@ -57,8 +57,6 @@ t_bool		hit_sphere(t_sphere *sp, t_ray *r, t_hit_record *rec, t_color3 color) //
 	// rec->normal = vdiv(vsub(rec->p, sp->center), sp->diameter); // 법선 벡터 정규화
 	rec->normal = vdiv(vsub(rec->p, sp->center), sp->radius); // 법선 벡터 정규화
 	set_face_normal(r, rec); // hit record 법선 벡터와 광선의 법선 벡터를 비교하여 앞면/뒷면 판단
-	
-	rec->albedo = vmul_t(1.0 / 255.0, color);
 	return (TRUE);
 }
 
