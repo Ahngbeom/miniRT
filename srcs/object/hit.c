@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/15 14:53:34 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/15 18:04:59 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 
 	hit_result = FALSE;
 	if (objects->type == PLANE)
-		hit_result = hit_plane(objects->element, ray, rec, objects->color);
+		hit_result = hit_plane(objects->element, ray, rec);
 	else if (objects->type == SPHERE)
 		hit_result = hit_sphere(objects->element, ray, rec);
 	else if (objects->type == CYLINDER)

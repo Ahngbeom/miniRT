@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/15 14:53:11 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/15 18:04:51 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_bool		shadow_checker(t_object *objects, t_light light, t_vec3 light_dir, t_hit
 
 // Plane
 t_plane		*plane_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec, t_color3 color);
+t_bool		hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec);
 
 // Sphere
 t_sphere	*sphere_init(t_point3 center, double diameter);
