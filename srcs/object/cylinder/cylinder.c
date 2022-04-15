@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/15 14:46:42 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/15 15:15:06 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	rec->p = ray_at(r, rec->t);
 	// rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
 	rec->normal = vunit(vsub(vsub(rec->p, cy->coord), vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir)));
-	set_face_normal(r, rec);
+	set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
 	return (TRUE);
 }
 
@@ -82,7 +82,7 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 	t_vec3	oc;
 	double	t;
 
-	// 광선과 원기둥의 법선 벡터의 내적이 0이라면 평행. 광선은 윗면이나 아랫면과 교차하지않는다.
+	// 광선과 원기둥의 법선 벡터의 내적이 0. 즉, 평행이라면 광선은 윗면이나 아랫면과 교차하지않는다.
 	// 광선과 원기둥의 사이각이 윗면과 아랫면의 t를 구하기 위한 분모로 활용된다.
 	denom = vdot(r->dir, cy->dir);
 	if (denom == 0)
@@ -99,12 +99,12 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 	if (t < rec->tmin || t > rec->tmax)
 		return (FALSE);
 	
-	if (t < rec->t)
-		rec->t = t; // 가장 작은 근 대입
+	if (t < rec->t) // 가장 작은 근 대입
+		rec->t = t;
 	else
-		return (TRUE); // 광선의 방향으로 교차 투영은 되지만 실질적인 교점은 아니다. 하지만 그림자를 생성하기 위해 TRUE를 반환한다.
+		return (TRUE); // 실질적인 교점은 아니지만 그림자의 면적을 고려하기 위해 TRUE를 반환한다.
 	rec->p = ray_at(r, rec->t);
 	rec->normal = cy->dir; // 원기둥의 법선 벡터를 교점의 법선 벡터에 그대로 대입
-	set_face_normal(r, rec);
+	set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
 	return (TRUE);
 }
