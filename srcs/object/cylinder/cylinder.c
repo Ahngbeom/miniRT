@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/15 15:52:20 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/18 16:39:42 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	c = vlength2(oc) - pow(vdot(oc, cy->dir), 2.0) - pow(cy->diameter / 2, 2.0);
 	discriminant = pow(half_b, 2.0) - a * c;
 
+	a = vlength2(vcross(r->dir, cy->dir));
+	half_b = vdot(vcross(r->dir, cy->dir), vcross(oc, cy->dir));
+	c = vlength2(vcross(oc, cy->dir)) - pow(cy->diameter / 2, 2.0);
+	discriminant = pow(half_b, 2.0) - a * c;
+
 	if (discriminant < 0) // 실근이 없는 경우. 광선과 원기둥은 부딪히지 않음.
 		return (FALSE);
 
@@ -59,8 +64,8 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	// 교점이 발견되고 원기둥이 무한대가 아닌 경우 원기둥 축의 교차 투영은 윗면/아랫면 지점 사이에 교점이 존재해야한다.
 	// 따라서 교점이 원기둥의 높이 범위 안에 있는 지점이어야한다.
 	
-	// if (vdot(vsub(ray_at(r, root), cy->coord_top), cy->dir) > 0)
-	if (vdot(vsub(ray_at(r, root), cy->coord_bot), cy->dir) > cy->height)
+	if (vdot(vsub(ray_at(r, root), cy->coord_top), cy->dir) > 0)
+	// if (vdot(vsub(ray_at(r, root), cy->coord_bot), cy->dir) > cy->height) // 교점 법선 벡터에 영향을 줌?
 		return (FALSE);
 	if (vdot(vsub(ray_at(r, root), cy->coord_bot), cy->dir) < 0)
 		return (FALSE);
@@ -70,13 +75,19 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	// RGB 벡터 albedo에 0 ~ 1 범위의 원기둥 오브젝트의 RGB 색상 값 대입
 	rec->t = root;
 	rec->p = ray_at(r, rec->t);
-	// rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
-	rec->normal = vunit(vsub(vsub(rec->p, cy->coord), vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir)));
+	// printf("Hit : %f, %f, %f\n", rec->p.x, rec->p.y, rec->p.z);
+	rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
+	// printf("(1) (P - C) : %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
+	// printf("(2) Cy_dir · (P - C): %f\n", vdot(cy->dir, rec->normal));
+	// printf("(3) Cy_dir * (Cy_dir · (P - C)): %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
+	// printf("(4) (P - C) - (Cy_dir * (Cy_dir · (P - C))) : %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
+	// printf("(5) Cylinder Normal : %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
 	set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
+	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 	return (TRUE);
 }
 
-t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point3 center)
+t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point3 circle_center)
 {
 	double	denom;
 	t_vec3	oc;
@@ -88,11 +99,12 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 	if (denom == 0)
 		return (FALSE);
 	
-	oc = vsub(center, r->orig); // 광선의 원점에서 윗면 또는 아랫면의 중심점까지의 벡터
+	oc = vsub(circle_center, r->orig); // 광선의 원점에서 윗면 또는 아랫면의 중심점까지의 벡터
 	t = vdot(oc, cy->dir) / denom; // 윗면 또는 아랫면의 t : oc와 원기둥의 법선 벡터의 내적 값을 denom으로 나눈다.
 	
 	// 광원에서부터 t 만큼 떨어진 지점이 윗면 또는 아랫면의 중심점과의 거리가 원기둥의 반지름보다 높을 경우 광선과 원기둥의 윗면 또는 아랫면은 교차하지 않는다.
-	if (vlength(vsub(vsum(r->orig, vmul_t(t, r->dir)), center)) > cy->diameter / 2)
+	// if (vlength(vsub(vsum(r->orig, vmul_t(t, r->dir)), circle_center)) > cy->diameter / 2)
+	if (vlength2(vsub(vsum(r->orig, vmul_t(t, r->dir)), circle_center)) > pow(cy->diameter / 2, 2.0))
 		return (FALSE);
 		
 	// 윗면 또는 아랫면의 t와 tmin, tmax를 비교하여 최소/최대 거리 범위에 속하는지 검사한다.

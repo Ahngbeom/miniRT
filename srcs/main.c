@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/09 01:52:36 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/18 14:14:02 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 			printf("Normal Vector : %f, %f, %f\n", ((t_cylinder*)list->element)->dir.x, ((t_cylinder*)list->element)->dir.y, ((t_cylinder*)list->element)->dir.z);
 			printf("Diameter : %f\n", ((t_cylinder*)list->element)->diameter);
 			printf("Height : %f\n", ((t_cylinder*)list->element)->height);
-			printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
+			printf("Color : %f, %f, %f\n", list->color.x, list->color.y, list->color.z);
+			printf("Top Center : %f, %f, %f\n", ((t_cylinder*)list->element)->coord_top.x, ((t_cylinder*)list->element)->coord_top.y, ((t_cylinder*)list->element)->coord_top.z);
+			printf("Bottom Center : %f, %f, %f\n\n", ((t_cylinder*)list->element)->coord_bot.x, ((t_cylinder*)list->element)->coord_bot.y, ((t_cylinder*)list->element)->coord_bot.z);
 		}
 		list = list->next;
 	}
