@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/18 16:39:42 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/19 00:07:30 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,17 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 {
 	t_vec3		oc;
 	
+	t_vec3		h;
+	t_vec3		w;
+
 	double		a;
 	double		half_b;
 	double		c;
 	double		discriminant;
 	double		root;
+	
+	h = vunit(vsub(cy->coord_top, cy->coord_bot));
+	w = vsub(r->orig, cy->coord_bot);
 	
 	oc = vsub(r->orig, cy->coord); // 카메라 원점에서 원기둥의 중심점까지의 방향 벡터
 	
@@ -46,6 +52,11 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	a = vlength2(vcross(r->dir, cy->dir));
 	half_b = vdot(vcross(r->dir, cy->dir), vcross(oc, cy->dir));
 	c = vlength2(vcross(oc, cy->dir)) - pow(cy->diameter / 2, 2.0);
+	discriminant = pow(half_b, 2.0) - a * c;
+
+	a = vlength2(r->dir) - pow(vdot(r->dir, h), 2);
+	half_b = vdot(r->dir, w) - (vdot(r->dir, h) * vdot(w, h));
+	c = vlength2(w) - pow(vdot(w, h), 2) - pow(cy->diameter / 2, 2);
 	discriminant = pow(half_b, 2.0) - a * c;
 
 	if (discriminant < 0) // 실근이 없는 경우. 광선과 원기둥은 부딪히지 않음.
@@ -84,6 +95,27 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	// printf("(5) Cylinder Normal : %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
 	set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
 	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+
+
+	if ((cy->dir.x != 0) &&
+		(cy->dir.y == 0 || cy->dir.z == 0))
+	{
+		if (rec->p.x < cy->coord.x - cy->height || rec->p.x > cy->coord.x + cy->height)
+			return (0);
+	}
+	else if ((cy->dir.y != 0) &&
+		(cy->dir.y == 0 || cy->dir.z == 0))
+	{
+		if (rec->p.y < cy->coord.y - cy->height || rec->p.y > cy->coord.y + cy->height)
+			return (0);
+	}
+	else if ((cy->dir.z != 0) &&
+		(cy->dir.y == 0 || cy->dir.z == 0))
+	{
+		if (rec->p.z < cy->coord.z - cy->height || rec->p.z > cy->coord.z + cy->height)
+			return (0);
+	}
+
 	return (TRUE);
 }
 
@@ -103,7 +135,6 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 	t = vdot(oc, cy->dir) / denom; // 윗면 또는 아랫면의 t : oc와 원기둥의 법선 벡터의 내적 값을 denom으로 나눈다.
 	
 	// 광원에서부터 t 만큼 떨어진 지점이 윗면 또는 아랫면의 중심점과의 거리가 원기둥의 반지름보다 높을 경우 광선과 원기둥의 윗면 또는 아랫면은 교차하지 않는다.
-	// if (vlength(vsub(vsum(r->orig, vmul_t(t, r->dir)), circle_center)) > cy->diameter / 2)
 	if (vlength2(vsub(vsum(r->orig, vmul_t(t, r->dir)), circle_center)) > pow(cy->diameter / 2, 2.0))
 		return (FALSE);
 		
