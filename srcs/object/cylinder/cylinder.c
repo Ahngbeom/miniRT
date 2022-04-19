@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/19 00:07:30 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/20 00:52:45 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal)
 
 t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 {
-	t_vec3		oc;
+	// t_vec3		oc;
 	
 	t_vec3		h;
 	t_vec3		w;
@@ -36,24 +36,14 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	double		a;
 	double		half_b;
 	double		c;
+	
 	double		discriminant;
+	
 	double		root;
 	
-	h = vunit(vsub(cy->coord_top, cy->coord_bot));
-	w = vsub(r->orig, cy->coord_bot);
+	h = vunit(vsub(cy->coord_top, cy->coord_bot)); // 원기둥 아랫면 기준 방향 벡터
+	w = vsub(r->orig, cy->coord_bot); // 카메라 원점에서 원기둥의 아랫면까지의 방향 벡터 ( oc )
 	
-	oc = vsub(r->orig, cy->coord); // 카메라 원점에서 원기둥의 중심점까지의 방향 벡터
-	
-	a = vlength2(r->dir) - pow(vdot(r->dir, cy->dir), 2.0);
-	half_b = vdot(r->dir, oc) - (vdot(r->dir, cy->dir) * vdot(oc, cy->dir));
-	c = vlength2(oc) - pow(vdot(oc, cy->dir), 2.0) - pow(cy->diameter / 2, 2.0);
-	discriminant = pow(half_b, 2.0) - a * c;
-
-	a = vlength2(vcross(r->dir, cy->dir));
-	half_b = vdot(vcross(r->dir, cy->dir), vcross(oc, cy->dir));
-	c = vlength2(vcross(oc, cy->dir)) - pow(cy->diameter / 2, 2.0);
-	discriminant = pow(half_b, 2.0) - a * c;
-
 	a = vlength2(r->dir) - pow(vdot(r->dir, h), 2);
 	half_b = vdot(r->dir, w) - (vdot(r->dir, h) * vdot(w, h));
 	c = vlength2(w) - pow(vdot(w, h), 2) - pow(cy->diameter / 2, 2);
@@ -76,7 +66,6 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	// 따라서 교점이 원기둥의 높이 범위 안에 있는 지점이어야한다.
 	
 	if (vdot(vsub(ray_at(r, root), cy->coord_top), cy->dir) > 0)
-	// if (vdot(vsub(ray_at(r, root), cy->coord_bot), cy->dir) > cy->height) // 교점 법선 벡터에 영향을 줌?
 		return (FALSE);
 	if (vdot(vsub(ray_at(r, root), cy->coord_bot), cy->dir) < 0)
 		return (FALSE);
@@ -86,36 +75,9 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	// RGB 벡터 albedo에 0 ~ 1 범위의 원기둥 오브젝트의 RGB 색상 값 대입
 	rec->t = root;
 	rec->p = ray_at(r, rec->t);
-	// printf("Hit : %f, %f, %f\n", rec->p.x, rec->p.y, rec->p.z);
-	rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
-	// printf("(1) (P - C) : %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
-	// printf("(2) Cy_dir · (P - C): %f\n", vdot(cy->dir, rec->normal));
-	// printf("(3) Cy_dir * (Cy_dir · (P - C)): %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
-	// printf("(4) (P - C) - (Cy_dir * (Cy_dir · (P - C))) : %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
-	// printf("(5) Cylinder Normal : %f, %f, %f\n", rec->normal.x, rec->normal.y, rec->normal.z);
+	// rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir), cy->coord)));
+	rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(h, vsub(rec->p, cy->coord_bot)), h), cy->coord_bot)));
 	set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
-	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
-
-
-	if ((cy->dir.x != 0) &&
-		(cy->dir.y == 0 || cy->dir.z == 0))
-	{
-		if (rec->p.x < cy->coord.x - cy->height || rec->p.x > cy->coord.x + cy->height)
-			return (0);
-	}
-	else if ((cy->dir.y != 0) &&
-		(cy->dir.y == 0 || cy->dir.z == 0))
-	{
-		if (rec->p.y < cy->coord.y - cy->height || rec->p.y > cy->coord.y + cy->height)
-			return (0);
-	}
-	else if ((cy->dir.z != 0) &&
-		(cy->dir.y == 0 || cy->dir.z == 0))
-	{
-		if (rec->p.z < cy->coord.z - cy->height || rec->p.z > cy->coord.z + cy->height)
-			return (0);
-	}
-
 	return (TRUE);
 }
 
@@ -135,7 +97,8 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 	t = vdot(oc, cy->dir) / denom; // 윗면 또는 아랫면의 t : oc와 원기둥의 법선 벡터의 내적 값을 denom으로 나눈다.
 	
 	// 광원에서부터 t 만큼 떨어진 지점이 윗면 또는 아랫면의 중심점과의 거리가 원기둥의 반지름보다 높을 경우 광선과 원기둥의 윗면 또는 아랫면은 교차하지 않는다.
-	if (vlength2(vsub(vsum(r->orig, vmul_t(t, r->dir)), circle_center)) > pow(cy->diameter / 2, 2.0))
+	if (vlength2(vsub(ray_at(r, t), circle_center)) > pow(cy->diameter / 2, 2.0))
+	// if (sqrt(vlength2(vsub(ray_at(r, t), circle_center))) > cy->diameter)
 		return (FALSE);
 		
 	// 윗면 또는 아랫면의 t와 tmin, tmax를 비교하여 최소/최대 거리 범위에 속하는지 검사한다.
@@ -148,6 +111,59 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 		return (TRUE); // 실질적인 교점은 아니지만 그림자의 면적을 고려하기 위해 TRUE를 반환한다.
 	rec->p = ray_at(r, rec->t);
 	rec->normal = cy->dir; // 원기둥의 법선 벡터를 교점의 법선 벡터에 그대로 대입
-	set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
+	// set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
+	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+	return (TRUE);
+}
+
+t_bool		hit_cylinder_surface2(t_cylinder *cy, t_ray *r, t_hit_record *rec)
+{
+	double	r2;
+	t_vec3	hc;
+	t_vec3	h;
+	t_vec3	w;
+	t_vec3	v;
+	
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	
+	double	root;
+	
+	r2 = pow(cy->diameter / 2, 2);
+	hc = vsub(cy->coord_top, cy->coord_bot);
+	h = vunit(hc);
+	w = vsub(r->orig, cy->coord_bot);
+	v = r->dir;
+	
+	a = vlength2(v) - pow(vdot(v, h), 2);
+	b = (vdot(v, w) - vdot(v, h) * vdot(w, h)) * 2;
+	c = vlength2(w) - pow(vdot(w, h), 2) - r2;
+	
+	discriminant = pow(b, 2) - 4 * a * c;	
+	if (discriminant < 0)
+		return (FALSE);
+		
+	root = (-b - sqrt(discriminant)) / (2 * a);
+	if (root < rec->tmin || root > rec->tmax)
+	{
+		root = (-b + sqrt(discriminant)) / (2 * a);
+		if (root < rec->tmin || root > rec->tmax)
+			return (FALSE);
+	}
+
+	// if (vdot(vsub(ray_at(r, root), cy->coord_top), cy->dir) > 0)
+	// 	return (FALSE);
+	// if (vdot(vsub(ray_at(r, root), cy->coord_bot), cy->dir) < 0)
+	// 	return (FALSE);
+	
+	if (vlength(vsub(ray_at(r, root), cy->coord)) > sqrt(pow(cy->diameter, 2) + pow(cy->height, 2)))
+		return (FALSE);
+	rec->t = root;
+	rec->p = ray_at(r, root);
+	rec->normal = vunit(vsub(vsub(rec->p, cy->coord), vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir)));
+	rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+	// set_face_normal(r, rec);
 	return (TRUE);
 }

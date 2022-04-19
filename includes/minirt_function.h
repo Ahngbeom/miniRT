@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/15 18:04:51 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/19 14:02:22 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ int			hit_sphere(t_sphere *sphere, t_ray *r, t_hit_record *rec);
 // Cylinder
 t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal);
 t_bool		hit_cylinder_surface(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
+t_bool		hit_cylinder_surface2(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
 t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point3 center);
+t_bool		hit_cylinder_circle2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point3 center);
 
 // Square
 t_square	*square_init(t_point3 center, t_vec3 normal, double side_len);
