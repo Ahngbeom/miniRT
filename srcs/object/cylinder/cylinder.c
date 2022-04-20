@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/20 00:52:45 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/20 12:29:55 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ t_bool		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	// 교점이 발견되고 원기둥이 무한대가 아닌 경우 원기둥 축의 교차 투영은 윗면/아랫면 지점 사이에 교점이 존재해야한다.
 	// 따라서 교점이 원기둥의 높이 범위 안에 있는 지점이어야한다.
 	
-	if (vdot(vsub(ray_at(r, root), cy->coord_top), cy->dir) > 0)
+	if (vdot(vsub(ray_at(r, root), cy->coord_top), h) > 0)
 		return (FALSE);
-	if (vdot(vsub(ray_at(r, root), cy->coord_bot), cy->dir) < 0)
+	if (vdot(vsub(ray_at(r, root), cy->coord_bot), h) < 0)
 		return (FALSE);
-	
+
 	// t_hit_record 구조체에 실근과 교점 좌표 및 교점에서의 법선벡터를 저장한다.
 	// set_face_normal 함수를 통해 앞면/뒷면 판단.
 	// RGB 벡터 albedo에 0 ~ 1 범위의 원기둥 오브젝트의 RGB 색상 값 대입
@@ -97,7 +97,7 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 	t = vdot(oc, cy->dir) / denom; // 윗면 또는 아랫면의 t : oc와 원기둥의 법선 벡터의 내적 값을 denom으로 나눈다.
 	
 	// 광원에서부터 t 만큼 떨어진 지점이 윗면 또는 아랫면의 중심점과의 거리가 원기둥의 반지름보다 높을 경우 광선과 원기둥의 윗면 또는 아랫면은 교차하지 않는다.
-	if (vlength2(vsub(ray_at(r, t), circle_center)) > pow(cy->diameter / 2, 2.0))
+	if (vlength2(vsub(ray_at(r, t), circle_center)) > pow(cy->diameter / 2, 2))
 	// if (sqrt(vlength2(vsub(ray_at(r, t), circle_center))) > cy->diameter)
 		return (FALSE);
 		
@@ -112,7 +112,7 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 	rec->p = ray_at(r, rec->t);
 	rec->normal = cy->dir; // 원기둥의 법선 벡터를 교점의 법선 벡터에 그대로 대입
 	// set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
-	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+	rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 	return (TRUE);
 }
 

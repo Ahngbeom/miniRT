@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:17:09 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/20 13:33:07 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/20 16:47:08 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	output_scene(t_scene *scene)
 		w = 0;
 		while (w < scene->canvas.width)
 		{
-			u = (double)w / (scene->canvas.width - 1);
-			v = (double)h / (scene->canvas.height - 1);
+			u = (double)w / (scene->canvas.width);
+			v = (double)h / (scene->canvas.height);
 			scene->ray = ray_primary(scene->camera->content, u, v);
-			minirt_pixel_put_vector(scene->vars->img_data, w, scene->canvas.height - 1 - h, write_color(-1, ray_color(scene)));
+			minirt_pixel_put_vector(scene->vars->img_data, w, scene->canvas.height - 1 - h, write_color(ray_color(scene)));
 			w++;
 		}
 		h--;

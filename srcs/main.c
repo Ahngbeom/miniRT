@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/20 14:05:37 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/20 21:56:33 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	{
 		printf("Invalid Arguments\n");
 		printf("./miniRT\n");
-		printf("./miniRT [file path to save] [--save]\n");
-		printf("./miniRT [.rt file path] [--save]\n");
 		exit(1);
 	}
 	else if (argc >= 2)
@@ -28,8 +26,6 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 		{
 			printf("Invalid Arguments\n");
 			printf("./miniRT\n");
-			printf("./miniRT [file path to save] [--save]\n");
-			printf("./miniRT [.rt file path] [--save]\n");
 			exit(1);
 		}
 		scene->camera = NULL;
@@ -99,9 +95,8 @@ int main(int argc, char const *argv[])
 	mlx_hook(scene.vars->win, 2, 1L << 0, minirt_esc, &scene);
 	mlx_hook(scene.vars->win, 17, 1L << 2, minirt_close, &scene);
 
-	// mlx_key_hook(scene.vars->win, camera_move, &scene);
-	// mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
-	mlx_key_hook(scene.vars->win, camera_switch, &scene);
+	mlx_key_hook(scene.vars->win, camera_move, &scene);
+	mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
 
 	mlx_loop(scene.vars->mlx);
 	// mlx_loop_end(scene.vars->mlx);
