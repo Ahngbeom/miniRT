@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/19 14:02:22 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/20 13:41:24 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int			minirt_close(int keycode, t_scene *scene);
 int			minirt_esc(int keycode, t_scene *scene);
 int			camera_move(int keycode, t_scene *scene);
 int			camera_zoom(int keycode, int x, int y, t_scene *scene);
+int			camera_switch(int keycode, t_scene *scene);
 
 // Output & Display Color per Pixel
 void		minirt_pixel_put(t_img_data *data, int x, int y, int color);
@@ -32,7 +33,7 @@ t_color3	write_color(int fd, t_color3 color);
 void		init_canvas(t_scene *scene, int width, int height);
 
 // Camera
-void		init_camera(t_scene *scene, int fov);
+void		init_camera(t_scene *scene);
 
 // Vector
 t_vec3		vector_init(double x, double y, double z);

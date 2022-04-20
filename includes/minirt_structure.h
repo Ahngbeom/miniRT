@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/14 22:20:36 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/20 13:18:32 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,8 @@ struct s_light
 struct s_scene
 {
 	t_vars			*vars;
-	t_camera		camera;
+	// t_camera		camera;
+	t_list			*camera;
 	t_canvas		canvas;
 	t_ray			ray;
 	t_hit_record	rec;

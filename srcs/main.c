@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/18 14:14:02 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/20 14:05:37 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 			printf("./miniRT [.rt file path] [--save]\n");
 			exit(1);
 		}
+		scene->camera = NULL;
 		scene->objects = NULL;
 		parse_file(scene, argv[1]);
 	}
@@ -52,15 +53,8 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 												&scene->vars->img_data->endian);
 
 	init_canvas(scene, WIDTH, HEIGHT);
-	init_camera(scene, scene->camera.fov);
+	init_camera(scene);
 
-	// printf("Ambient Ratio : %f\n", scene.ambient.ratio);
-	// printf("Ambient Color : %f, %f, %f\n\n", scene.ambient.color.x, scene.ambient.color.y, scene.ambient.color.z);
-
-	// printf("Light Point : %f, %f, %f\n", scene.light.orig.x, scene.light.orig.y, scene.light.orig.z);
-	// printf("Light Ratio : %f\n", scene.light.bright_ratio);
-	// printf("Light Color : %f, %f, %f\n\n", scene.light.light_color.x, scene.light.light_color.y, scene.light.light_color.z);
-	
 	t_object *list = scene->objects;
 	while (list != NULL)
 	{
@@ -105,8 +99,9 @@ int main(int argc, char const *argv[])
 	mlx_hook(scene.vars->win, 2, 1L << 0, minirt_esc, &scene);
 	mlx_hook(scene.vars->win, 17, 1L << 2, minirt_close, &scene);
 
-	mlx_key_hook(scene.vars->win, camera_move, &scene);
-	mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
+	// mlx_key_hook(scene.vars->win, camera_move, &scene);
+	// mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
+	mlx_key_hook(scene.vars->win, camera_switch, &scene);
 
 	mlx_loop(scene.vars->mlx);
 	// mlx_loop_end(scene.vars->mlx);

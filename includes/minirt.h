@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:19:28 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/03 17:45:08 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/20 13:11:48 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@
 typedef int	t_bool;
 typedef	int	t_object_type;
 
-# define SPHERE		0
-# define PLANE		1
-# define CYLINDER	2
-# define SQUARE		3
+# define CAMERA		0
+# define SPHERE		1
+# define PLANE		2
+# define CYLINDER	3
+# define SQUARE		4
 
 # define EPSILON	1e-6
 
