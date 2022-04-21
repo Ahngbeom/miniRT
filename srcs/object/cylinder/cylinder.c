@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/21 15:35:22 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/21 23:48:26 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,6 @@ t_bool		hit_cylinder_surface2(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	discriminant = pow(b, 2) - (4 * a * c);	
 	if (discriminant < 0)
 		return (FALSE);
-	else if (discriminant == 0)
-		printf("???\n");
 	root = (-b - sqrt(discriminant)) / (2 * a);
 	if (root < rec->tmin || root > rec->tmax)
 	{
@@ -179,25 +177,23 @@ t_bool		hit_cylinder_circle2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_poin
 	denom = vdot(r->dir, cy->dir); // 광선 단위 벡터와 평면의 방향 벡터 내적 연산
 	if (denom == 0)
 		return (FALSE);
-	// if (denom > EPSILON) // 분모가 음수라면 t는 양수.
-	// {
-		numer = vdot(vsub(circle_center, r->orig), cy->dir);
-		t = numer / denom;
-		if (vlength2(vsub(ray_at(r, t), circle_center)) <= pow(cy->diameter / 2.0, 2))
+	numer = vdot(vsub(circle_center, r->orig), cy->dir);
+	t = numer / denom;
+	if (vlength(vsub(ray_at(r, t), circle_center)) <= cy->diameter / 2.0)
+	{
+		if (t > rec->tmin && t < rec->tmax)
 		{
-			if (t > rec->tmin && t < rec->tmax)
-			{
-				if (t < rec->t)
-				{	
-					rec->t = t;
-					rec->p = ray_at(r, t);
-					rec->normal = cy->dir; // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
-					rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
-					set_face_normal(r, rec);
-				}
-				return (TRUE);
+			if (t < rec->t)
+			{	
+				rec->t = t;
+				rec->p = ray_at(r, t);
+				rec->normal = cy->dir; // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
+				// rec->normal = vmul_t(-1, cy->dir); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
+				rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+				set_face_normal(r, rec);
 			}
+			return (TRUE);
 		}
-	// }
+	}
 	return (FALSE);
 }

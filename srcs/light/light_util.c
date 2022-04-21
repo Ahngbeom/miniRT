@@ -6,13 +6,13 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/21 15:13:30 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/21 21:38:14 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static t_color3	diffuse_calculator(t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal)
+t_color3	diffuse_calculator(t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal)
 {
 	double		kd; // Diffuse 강도
 	
@@ -25,7 +25,7 @@ static t_color3	diffuse_calculator(t_vec3 light_dir, t_color3 light_color, t_vec
 	return (vmul_t(kd, vmul_t(1.0 / 255.0, light_color)));
 }
 
-static t_vec3	reflect(t_vec3 v, t_vec3 n)
+t_vec3	reflect(t_vec3 v, t_vec3 n)
 {
 	// v : 광원에서 교점으로 향하는 벡터
 	// n : 교점의 법선 벡터
@@ -33,7 +33,7 @@ static t_vec3	reflect(t_vec3 v, t_vec3 n)
 	return (vsub(v, vmul_t(vdot(v, n) * 2, n)));
 }
 
-static t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal)
+t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal)
 {
 	t_vec3		view_dir; 		// 교점에서 카메라 원점으로 향하는 벡터
 	t_vec3		reflect_dir;	// 교점의 법선 벡터를 기준으로 light_dir을 대칭시킨 벡터
@@ -44,7 +44,7 @@ static t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 l
 	view_dir = vunit(vmul_t(-1.0, ray_dir)); // 카메라 원점에서 교점으로 향하는 벡터를 반전시킨 후 정규화
 	reflect_dir = reflect(vmul_t(-1.0, light_dir), rec_normal); // 반사광 벡터 계산
 	ksn = 128; // Shininess Value
-	ks = 0.5; // Specular Strength
+	ks = 0.2; // Specular Strength
 	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), ksn); // cosθ ^ ksn. 물체의 하이라이팅 범위 적용
 	return (vmul_t(spec, vmul_t(ks, vmul_t(1.0 / 255.0, light_color)))); // spec * ks * light_color. 정반사광 강도 적용
 }
@@ -65,7 +65,6 @@ t_color3	get_point_light(t_scene *scene)
 
 	// Diffuse
 	diffuse = diffuse_calculator(light_dir, scene->light.light_color, scene->rec.normal);
-
 	// Specular
 	specular = specular_calculator(scene->ray.dir, light_dir, scene->light.light_color, scene->rec.normal);
 	

@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:24:38 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/20 16:56:04 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/21 21:46:46 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	camera_move(int keycode, t_scene *scene)
 	t_camera	*cam;
 
 	cam = scene->camera->content;
-	printf("keycode : %d\n", keycode);
+	// printf("keycode : %d\n", keycode);
 	if ((keycode == 32 || keycode == 49) && ft_lstsize(scene->camera) > 1)
 		return (camera_switch(scene));
 	else if (keycode == 65362 || keycode == 126)

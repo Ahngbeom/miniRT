@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/21 15:18:17 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/21 21:50:59 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 	int	hit_result;
 
 	hit_result = FALSE;
-	if (objects->type == PLANE)
-		hit_result = hit_plane(objects->element, ray, rec);
-	else if (objects->type == SPHERE)
+	if (objects->type == SPHERE)
 		hit_result = hit_sphere(objects->element, ray, rec);
 	else if (objects->type == CYLINDER)
 	{
@@ -52,6 +50,8 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 		hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
 		hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
 	}
+	else if (objects->type == PLANE)
+		hit_result = hit_plane(objects->element, ray, rec);
 	// else if (objects->type == SQUARE)	
 	// 	hit_result = hit_square(objects, ray, rec);
 	return hit_result;
