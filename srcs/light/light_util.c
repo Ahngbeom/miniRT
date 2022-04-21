@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/20 21:17:54 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/21 15:13:30 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 l
 	
 	view_dir = vunit(vmul_t(-1.0, ray_dir)); // 카메라 원점에서 교점으로 향하는 벡터를 반전시킨 후 정규화
 	reflect_dir = reflect(vmul_t(-1.0, light_dir), rec_normal); // 반사광 벡터 계산
-	ksn = 32; // Shininess Value
+	ksn = 128; // Shininess Value
 	ks = 0.5; // Specular Strength
 	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), ksn); // cosθ ^ ksn. 물체의 하이라이팅 범위 적용
 	return (vmul_t(spec, vmul_t(ks, vmul_t(1.0 / 255.0, light_color)))); // spec * ks * light_color. 정반사광 강도 적용

@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/20 21:06:32 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/21 15:18:17 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 		hit_result = hit_sphere(objects->element, ray, rec);
 	else if (objects->type == CYLINDER)
 	{
-		hit_result |= hit_cylinder_surface(objects->element, ray, rec);
-		hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
-		hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
-		// hit_result |= hit_cylinder_surface2(objects->element, ray, rec);
-		// hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
-		// hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
+		// hit_result |= hit_cylinder_surface(objects->element, ray, rec);
+		// hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
+		// hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
+		
+		hit_result |= hit_cylinder_surface2(objects->element, ray, rec);
+		hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
+		hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
 	}
 	// else if (objects->type == SQUARE)	
 	// 	hit_result = hit_square(objects, ray, rec);
