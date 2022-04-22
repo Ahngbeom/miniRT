@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/21 21:38:14 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/22 15:47:44 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ t_color3	diffuse_calculator(t_vec3 light_dir, t_color3 light_color, t_vec3 rec_n
 	// 사이각 θ가 0~90도 일때, cosθ 값은 1 ~ 0이므로,
 	// cosθ는 θ값이 90도일 때 0, θ가 둔각이 되면 음수. 음수일 경우 0.0으로 대체.
 	kd = fmax(vdot(rec_normal, light_dir), 0.0);
-	
-	// diffuse의 강도와 빛의 양을 곱해주면 교점에 도달한 빛 의양을 계산할 수 있다.
+	// if (kd == 0.0)
+	// 	kd = EPSILON;
+		// return (color_init(1, 1, 1));
+	// printf("Record Normal : %f, %f, %f\n", rec_normal.x, rec_normal.y, rec_normal.z);
+	// printf("Light Direction : %f, %f, %f\n", light_dir.x, light_dir.y, light_dir.z);
+	// diffuse의 강도와 빛의 양을 곱해주면 교점에 도달한 빛의 양을 계산할 수 있다.
 	return (vmul_t(kd, vmul_t(1.0 / 255.0, light_color)));
 }
 
@@ -64,8 +68,13 @@ t_color3	get_point_light(t_scene *scene)
 		return (color_init(0, 0, 0));
 
 	// Diffuse
-	diffuse = diffuse_calculator(light_dir, scene->light.light_color, scene->rec.normal);
+	diffuse = color_init(0.336313, 0.940952, 0.336313);
+	// diffuse = color_init(1, 1, 1);
+	// diffuse = diffuse_calculator(light_dir, scene->light.light_color, scene->rec.normal);
+	return (diffuse);
+	
 	// Specular
+	specular = color_init(0, 0, 0);
 	specular = specular_calculator(scene->ray.dir, light_dir, scene->light.light_color, scene->rec.normal);
 	
 	// Brightness

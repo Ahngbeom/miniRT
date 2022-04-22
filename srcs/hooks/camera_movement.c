@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:24:38 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/21 21:46:46 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/22 14:08:46 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	camera_move(int keycode, t_scene *scene)
 int	camera_zoom(int keycode, int x, int y, t_scene *scene)
 {
 	t_camera	*cam;
-
+	
 	cam = scene->camera->content;
-	// printf("mouse keycode : %d (%d, %d)\n", keycode, x, y);
+	printf("mouse keycode : %d (%d, %d)\n", keycode, x, y);
 	(void)x;
 	(void)y;
 	if (keycode == 4)
@@ -53,6 +53,11 @@ int	camera_zoom(int keycode, int x, int y, t_scene *scene)
 	else if (keycode == 5)
 		// cam->fov -= 5;
 		cam->lower_left_corner.z += 0.1;
+	else if (keycode == 1)
+	{
+		scene->ray = ray_primary(cam, (double)x / scene->canvas.width, (double)y / scene->canvas.height);
+		printf("%s\n", hit(scene->objects, &scene->ray, &scene->rec) == TRUE ? "TRUE" : "FALSE");
+	}
 	else
 		return (0);
 	// set_camera(scene);
