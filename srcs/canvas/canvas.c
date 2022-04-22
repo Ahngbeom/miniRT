@@ -6,13 +6,13 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:07:21 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 15:49:31 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/06 00:21:21 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	canvas_init(t_scene *scene, int width, int height)
+void	init_canvas(t_scene *scene, int width, int height)
 {
 	// scene->canvas = ft_calloc(sizeof(t_canvas), 1);
 	

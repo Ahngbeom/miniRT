@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:17:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 14:55:36 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/14 16:18:33 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_ray		ray_init(t_point3 origin, t_vec3 direction) // ray 정규화, 초기화
 	return (ray);
 }
 
-t_point3	ray_at(t_ray *r, double t) // 광선의 원점부터 방향 벡터만큼 떨어진 점 반환
+t_point3	ray_at(t_ray *r, double t) // 광선의 원점부터 광선의 방향으로 t만큼 떨어진 점 반환
 {
 	return (vsum(r->orig, vmul_t(t, r->dir)));
 }
@@ -46,7 +46,7 @@ t_color3 	ray_color(t_scene *scene)
 	{
 		scene->rec.tmin = EPSILON; // 오브젝트와 카메라 간 거리 최솟값
 		scene->rec.tmax = INFINITY; // 오브젝트와 카메라 간 거리 최댓값
-		scene->rec.front_face = 0; // 오브젝트 교점 위치(앞면 / 뒷면) 판단
+		scene->rec.front_face = 0; // 오브젝트와 카메라 간 거리 최댓값
 		if (hit(scene->objects, &scene->ray, &scene->rec) == TRUE)
 		{
 			return (phong_lighting(scene));

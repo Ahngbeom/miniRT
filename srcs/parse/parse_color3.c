@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:49:39 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/04/04 16:39:49 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/06 21:41:03 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ void	parse_color3(t_color3 *ret, char *color)
 	ret->x = (double)ft_atoi(split[0]);
 	ret->y = (double)ft_atoi(split[1]);
 	ret->z = (double)ft_atoi(split[2]);
+	split_free(split);
 }

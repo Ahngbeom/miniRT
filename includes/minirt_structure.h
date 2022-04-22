@@ -6,7 +6,7 @@
 /*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/09 16:41:40 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/16 20:36:06 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ struct s_camera
 {
 	double viewport_height;	// Viewport 세로 길이
 	double viewport_width; // Viewport 가로 길이
-	double focal_length; // 초점 거리
 	
 	t_point3	orig;
 	t_vec3		horizontal; // 수평 길이 벡터
@@ -101,25 +100,24 @@ struct s_sphere
 {
 	t_point3	center;
 	double		diameter;
-	double		diameter2;
+	double		radius;
 };
 
 struct s_plane
 {
 	t_point3	coord;	// 평면 상 어느 한 지점.
-	t_vec3		normal;	// 평면이 가리키는 방향, 기울임 방향 및 정도
+	t_vec3		dir;	// 평면이 가리키는 방향, 기울임 방향 및 정도
 };
 
 struct s_cylinder
 {
 	t_point3	coord;
-	t_vec3		normal;
+	t_vec3		dir;
 	double		diameter;
 	double		height;
-
-	double		radius;
-	t_point3	top_center;
-	t_point3	bottom_center;
+	
+	t_point3	coord_top;
+	t_point3	coord_bot;
 };
 
 struct s_square
@@ -134,7 +132,6 @@ struct s_object
 	t_object_type	type;
 	void			*element;
 	t_color3		color;
-	t_color3		albedo;
 	void			*next;
 };
 

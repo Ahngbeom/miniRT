@@ -3,49 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 14:28:54 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/18 20:24:09 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_bool	hit(t_object *world, t_ray *ray, t_hit_record *rec)
+t_bool	hit(t_object *objects, t_ray *ray, t_hit_record *rec)
 {
 	t_bool			hit_anything;
 	t_hit_record	tmp_rec;
 
 	tmp_rec = *rec;
 	hit_anything = FALSE;
-	while (world != NULL)
+	while (objects != NULL)
 	{
-		if (hit_object(world, ray, &tmp_rec) > 0)
+		if (hit_object(objects, ray, &tmp_rec) == TRUE)
 		{
 			hit_anything = TRUE;
+			tmp_rec.albedo = vmul_t(1.0 / 255.0, objects->color);
 			*rec = tmp_rec;
 			tmp_rec.tmax = tmp_rec.t;
 		}
-		world = world->next;
+		objects = objects->next;
 	}
 	return (hit_anything);
 }
 
-t_bool	hit_object(t_object *world, t_ray *ray, t_hit_record *rec)
+t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 {
 	int	hit_result;
 
 	hit_result = FALSE;
-	if (world->type == SPHERE)
-		hit_result = hit_sphere(world, ray, rec);
-	else if (world->type == SQUARE)	
-		hit_result = hit_square(world, ray, rec);
-	else if (world->type == CYLINDER)
-		hit_result = hit_cylinder(world, ray, rec);	
-	else if (world->type == PLANE) {
-		// hit_result = hit_plane(world, ray, rec);
-		hit_result = intersect_plane(world, ray, rec);
+	if (objects->type == PLANE)
+		hit_result = hit_plane(objects->element, ray, rec);
+	else if (objects->type == SPHERE)
+		hit_result = hit_sphere(objects->element, ray, rec);
+	else if (objects->type == CYLINDER)
+	{
+		hit_result |= hit_cylinder_surface(objects->element, ray, rec);
+		hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
+		hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
 	}
-	return hit_result;
+	// else if (objects->type == SQUARE)	
+	// 	hit_result = hit_square(objects, ray, rec);
+	return (hit_result);
 }
