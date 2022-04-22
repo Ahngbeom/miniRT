@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_function.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/15 18:04:51 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/23 01:16:28 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_color3	phong_lighting(t_scene *scene);
 t_color3	get_point_light(t_scene *scene, t_light *light);
 
 // Shadow
-t_bool		shadow_checker(t_object *objects, t_light light, t_vec3 light_dir, t_hit_record rec);
+t_bool		shadow_checker(t_object *objects, double light_len, t_vec3 light_dir, t_hit_record rec);
 
 // Plane
 t_plane		*plane_init(t_point3 orig, t_vec3 normal);

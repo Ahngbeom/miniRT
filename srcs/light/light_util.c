@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 19:50:57 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/23 01:44:21 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ static t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 l
 	ksn = 64; // Shininess Value
 	ks = 0.5; // Specular Strength
 	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), ksn); // cosθ ^ ksn. 물체의 하이라이팅 범위 적용
+	//spec = fmax(pow(vdot(view_dir, reflect_dir), 20.0), 0.0); // cosθ ^ ksn. 물체의 하이라이팅 범위 적용
 	return (vmul_t(spec, vmul_t(ks, vmul_t(1.0 / 255.0, light_color)))); // spec * ks * light_color. 정반사광 강도 적용
+	//return (vmul_t(spec, vmul_t(1.0 / 255.0, light_color))); // spec * ks * light_color. 정반사광 강도 적용
 }
 
 t_color3	get_point_light(t_scene *scene, t_light *light)
@@ -54,13 +56,15 @@ t_color3	get_point_light(t_scene *scene, t_light *light)
 	t_vec3		light_dir;
 	t_color3	diffuse;
 	t_color3	specular;
+	double		light_len;
 	double		brightness;
 
 	// Light Direction
+	light_len = vlength(vsub(scene->light.orig, scene->rec.p));
 	light_dir = vunit(vsub(scene->light.orig, scene->rec.p)); // 교점에서 출발하여 광원을 향하는 정규화 벡터
 
 	// Shadow
-	if (shadow_checker(scene->objects, scene->light, light_dir, scene->rec))
+	if (shadow_checker(scene->objects, light_len, light_dir, scene->rec))
 		return (color_init(0, 0, 0));
 
 	// Diffuse
@@ -69,7 +73,11 @@ t_color3	get_point_light(t_scene *scene, t_light *light)
 	// Specular
 	specular = specular_calculator(scene->ray.dir, light_dir, light->light_color, scene->rec.normal);
 	
+	// ambient
+	//ambient = vmul_t(scene->ambient.ratio, vmul_t(1.0 / 255.0, scene->ambient.color));
+
 	// Brightness
 	brightness = light->bright_ratio * LUMEN;
-	return (vmul_t(brightness, vsum(vsum(diffuse, scene->ambient.color), specular)));
+	//return (vmul_t(brightness, vsum(vsum(diffuse, scene->ambient.color), specular)));
+	return(vmul_t(brightness, vsum(diffuse, specular)));
 }
