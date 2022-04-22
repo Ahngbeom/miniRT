@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/22 15:54:15 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/22 18:20:59 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,8 @@ t_bool		hit_cylinder_circle2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_poin
 	denom = vdot(r->dir, cy->dir); // 광선 단위 벡터와 평면의 방향 벡터 내적 연산
 	if (denom == 0)
 		return (FALSE);
-	numer = vdot(vsub(circle_center, r->orig), cy->dir);
-	t = numer / denom;
+	numer = vdot(vsub(r->orig, circle_center), cy->dir);
+	t = -numer / denom;
 	if (vlength2(vsub(ray_at(r, t), circle_center)) <= pow(cy->diameter / 2.0, 2))
 	{
 		if (t > rec->tmin && t < rec->tmax)
