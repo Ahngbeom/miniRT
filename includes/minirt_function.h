@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/21 15:37:56 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/22 20:26:39 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_vec3		reflect(t_vec3 v, t_vec3 n);
 t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal);
 
 // Shadow
-t_bool		shadow_checker(t_object *objects, t_light light, t_vec3 light_dir, t_hit_record rec);
+t_bool		shadow_checker(t_object *objects, t_vec3 light_dir, t_hit_record rec);
 
 // Plane
 t_plane		*plane_init(t_point3 orig, t_vec3 normal);

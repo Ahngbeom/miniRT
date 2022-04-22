@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:17:09 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/21 11:49:37 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/22 21:10:34 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec)
 	denom = vdot(ray->dir, plane->dir); // 광선 단위 벡터와 평면의 방향 벡터 내적 연산
 	if (denom > EPSILON) // 분모가 음수라면 t는 양수.
 	{
-		numer = vdot(vsub(plane->coord, ray->orig), plane->dir);
-		t = numer / denom;
+		numer = vdot(vsub(ray->orig, plane->coord), plane->dir);
+		t = -numer / denom;
 		if (t > rec->tmin && t < rec->tmax)
 		{
 			rec->t = t;
