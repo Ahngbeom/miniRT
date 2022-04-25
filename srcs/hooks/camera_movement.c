@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 16:24:38 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/22 14:08:46 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/25 00:57:12 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	camera_move(int keycode, t_scene *scene)
 
 	cam = scene->camera->content;
 	// printf("keycode : %d\n", keycode);
-	if ((keycode == 32 || keycode == 49) && ft_lstsize(scene->camera) > 1)
+	if ((keycode == 32 || keycode == 49))
 		return (camera_switch(scene));
 	else if (keycode == 65362 || keycode == 126)
 		// cam->orig.y += 1;
@@ -70,12 +70,14 @@ int	camera_switch(t_scene *scene)
 	t_list		*tmp;
 	t_camera	*cam;
 	
-	tmp = scene->camera;
-	// ft_lstlast(scene->camera)->next = tmp;
-	scene->camera = scene->camera->next;
-	tmp->next = NULL;
-	ft_lstadd_back(&scene->camera, tmp);
-	
+	if (scene->camera->next != NULL)
+	{
+		tmp = scene->camera;
+		// ft_lstlast(scene->camera)->next = tmp;
+		scene->camera = scene->camera->next;
+		tmp->next = NULL;
+		ft_lstadd_back(&scene->camera, tmp);
+	}
 	cam = scene->camera->content;
 	printf("Camera Info\n");
 	printf("Camera View point : %f, %f, %f\n", cam->orig.x, cam->orig.y, cam->orig.z);
