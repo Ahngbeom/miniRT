@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/22 20:28:25 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/25 16:00:06 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_color3	get_point_light(t_scene *scene)
 	double		brightness;
 
 	// Light Direction
-	light_dir = vsub(scene->light.orig, scene->rec.p); // 교점에서 출발하여 광원을 향하는 정규화 벡터
+	light_dir = vsub(scene->light.orig, scene->rec.p); // 교점과 광원까지의 거리
 
 	// Shadow
 	if (shadow_checker(scene->objects, light_dir, scene->rec))
@@ -70,10 +70,12 @@ t_color3	get_point_light(t_scene *scene)
 	// Diffuse
 	// diffuse = color_init(0.336313, 0.940952, 0.336313);
 	// diffuse = color_init(1, 1, 1);
+	// diffuse = color_init(0.5, 0.5, 0.5);
 	diffuse = diffuse_calculator(light_dir, scene->light.light_color, scene->rec.normal);
+	// printf("Diffuse : %f, %f, %f\n", diffuse.x, diffuse.y, diffuse.z);
 	
 	// Specular
-	specular = color_init(0, 0, 0);
+	// specular = color_init(0, 0, 0);
 	specular = specular_calculator(scene->ray.dir, light_dir, scene->light.light_color, scene->rec.normal);
 	
 	// Brightness

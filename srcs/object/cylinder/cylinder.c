@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/22 20:39:49 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/25 15:47:24 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,17 +133,17 @@ t_bool		hit_cylinder_surface2(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	w = vsub(r->orig, cy->coord_bot);
 	v = r->dir;
 	
-	a = vlength2(v) - pow(vdot(v, h), 2);
-	b = 2 * (vdot(v, w) - (vdot(v, h) * vdot(w, h)));
-	c = vlength2(w) - pow(vdot(w, h), 2) -  pow(cy->diameter / 2, 2);
+	a = vlength2(v) - pow(vdot(v, h), 2.0);
+	b = 2.0 * (vdot(v, w) - (vdot(v, h) * vdot(w, h)));
+	c = vlength2(w) - pow(vdot(w, h), 2.0) -  pow(cy->diameter / 2.0, 2.0);
 	
-	discriminant = pow(b, 2) - (4 * a * c);	
+	discriminant = pow(b, 2.0) - (4.0 * a * c);	
 	if (discriminant < 0)
 		return (FALSE);
-	root = (-b - sqrt(discriminant)) / (2 * a);
+	root = (-b - sqrt(discriminant)) / (2.0 * a);
 	if (root < rec->tmin || root > rec->tmax)
 	{
-		root = (-b + sqrt(discriminant)) / (2 * a);
+		root = (-b + sqrt(discriminant)) / (2.0 * a);
 		if (root < rec->tmin || root > rec->tmax)
 			return (FALSE);
 	}
@@ -164,7 +164,7 @@ t_bool		hit_cylinder_surface2(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	rec->p = ray_at(r, root);
 	// rec->normal = vunit(vsub(vsub(rec->p, cy->coord), vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir)));
 	rec->normal = vunit(vsub(vsub(rec->p, cy->coord_bot), vmul_t(vdot(h, vsub(rec->p, cy->coord_bot)), h)));
-	rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 	set_face_normal(r, rec);
 	return (TRUE);
 }
@@ -180,17 +180,17 @@ t_bool		hit_cylinder_circle2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_poin
 		return (FALSE);
 	numer = vdot(vsub(r->orig, circle_center), cy->dir);
 	t = -numer / denom;
-	if (vlength2(vsub(ray_at(r, t), circle_center)) <= pow(cy->diameter / 2.0, 2))
+	if (vlength2(vsub(ray_at(r, t), circle_center)) <= pow(cy->diameter / 2.0, 2.0))
 	{
 		if (t > rec->tmin && t < rec->tmax)
 		{
-			if (t < rec->t)
+			if (t <= rec->t)
 			{	
 				rec->t = t;
 				rec->p = ray_at(r, rec->t);
 				rec->normal = cy->dir; // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
-				// rec->normal = vmul_t(-1, cy->dir); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
-				rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+				// rec->normal = vmul_t(-1, cy->dir); // 교/점의 법선 벡터 : 평면의 방향 벡터의 역벡터
+				// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 				set_face_normal(r, rec);
 			}
 			return (TRUE);
