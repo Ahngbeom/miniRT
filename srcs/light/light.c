@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 15:59:39 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/25 17:23:41 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,25 @@ t_color3	phong_lighting(t_scene *scene)
 	// printf("%f, %f, %f\n", vmul(scene->rec.albedo, light_color).x, vmul(scene->rec.albedo, light_color).y, vmul(scene->rec.albedo, light_color).z);
 	// sleep(1);
 	return (vmin(vmul(scene->rec.albedo, light_color), color_init(1, 1, 1)));
+}
+
+t_color3	phong_lighting2(t_scene *scene)
+{
+	t_color3	light_color;
+	t_vec3		light_dir;
+
+	t_color3	diffuse;
+	double		kd;
+	
+	light_color = color_init(0, 0, 0);
+	
+	light_dir = vunit(vsub(scene->light.orig, scene->rec.p));
+	
+	// kd = fmax(vdot(vector_init(0, 0, 1), light_dir), 0.0);
+	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
+	diffuse = vmul_t(kd, vdiv(scene->light.light_color, 255));
+	light_color = vsum(light_color, diffuse);
+
+	light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, scene->ambient.color), 255));
+	return (vmin(vmul(light_color, scene->rec.albedo), color_init(1, 1, 1)));
 }

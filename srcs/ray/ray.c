@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:17:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 15:58:45 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/25 17:17:08 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_color3 	ray_color(t_scene *scene)
 		scene->rec.front_face = 0;
 		if (hit(scene->objects, &scene->ray, &scene->rec) == TRUE)
 		{
-			return (phong_lighting(scene));
+			return (phong_lighting2(scene));
 			// return (vmul_t(0.5, vsum(scene->rec.normal, color_init(1, 1, 1))));
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 15:47:24 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/25 17:36:32 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ t_bool		hit_cylinder_surface2(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	rec->p = ray_at(r, root);
 	// rec->normal = vunit(vsub(vsub(rec->p, cy->coord), vmul_t(vdot(cy->dir, vsub(rec->p, cy->coord)), cy->dir)));
 	rec->normal = vunit(vsub(vsub(rec->p, cy->coord_bot), vmul_t(vdot(h, vsub(rec->p, cy->coord_bot)), h)));
+	rec->normal = vunit(vsub(rec->p, vsum(vmul_t(vdot(h, vsub(rec->p, cy->coord_bot)), h), cy->coord_bot)));
 	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 	set_face_normal(r, rec);
 	return (TRUE);
