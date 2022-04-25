@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 17:36:04 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 02:03:51 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,21 @@ t_bool	hit(t_object *objects, t_ray *ray, t_hit_record *rec)
 	return (hit_anything);
 }
 
+t_bool	hit_shadow(t_object *objects, t_ray *ray, double limit)
+{
+	while (objects != NULL)
+	{
+		// if (objects->type == PLANE && interfere_plane(objects->element, ray, rec))
+		// 	return (FALSE);
+		if (objects->type == SPHERE && interfere_sphere(objects->element, ray, limit))
+			return (TRUE);
+		else if (objects->type == CYLINDER && interfere_cylinder(objects->element, ray, limit))
+			return (TRUE);
+		objects = objects->next;
+	}
+	return (FALSE);
+}
+
 t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 {
 	int	hit_result;
@@ -40,17 +55,16 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 	hit_result = FALSE;
 	if (objects->type == PLANE)
 		hit_result = hit_plane(objects->element, ray, rec);
-	if (objects->type == SPHERE)
+	else if (objects->type == SPHERE)
 		hit_result = hit_sphere(objects->element, ray, rec);
-	if (objects->type == CYLINDER)
+	else if (objects->type == CYLINDER)
 	{
-		// hit_result |= hit_cylinder_surface(objects->element, ray, rec);
-		// hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
-		// hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
+		hit_result = hit_cylinder(objects->element, ray, rec);
 		
-		hit_result |= hit_cylinder_surface2(objects->element, ray, rec);
-		hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
-		hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
+		// hit_result |= hit_cylinder_surface2(objects->element, ray, rec);
+		// hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
+		// hit_result |= hit_cylinder_circle2(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
 	}
 	return hit_result;
 }
+

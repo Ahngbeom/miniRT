@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 17:15:47 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 01:23:53 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_color3	get_point_light(t_scene *scene)
 		return (color_init(0, 0, 0));
 
 	// Diffuse
-	diffuse = color_init(0.336313, 0.940952, 0.336313);
+	// diffuse = color_init(0.336313, 0.940952, 0.336313);
 	// diffuse = color_init(1, 1, 1);
 	// diffuse = color_init(0.5, 0.5, 0.5);
 	diffuse = diffuse_calculator(light_dir, scene->light.light_color, scene->rec.normal);
@@ -75,8 +75,8 @@ t_color3	get_point_light(t_scene *scene)
 	// sleep(1);
 	
 	// Specular
-	specular = color_init(0, 0, 0);
-	// specular = specular_calculator(scene->ray.dir, light_dir, scene->light.light_color, scene->rec.normal);
+	// specular = color_init(0, 0, 0);
+	specular = specular_calculator(scene->ray.dir, light_dir, scene->light.light_color, scene->rec.normal);
 	
 	// Brightness
 	brightness = scene->light.bright_ratio * LUMEN;
