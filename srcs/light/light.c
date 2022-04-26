@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 15:32:53 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 22:20:54 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ t_color3	phong_lighting2(t_scene *scene)
 		light = lights->content;
 		light_dir = vsub(light->orig, scene->rec.p);
 		
-		kd = fmax(vdot(scene->rec.normal, vunit(light_dir)), 0.0);
+		kd = fmax(vdot(vunit(scene->rec.normal), vunit(light_dir)), 0.0);
 		diffuse = vmul_t(kd, vdiv(light->light_color, 255));
 		light_color = vsum(light_color, diffuse);
+		(void)diffuse;
+		(void)kd;
 		
 		light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, scene->ambient.color), 255));
 		lights = lights->next;

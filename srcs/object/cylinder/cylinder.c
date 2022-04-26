@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 16:24:20 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 22:07:04 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,8 +211,8 @@ t_bool		hit_cylinder_circle2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_poin
 			{	
 				rec->t = t;
 				rec->p = ray_at(r, rec->t);
-				rec->normal = vector_init(0.9, 0.9, 0.9); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
-				// rec->normal = cy->dir; // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
+				// rec->normal = vector_init(0.9, 0.9, 0.9); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
+				rec->normal = cy->dir; // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
 				// rec->normal = vmul_t(-1, cy->dir); // 교/점의 법선 벡터 : 평면의 방향 벡터의 역벡터
 				// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 				set_face_normal(r, rec);
