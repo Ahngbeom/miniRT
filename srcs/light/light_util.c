@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 15:29:23 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 16:22:30 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ t_color3	get_point_light(t_scene *scene)
 	// sleep(1);
 	
 	// Specular
-	specular = color_init(0, 0, 0);
-	// specular = specular_calculator(scene->ray.dir, light_dir, scene->light.light_color, scene->rec.normal);
+	// specular = color_init(0, 0, 0);
+	specular = specular_calculator(scene->ray.dir, light_dir, scene->light.light_color, scene->rec.normal);
 	
 	// Brightness
 	brightness = scene->lights.bright_ratio * LUMEN;
