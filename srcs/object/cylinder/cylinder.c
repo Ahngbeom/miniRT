@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 17:36:32 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 16:13:29 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point
 	rec->p = ray_at(r, rec->t);
 	rec->normal = cy->dir; // 원기둥의 법선 벡터를 교점의 법선 벡터에 그대로 대입
 	set_face_normal(r, rec); // 교점 법선 벡터와 광선의 방향 벡터는 항상 반대방향이어야한다.
-	rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+	// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 	return (TRUE);
 }
 
@@ -177,19 +177,20 @@ t_bool		hit_cylinder_circle2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_poin
 	double	t; // 평면 방정식 결과 값
 	
 	denom = vdot(r->dir, cy->dir); // 광선 단위 벡터와 평면의 방향 벡터 내적 연산
-	if (denom == 0)
+	if (fabs(denom) < EPSILON)
 		return (FALSE);
-	numer = vdot(vsub(r->orig, circle_center), cy->dir);
-	t = -numer / denom;
+	numer = vdot(vsub(circle_center, r->orig), cy->dir);
+	t = numer / denom;
 	if (vlength2(vsub(ray_at(r, t), circle_center)) <= pow(cy->diameter / 2.0, 2.0))
 	{
 		if (t > rec->tmin && t < rec->tmax)
 		{
-			if (t <= rec->t)
+			if (t < rec->t)
 			{	
 				rec->t = t;
 				rec->p = ray_at(r, rec->t);
-				rec->normal = cy->dir; // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
+				rec->normal = vector_init(0.9, 0.9, 0.9); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
+				// rec->normal = cy->dir; // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
 				// rec->normal = vmul_t(-1, cy->dir); // 교/점의 법선 벡터 : 평면의 방향 벡터의 역벡터
 				// rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 				set_face_normal(r, rec);

@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:22:52 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 14:19:31 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 14:08:53 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_bool	shadow_checker(t_object *objects, t_vec3 light_dir, t_hit_record rec)
 	light_ray = ray_init(vsum(rec.p, vmul_t(EPSILON, rec.normal)), light_dir);
 	shadow_rec.tmin = 0;
 	shadow_rec.tmax = light_len; // 광원 원점까지의 거리를 tmax 값에 대입
-	if (hit(objects, &light_ray, &shadow_rec) == TRUE) // 존재하는 각 오브젝트의 그림자 생성 여부 판단
+	if (shadow(objects, &light_ray, &shadow_rec) == TRUE) // 존재하는 각 오브젝트의 그림자 생성 여부 판단
 		return (TRUE);
 	else
 		return (FALSE);

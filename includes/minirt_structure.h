@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/20 13:18:32 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 15:29:23 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,8 @@ struct s_scene
 
 	t_object		*objects;
 	t_ambient		ambient; // 주변 조명
-	t_light			light; // 광원
+	// t_light			light; // 광원
+	t_list			*lights; // 광원
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 17:23:41 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 15:32:53 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_color3	phong_lighting(t_scene *scene)
 
 	scene->ambient.color = vmul_t(scene->ambient.ratio, vmul_t(1.0 / 255.0, scene->ambient.color));
 	light_color = color_init(0, 0, 0); // 광원이 없을 경우, 빛의 양은 0
-	light_color = get_point_light(scene); // diffuse, specular 계산
+	// light_color = get_point_light(scene); // diffuse, specular 계산
 
 	// printf("Albedo : %f, %f, %f\n", scene->rec.albedo.x, scene->rec.albedo.y, scene->rec.albedo.z);
 	// printf("Ambient Color : %f, %f, %f\n", scene->ambient.color.x, scene->ambient.color.y, scene->ambient.color.z);
@@ -47,21 +47,27 @@ t_color3	phong_lighting(t_scene *scene)
 
 t_color3	phong_lighting2(t_scene *scene)
 {
+	t_list		*lights;
+	t_light		*light;
 	t_color3	light_color;
 	t_vec3		light_dir;
-
+	
 	t_color3	diffuse;
 	double		kd;
 	
 	light_color = color_init(0, 0, 0);
-	
-	light_dir = vunit(vsub(scene->light.orig, scene->rec.p));
-	
-	// kd = fmax(vdot(vector_init(0, 0, 1), light_dir), 0.0);
-	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
-	diffuse = vmul_t(kd, vdiv(scene->light.light_color, 255));
-	light_color = vsum(light_color, diffuse);
-
-	light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, scene->ambient.color), 255));
+	lights = scene->lights;
+	while (lights)
+	{
+		light = lights->content;
+		light_dir = vsub(light->orig, scene->rec.p);
+		
+		kd = fmax(vdot(scene->rec.normal, vunit(light_dir)), 0.0);
+		diffuse = vmul_t(kd, vdiv(light->light_color, 255));
+		light_color = vsum(light_color, diffuse);
+		
+		light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, scene->ambient.color), 255));
+		lights = lights->next;
+	}
 	return (vmin(vmul(light_color, scene->rec.albedo), color_init(1, 1, 1)));
 }

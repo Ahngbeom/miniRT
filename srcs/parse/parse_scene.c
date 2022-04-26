@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:16:12 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/04/20 13:57:48 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 15:29:23 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,18 @@ void	parse_camera(t_scene *scene, char **split)
 
 void	parse_light(t_scene *scene, char **split)
 {
-	// t_light *light;
+	t_light *light;
 	
 	if (split_size(split) != 4)
 		print_error("Light usage: L [origin x,y,z] [brightness] [R,G,B]");
-	// light = malloc(sizeof(t_light));
-	parse_coords(&(scene->light.orig), split[1]);
-	scene->light.bright_ratio = ft_atod(split[2]);
-	parse_color3(&(scene->light.light_color), split[3]);
-	if (!check_color3(scene->light.light_color))
+	light = malloc(sizeof(t_light));
+	parse_coords(&(light->orig), split[1]);
+	light->bright_ratio = ft_atod(split[2]);
+	parse_color3(&(light->light_color), split[3]);
+	if (!check_color3(light->light_color))
 		print_error("Light RGB must be in range [0-255]");
-	// scene->light = light;
+	if (scene->lights == NULL)
+		scene->lights = ft_lstnew(light);
+	else
+		ft_lstadd_back(&scene->lights, ft_lstnew(light));
 }

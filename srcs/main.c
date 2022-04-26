@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/21 15:56:10 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/26 15:33:36 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 			exit(1);
 		}
 		scene->camera = NULL;
+		scene->lights = NULL;
 		scene->objects = NULL;
 		parse_file(scene, argv[1]);
 	}
