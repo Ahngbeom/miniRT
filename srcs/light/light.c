@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 22:20:54 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 13:59:40 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,22 @@ t_light	*light_init(t_point3 light_origin, t_color3 light_color, double bright_r
 
 t_color3	phong_lighting(t_scene *scene)
 {
+	t_list		*lights;
 	t_color3	light_color; // 빛의 양, 정도를 저장하기 위한 변수
 
-	scene->ambient.color = vmul_t(scene->ambient.ratio, vmul_t(1.0 / 255.0, scene->ambient.color));
 	light_color = color_init(0, 0, 0); // 광원이 없을 경우, 빛의 양은 0
-	// light_color = get_point_light(scene); // diffuse, specular 계산
+	lights = scene->lights;
+	while (lights)
+	{
+		light_color = vsum(light_color, get_point_light(scene, lights->content)); // diffuse, specular 계산
+		lights = lights->next;
+	}
 
 	// printf("Albedo : %f, %f, %f\n", scene->rec.albedo.x, scene->rec.albedo.y, scene->rec.albedo.z);
 	// printf("Ambient Color : %f, %f, %f\n", scene->ambient.color.x, scene->ambient.color.y, scene->ambient.color.z);
 	// printf("Light Color : %f, %f, %f\n", light_color.x, light_color.y, light_color.z);
 
-	light_color = vsum(light_color, scene->ambient.color);
+	light_color = vsum(light_color, vmul_t(scene->ambient.ratio, vdiv(scene->ambient.color, 255)));
 
 	
 	// printf("%f, %f, %f\n", vmul(scene->rec.albedo, light_color).x, vmul(scene->rec.albedo, light_color).y, vmul(scene->rec.albedo, light_color).z);
@@ -61,10 +66,16 @@ t_color3	phong_lighting2(t_scene *scene)
 	{
 		light = lights->content;
 		light_dir = vsub(light->orig, scene->rec.p);
-		
-		kd = fmax(vdot(vunit(scene->rec.normal), vunit(light_dir)), 0.0);
-		diffuse = vmul_t(kd, vdiv(light->light_color, 255));
-		light_color = vsum(light_color, diffuse);
+		if (shadow_checker(scene->objects, light_dir, scene->rec))
+			light_color = vsum(light_color, color_init(0, 0, 0));
+		else
+		{
+			kd = fmax(vdot(scene->rec.normal, vunit(light_dir)), 0.0);
+			diffuse = vmul_t(kd, vdiv(light->light_color, 255));
+			light_color = vsum(light_color, diffuse);
+			// printf("%f, %f, %f\n", light_color.x, light_color.y, light_color.z);
+		}
+		(void)light_dir;
 		(void)diffuse;
 		(void)kd;
 		

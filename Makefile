@@ -6,7 +6,7 @@
 #    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 13:30:16 by bahn              #+#    #+#              #
-#    Updated: 2022/04/26 15:32:39 by bahn             ###   ########.fr        #
+#    Updated: 2022/04/27 12:32:17 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,11 +68,11 @@ SRCS_FNAME	=	parse/get_next_line_utils.c \
 				object/cylinder/cylinder.c \
 				object/square/square.c \
 				light/light.c \
+				light/light_util.c \
 				shadow/shadow.c \
 				scene/output_scene.c \
 				utils/minirt_free.c \
 				main.c
-# light/light_util.c
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_FNAME))
 OBJS		=	$(SRCS:.c=.o)
 

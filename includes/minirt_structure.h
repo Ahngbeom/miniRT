@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 15:29:23 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 11:50:16 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_hit_record	t_hit_record;
 
 typedef struct s_ambient	t_ambient;
 typedef struct s_light		t_light;
+
+typedef struct s_matrix44	t_matrix44;
 
 typedef struct s_scene		t_scene;
 
@@ -157,6 +159,12 @@ struct s_light
 	t_point3	orig;
 	t_color3	light_color;
 	double		bright_ratio;
+};
+
+struct	s_matrix44
+{
+	double	x[4][4];
+	t_vec3	rotate_deg;
 };
 
 struct s_scene

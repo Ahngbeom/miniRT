@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:11:41 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/20 20:47:59 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 01:55:51 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_camera(t_scene *scene)
 		cam->viewport_width = cam->viewport_height * scene->canvas.aspect_ratio;
 		// 카메라 좌표계 설정. 기저벡터?
 		cam->vup = vector_init(0, 1, 0); // 카메라 기울기
-		cam->w = vunit(vmul_t(-h, cam->dir));	// 카메라 좌표계 z축. 카메라와 뷰포트의 거리 단위 벡터
+		cam->w = vunit(vmul_t(-1, cam->dir));	// 카메라 좌표계 z축. 카메라와 뷰포트의 거리 단위 벡터
 		// cam->w = vunit(vmul_t(h, cam->orig));	// 카메라 좌표계 z축. 카메라와 뷰포트의 거리 단위 벡터
 		cam->u = vunit(vcross(cam->vup, cam->w)); // 카메라 좌표계 x축. vup과 w의 외적 : vup 벡터와 w 벡터의 수직 벡터를 카메라 좌표계의 x축으로 잡는다.
 		cam->v = vcross(cam->w, cam->u);	// 카메라 좌표계 y축. w와 u의 외적 : w 벡터와 u 벡터의 수직 벡터를 카메라 좌표계의 y축으로 잡는다.
@@ -48,18 +48,18 @@ void	init_camera(t_scene *scene)
 	// scene->camera.vertical = vector_init(0, scene->camera.viewport_height, 0); // 뷰포트 수직(높이) 길이 벡터
 
 	
-	cam = scene->camera->content;
-	printf("Camera Info (%d)\n", ft_lstsize(scene->camera));
-	printf("Camera View point : %f, %f, %f\n", cam->orig.x, cam->orig.y, cam->orig.z);
-	printf("Camera Direction : %f, %f, %f\n", cam->dir.x, cam->dir.y, cam->dir.z);
-	printf("Camera FOV : %d\n", cam->fov);
-	printf("Camera View up : %f, %f, %f\n", cam->vup.x, cam->vup.y, cam->vup.z);
-	printf("Camera w : %f, %f, %f\n", cam->w.x, cam->w.y, cam->w.z);
-	printf("Camera u : %f, %f, %f\n", cam->u.x, cam->u.y, cam->u.z);
-	printf("Camera v : %f, %f, %f\n", cam->v.x, cam->v.y, cam->v.z);
-	printf("Camera horizontal : %f, %f, %f\n", cam->horizontal.x, cam->horizontal.y, cam->horizontal.z);
-	printf("Camera vertical : %f, %f, %f\n", cam->vertical.x, cam->vertical.y, cam->vertical.z);
-	printf("Lower left Corner Point: %f, %f, %f\n\n", cam->lower_left_corner.x, cam->lower_left_corner.y, cam->lower_left_corner.z);
+	// cam = scene->camera->content;
+	// printf("Camera Info (%d)\n", ft_lstsize(scene->camera));
+	// printf("Camera View point : %f, %f, %f\n", cam->orig.x, cam->orig.y, cam->orig.z);
+	// printf("Camera Direction : %f, %f, %f\n", cam->dir.x, cam->dir.y, cam->dir.z);
+	// printf("Camera FOV : %d\n", cam->fov);
+	// printf("Camera View up : %f, %f, %f\n", cam->vup.x, cam->vup.y, cam->vup.z);
+	// printf("Camera w : %f, %f, %f\n", cam->w.x, cam->w.y, cam->w.z);
+	// printf("Camera u : %f, %f, %f\n", cam->u.x, cam->u.y, cam->u.z);
+	// printf("Camera v : %f, %f, %f\n", cam->v.x, cam->v.y, cam->v.z);
+	// printf("Camera horizontal : %f, %f, %f\n", cam->horizontal.x, cam->horizontal.y, cam->horizontal.z);
+	// printf("Camera vertical : %f, %f, %f\n", cam->vertical.x, cam->vertical.y, cam->vertical.z);
+	// printf("Lower left Corner Point: %f, %f, %f\n\n", cam->lower_left_corner.x, cam->lower_left_corner.y, cam->lower_left_corner.z);
 }
 
 void	set_camera(t_scene *scene)

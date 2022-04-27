@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 15:33:36 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 01:55:35 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	init_canvas(scene, WIDTH, HEIGHT);
 	init_camera(scene);
 
-	printf("Ambient Info\n");
-	printf("Ratio : %f\n", scene->ambient.ratio);
-	printf("Color : %f, %f, %f\n\n", scene->ambient.color.x, scene->ambient.color.y, scene->ambient.color.z);
+	// printf("Ambient Info\n");
+	// printf("Ratio : %f\n", scene->ambient.ratio);
+	// printf("Color : %f, %f, %f\n\n", scene->ambient.color.x, scene->ambient.color.y, scene->ambient.color.z);
 
 	// t_object *list = scene->objects;
 	// while (list != NULL)

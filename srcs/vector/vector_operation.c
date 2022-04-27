@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:39:46 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 17:14:39 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 13:24:09 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ t_vec3	vunit(t_vec3 v) // 단위 벡터 반환
 	double	len;
 
 	len = vlength(v);
-	// if (len == 0)
-	// {
-	// 	printf("Error\n:Devider is 0");
-	// 	minirt_close(0, NULL);
-	// }
+	if (len == 0)
+	{
+		printf("Error\n:Devider is 0");
+		minirt_close(0, NULL);
+	}
 	v.x /= len;
 	v.y /= len;
 	v.z /= len;

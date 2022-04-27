@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:46:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 22:07:04 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 12:28:21 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ double		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 	
 	t_vec3	h;
 	t_vec3	w;
+	t_vec3	v;
 	
 	double	a;
 	// double	half_b;
@@ -73,9 +74,10 @@ double		hit_cylinder_surface(t_cylinder *cy, t_ray *r, t_hit_record *rec)
 
 	h = vunit(vsub(cy->coord_top, cy->coord_bot));
 	w = vsub(r->orig, cy->coord_bot);
+	v = r->dir;
 	
-	a = vlength2(r->dir) - pow(vdot(r->dir, h), 2.0);
-	b = 2.0 * (vdot(r->dir, w) - (vdot(r->dir, h) * vdot(w, h)));
+	a = vlength2(v) - pow(vdot(v, h), 2.0);
+	b = 2.0 * (vdot(r->dir, w) - (vdot(v, h) * vdot(w, h)));
 	c = vlength2(w) - pow(vdot(w, h), 2.0) -  pow(cy->diameter / 2.0, 2.0);
 	
 	discriminant = pow(b, 2.0) - (4.0 * a * c);	

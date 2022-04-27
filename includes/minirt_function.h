@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 16:24:37 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 12:34:37 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_bool		hit_shadow(t_object *objects, t_ray *ray, double limit);
 t_light		*light_init(t_point3 light_origin, t_color3 light_color, double bright_ratio);
 t_color3	phong_lighting(t_scene *scene);
 t_color3	phong_lighting2(t_scene *scene);
-t_color3	get_point_light(t_scene *scene);
+t_color3	get_point_light(t_scene *scene, t_light *light);
 t_color3	diffuse_calculator(t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal);
 t_vec3		reflect(t_vec3 v, t_vec3 n);
 t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal);
