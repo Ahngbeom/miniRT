@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:22:52 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 16:22:45 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/28 16:07:50 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,22 @@ t_bool	shadow_checker(t_object *objects, t_vec3 light_dir, t_hit_record rec)
 		return (TRUE);
 	else
 		return (FALSE);
+}
+
+t_bool	shadow(t_object *objects, t_ray *ray, t_hit_record *rec)
+{
+	t_bool			hit_anything;
+	t_hit_record	tmp_rec;
+
+	tmp_rec = *rec;
+	hit_anything = FALSE;
+	while (objects != NULL)
+	{
+		if (hit_object(objects, ray, &tmp_rec) == TRUE)
+		{
+			hit_anything = TRUE;
+		}
+		objects = objects->next;
+	}
+	return (hit_anything);
 }

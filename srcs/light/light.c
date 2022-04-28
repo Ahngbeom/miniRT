@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/27 13:59:40 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/28 16:33:25 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,15 @@ t_color3	phong_lighting2(t_scene *scene)
 	t_color3	diffuse;
 	double		kd;
 	
+	// t_color3	specular;
+	// t_vec3		view_dir;
+	// t_vec3		reflect_dir;
+	// double		spec;
+	// double		ksn;
+	// double		ks;
+
+	double		brightness;
+
 	light_color = color_init(0, 0, 0);
 	lights = scene->lights;
 	while (lights)
@@ -73,14 +82,20 @@ t_color3	phong_lighting2(t_scene *scene)
 			kd = fmax(vdot(scene->rec.normal, vunit(light_dir)), 0.0);
 			diffuse = vmul_t(kd, vdiv(light->light_color, 255));
 			light_color = vsum(light_color, diffuse);
-			// printf("%f, %f, %f\n", light_color.x, light_color.y, light_color.z);
+			
+			// view_dir = vunit(vmul_t(-1.0, scene->ray.dir));
+			// reflect_dir = reflect(vmul_t(-1.0, light_dir), scene->rec.normal);
+			// ksn = 64;
+			// ks = 0.5;
+			// spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), ksn);
+			// specular = vmul_t(spec, vmul_t(ks, light->light_color));
+			// light_color = vsum(light_color, specular);
+			
+			brightness = light->bright_ratio * LUMEN;
+			light_color = vmul_t(brightness, light_color);
 		}
-		(void)light_dir;
-		(void)diffuse;
-		(void)kd;
-		
-		light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, scene->ambient.color), 255));
 		lights = lights->next;
 	}
+	light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, scene->ambient.color), 255));
 	return (vmin(vmul(light_color, scene->rec.albedo), color_init(1, 1, 1)));
 }

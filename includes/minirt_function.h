@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/27 12:34:37 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 15:40:05 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,17 @@ t_bool		interfere_sphere(t_sphere *sp, t_ray *ray, double limit);
 
 // Cylinder
 t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal);
+
 t_bool		hit_cylinder(t_cylinder *cy, t_ray *r, t_hit_record *rec);
-double		hit_cylinder_surface(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
-t_bool		hit_cylinder_surface2(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
-double		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec);
-t_bool		hit_cylinder_circle2(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point3 center);
+double		hit_finite_cylinder(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
+double		hit_disk(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_bool is_top);
+
+t_bool		intersect_cylinder(t_cylinder *cy, t_ray *r, t_hit_record *rec);
+t_bool		intersect_disk(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point3 center);
+
+t_bool		hit_cylinder_surface(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
+t_bool		hit_cylinder_circle(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_point3 center);
+
 t_bool		interfere_cylinder(t_cylinder *cy, t_ray *ray, double limit);
 
 // Square

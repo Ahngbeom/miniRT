@@ -6,7 +6,7 @@
 #    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 13:30:16 by bahn              #+#    #+#              #
-#    Updated: 2022/04/27 12:32:17 by bahn             ###   ########.fr        #
+#    Updated: 2022/04/28 15:54:29 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,6 @@ SRCS_FNAME	=	parse/get_next_line_utils.c \
 				object/sphere/sphere.c \
 				object/plane/plane.c \
 				object/cylinder/cylinder.c \
-				object/square/square.c \
 				light/light.c \
 				light/light_util.c \
 				shadow/shadow.c \
