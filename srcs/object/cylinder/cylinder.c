@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 14:43:01 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/28 16:07:11 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/28 16:44:03 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	double		t_disk_top;
 	double		t_disk_bot;
 
-	t = hit_finite_cylinder(cy, ray, rec);
-	t_disk_top = hit_disk(cy, ray, rec, TRUE);
-	t_disk_bot = hit_disk(cy, ray, rec, FALSE);
+	t = hit_cylinder_surface(cy, ray, rec);
+	t_disk_top = hit_cylinder_disk(cy, ray, rec, TRUE);
+	t_disk_bot = hit_cylinder_disk(cy, ray, rec, FALSE);
 	if (t == INFINITY && t_disk_top == INFINITY && t_disk_bot == INFINITY)
 		return (FALSE);
 	if (t < t_disk_top && t < t_disk_bot)
@@ -71,7 +71,7 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	return (TRUE);
 }
 
-double		hit_finite_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+double		hit_cylinder_surface(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 {
 	// double		a;
 	// double		half_b;
@@ -134,7 +134,7 @@ double		hit_finite_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	return (root);
 }
 
-double		hit_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top)
+double		hit_cylinder_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top)
 {
 	t_point3	p;
 	t_point3	p0;
@@ -167,8 +167,8 @@ t_bool		interfere_cylinder(t_cylinder *cy, t_ray *ray, double limit)
 
 	rec.tmin = EPSILON;
 	rec.tmax = limit;
-	r_t = hit_finite_cylinder(cy, ray, &rec);
-	c_t = hit_disk(cy, ray, &rec, TRUE);
+	r_t = hit_cylinder_surface(cy, ray, &rec);
+	c_t = hit_cylinder_disk(cy, ray, &rec, TRUE);
 	if (r_t == INFINITY && c_t == INFINITY)
 		return (FALSE);
 	return (TRUE);
