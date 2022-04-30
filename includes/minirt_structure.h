@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 21:38:55 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/28 16:17:45 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ struct s_sphere
 {
 	t_point3	center;
 	double		diameter;
-	double		diameter2;
+	double		radius;
 };
 
 struct s_plane
@@ -112,9 +112,12 @@ struct s_plane
 struct s_cylinder
 {
 	t_point3	coord;
-	t_vec3		normal;
+	t_vec3		dir;
 	double		diameter;
 	double		height;
+	
+	t_point3	coord_top;
+	t_point3	coord_bot;
 };
 
 struct s_square
@@ -129,7 +132,6 @@ struct s_object
 	t_object_type	type;
 	void			*element;
 	t_color3		color;
-	t_color3		albedo;
 	void			*next;
 };
 
@@ -160,14 +162,16 @@ struct s_light
 struct s_scene
 {
 	t_vars			*vars;
-	t_camera		camera;
+	// t_camera		camera;
+	t_list			*camera;
 	t_canvas		canvas;
 	t_ray			ray;
 	t_hit_record	rec;
 
 	t_object		*objects;
 	t_ambient		ambient; // 주변 조명
-	t_light			light; // 광원
+	// t_light			light; // 광원
+	t_list			*lights; // 광원
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 00:21:21 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/28 16:44:22 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,19 @@ int			minirt_close(int keycode, t_scene *scene);
 int			minirt_esc(int keycode, t_scene *scene);
 int			camera_move(int keycode, t_scene *scene);
 int			camera_zoom(int keycode, int x, int y, t_scene *scene);
+int			camera_switch(t_scene *scene);
 
 // Output & Display Color per Pixel
 void		minirt_pixel_put(t_img_data *data, int x, int y, int color);
 void		minirt_pixel_put_vector(t_img_data *data, int x, int y, t_color3 color);
-t_color3	write_color(int fd, t_color3 color);
+t_color3	write_color(t_color3 color);
 
 // Canvas
 void		init_canvas(t_scene *scene, int width, int height);
 
 // Camera
-void		init_camera(t_scene *scene, int fov);
+void		init_camera(t_scene *scene);
+void		set_camera(t_scene *scene);
 
 // Vector
 t_vec3		vector_init(double x, double y, double z);
@@ -61,7 +63,7 @@ t_color3 	ray_color(t_scene *scene);
 void    	set_face_normal(t_ray *r, t_hit_record *rec);
 
 // Object
-t_object	*object_init(t_object_type type, void *element, t_color3 color, t_color3 albedo);
+t_object	*object_init(t_object_type type, void *element, t_color3 color);
 void		object_add(t_object **list, t_object *new);
 t_object	*object_last(t_object *list);
 void		object_clear(t_object **list);
@@ -69,27 +71,37 @@ void		object_clear(t_object **list);
 // Determining Hittable Object
 t_bool		hit(t_object *objects, t_ray *ray, t_hit_record *rec);
 t_bool		hit_object(t_object *objects, t_ray *ray, t_hit_record *rec);
+t_bool		hit_shadow(t_object *objects, t_ray *ray, double limit);
 
 // Light
 t_light		*light_init(t_point3 light_origin, t_color3 light_color, double bright_ratio);
 t_color3	phong_lighting(t_scene *scene);
+t_color3	phong_lighting2(t_scene *scene);
 t_color3	get_point_light(t_scene *scene, t_light *light);
+t_color3	diffuse_calculator(t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal);
+t_vec3		reflect(t_vec3 v, t_vec3 n);
+t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal);
 
 // Shadow
-t_bool		shadow_checker(t_object *objects, t_light light, t_vec3 light_dir, t_hit_record rec);
-
-// Sphere
-t_sphere	*sphere_init(t_point3 center, double diameter);
-int			hit_sphere(t_object *sphere, t_ray *r, t_hit_record *rec);
+t_bool		shadow_checker(t_object *objects, t_vec3 light_dir, t_hit_record rec);
+t_bool		shadow(t_object *objects, t_ray *ray, t_hit_record *rec);
 
 // Plane
 t_plane		*plane_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_plane(t_object *objects, t_ray *r, t_hit_record *rec);
-t_bool		intersect_plane(t_object *objects, t_ray *ray, t_hit_record *rec);
+t_bool		hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec);
+
+// Sphere
+t_sphere	*sphere_init(t_point3 center, double diameter);
+int			hit_sphere(t_sphere *sphere, t_ray *r, t_hit_record *rec);
+t_bool		interfere_sphere(t_sphere *sp, t_ray *ray, double limit);
 
 // Cylinder
 t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal);
-t_bool		hit_cylinder(t_object *objects, t_ray *r, t_hit_record *rec);
+
+t_bool		hit_cylinder(t_cylinder *cy, t_ray *r, t_hit_record *rec);
+double		hit_cylinder_surface(t_cylinder *cylinder, t_ray *r, t_hit_record *rec);
+double		hit_cylinder_disk(t_cylinder *cy, t_ray *r, t_hit_record *rec, t_bool is_top);
+t_bool		interfere_cylinder(t_cylinder *cy, t_ray *ray, double limit);
 
 // Square
 t_square	*square_init(t_point3 center, t_vec3 normal, double side_len);

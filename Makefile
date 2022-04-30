@@ -6,7 +6,7 @@
 #    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 13:30:16 by bahn              #+#    #+#              #
-#    Updated: 2022/04/03 20:55:16 by bahn             ###   ########.fr        #
+#    Updated: 2022/04/28 15:54:29 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,6 @@ SRCS_FNAME	=	parse/get_next_line_utils.c \
 				object/sphere/sphere.c \
 				object/plane/plane.c \
 				object/cylinder/cylinder.c \
-				object/square/square.c \
 				light/light.c \
 				light/light_util.c \
 				shadow/shadow.c \
@@ -87,6 +86,7 @@ endif
 $(NAME)		:	$(OBJS)
 			$(MAKE) all -C $(MLX_PATH)
 			$(MAKE) all -C $(LIBFT_PATH)
+			$(MAKE) bonus -C $(LIBFT_PATH)
 ifeq ($(OS), Linux)
 			$(CC) $(CFLAGS) $^ $(INCFLAGS) $(LIBFT_LINK) $(MLX_FLAGS) -o $@
 else

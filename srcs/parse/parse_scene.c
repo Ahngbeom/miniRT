@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:16:12 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/04/04 16:43:08 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/04/26 15:29:23 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,31 +47,41 @@ void	parse_coords(t_vec3 *point, char *vec)
 
 void	parse_camera(t_scene *scene, char **split)
 {
-	// t_camera *cam;
+	t_camera *cam;
 
 	if (split_size(split) != 4)
 		print_error("Camera usage: C [origin x,y,z] [normal x,y,z] [fov]");
-	// cam = malloc(sizeof(t_camera));
-	parse_coords(&(scene->camera.orig), split[1]);
-	parse_coords(&(scene->camera.dir), split[2]);
-	// cam->fov = ft_atoi(split[3]);
-	scene->camera.fov = ft_atoi(split[3]);
-	if (scene->camera.fov < 0 || scene->camera.fov > 180)
+	cam = malloc(sizeof(t_camera));
+	// parse_coords(&(scene->camera.orig), split[1]);
+	// parse_coords(&(scene->camera.dir), split[2]);
+	parse_coords(&(cam->orig), split[1]);
+	parse_coords(&(cam->dir), split[2]);
+	cam->fov = ft_atoi(split[3]);
+	// scene->camera.fov = ft_atoi(split[3]);
+	if (cam->fov < 0 || cam->fov > 180)
 		print_error("Camera FOV must be in range [0-180]");
 	// scene->camera = cam;
+
+	if (scene->camera == NULL)
+		scene->camera = ft_lstnew(cam);
+	else
+		ft_lstadd_back(&scene->camera, ft_lstnew(cam));
 }
 
 void	parse_light(t_scene *scene, char **split)
 {
-	// t_light *light;
+	t_light *light;
 	
 	if (split_size(split) != 4)
 		print_error("Light usage: L [origin x,y,z] [brightness] [R,G,B]");
-	// light = malloc(sizeof(t_light));
-	parse_coords(&(scene->light.orig), split[1]);
-	scene->light.bright_ratio = ft_atod(split[2]);
-	parse_color3(&(scene->light.light_color), split[3]);
-	if (!check_color3(scene->light.light_color))
+	light = malloc(sizeof(t_light));
+	parse_coords(&(light->orig), split[1]);
+	light->bright_ratio = ft_atod(split[2]);
+	parse_color3(&(light->light_color), split[3]);
+	if (!check_color3(light->light_color))
 		print_error("Light RGB must be in range [0-255]");
-	// scene->light = light;
+	if (scene->lights == NULL)
+		scene->lights = ft_lstnew(light);
+	else
+		ft_lstadd_back(&scene->lights, ft_lstnew(light));
 }

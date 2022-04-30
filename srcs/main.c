@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 17:03:40 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/27 01:55:35 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	{
 		printf("Invalid Arguments\n");
 		printf("./miniRT\n");
-		printf("./miniRT [file path to save] [--save]\n");
-		printf("./miniRT [.rt file path] [--save]\n");
 		exit(1);
 	}
 	else if (argc >= 2)
@@ -28,10 +26,10 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 		{
 			printf("Invalid Arguments\n");
 			printf("./miniRT\n");
-			printf("./miniRT [file path to save] [--save]\n");
-			printf("./miniRT [.rt file path] [--save]\n");
 			exit(1);
 		}
+		scene->camera = NULL;
+		scene->lights = NULL;
 		scene->objects = NULL;
 		parse_file(scene, argv[1]);
 	}
@@ -52,16 +50,13 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 												&scene->vars->img_data->endian);
 
 	init_canvas(scene, WIDTH, HEIGHT);
-	init_camera(scene, scene->camera.fov);
+	init_camera(scene);
 
-	// printf("Ambient Ratio : %f\n", scene.ambient.ratio);
-	// printf("Ambient Color : %f, %f, %f\n\n", scene.ambient.color.x, scene.ambient.color.y, scene.ambient.color.z);
+	// printf("Ambient Info\n");
+	// printf("Ratio : %f\n", scene->ambient.ratio);
+	// printf("Color : %f, %f, %f\n\n", scene->ambient.color.x, scene->ambient.color.y, scene->ambient.color.z);
 
-	// printf("Light Point : %f, %f, %f\n", scene.light.orig.x, scene.light.orig.y, scene.light.orig.z);
-	// printf("Light Ratio : %f\n", scene.light.bright_ratio);
-	// printf("Light Color : %f, %f, %f\n\n", scene.light.light_color.x, scene.light.light_color.y, scene.light.light_color.z);
-	
-	// t_object *list = scene.objects;
+	// t_object *list = scene->objects;
 	// while (list != NULL)
 	// {
 	// 	if (list->type == SPHERE)
@@ -82,14 +77,15 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	// 	{
 	// 		printf("Type : CYLINDER(%d)\n", list->type);
 	// 		printf("Coodinates : %f, %f, %f\n", ((t_cylinder*)list->element)->coord.x, ((t_cylinder*)list->element)->coord.y, ((t_cylinder*)list->element)->coord.z);
-	// 		printf("Normal Vector : %f, %f, %f\n", ((t_cylinder*)list->element)->normal.x, ((t_cylinder*)list->element)->normal.y, ((t_cylinder*)list->element)->normal.z);
+	// 		printf("Normal Vector : %f, %f, %f\n", ((t_cylinder*)list->element)->dir.x, ((t_cylinder*)list->element)->dir.y, ((t_cylinder*)list->element)->dir.z);
 	// 		printf("Diameter : %f\n", ((t_cylinder*)list->element)->diameter);
 	// 		printf("Height : %f\n", ((t_cylinder*)list->element)->height);
-	// 		printf("Color : %f, %f, %f\n\n", list->color.x, list->color.y, list->color.z);
+	// 		printf("Color : %f, %f, %f\n", list->color.x, list->color.y, list->color.z);
+	// 		printf("Top Center : %f, %f, %f\n", ((t_cylinder*)list->element)->coord_top.x, ((t_cylinder*)list->element)->coord_top.y, ((t_cylinder*)list->element)->coord_top.z);
+	// 		printf("Bottom Center : %f, %f, %f\n\n", ((t_cylinder*)list->element)->coord_bot.x, ((t_cylinder*)list->element)->coord_bot.y, ((t_cylinder*)list->element)->coord_bot.z);
 	// 	}
 	// 	list = list->next;
 	// }
-	// exit(0);
 }
 
 int main(int argc, char const *argv[])

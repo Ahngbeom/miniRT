@@ -6,48 +6,44 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/06 16:28:05 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/28 16:07:52 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_bool	hit(t_object *world, t_ray *ray, t_hit_record *rec)
+t_bool	hit(t_object *objects, t_ray *ray, t_hit_record *rec)
 {
 	t_bool			hit_anything;
 	t_hit_record	tmp_rec;
 
 	tmp_rec = *rec;
 	hit_anything = FALSE;
-	while (world != NULL)
+	while (objects != NULL)
 	{
-		if (hit_object(world, ray, &tmp_rec) > 0)
+		if (hit_object(objects, ray, &tmp_rec) == TRUE)
 		{
 			hit_anything = TRUE;
+			tmp_rec.albedo = vmul_t(1.0 / 255.0, objects->color);
 			*rec = tmp_rec;
 			tmp_rec.tmax = tmp_rec.t;
 		}
-		world = world->next;
+		objects = objects->next;
 	}
 	return (hit_anything);
 }
 
-t_bool	hit_object(t_object *world, t_ray *ray, t_hit_record *rec)
+t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 {
 	int	hit_result;
-
-	hit_result = FALSE;
 	
-	if (world->type == PLANE)
-	{
-		// hit_result = hit_plane(world, ray, rec);
-		hit_result = intersect_plane(world, ray, rec);
-	}
-	else if (world->type == SPHERE)
-		hit_result = hit_sphere(world, ray, rec);
-	else if (world->type == CYLINDER)
-		hit_result = hit_cylinder(world, ray, rec);	
-	// else if (world->type == SQUARE)	
-	// 	hit_result = hit_square(world, ray, rec);
+	hit_result = FALSE;
+	if (objects->type == PLANE)
+		hit_result = hit_plane(objects->element, ray, rec);
+	else if (objects->type == SPHERE)
+		hit_result = hit_sphere(objects->element, ray, rec);
+	else if (objects->type == CYLINDER)
+		hit_result = hit_cylinder(objects->element, ray, rec);
 	return hit_result;
 }
+
