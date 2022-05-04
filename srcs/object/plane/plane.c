@@ -26,9 +26,9 @@ t_plane		*plane_init(t_point3 orig, t_vec3 normal)
 
 t_bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec)
 {
-	double	denom; // Denominator : 분모. 판별식의 분모
-	double	numer; // Numerator : 분자. 판별식의 분자
-	double	t; // 평면 방정식 결과 값
+	double	denom;
+	double	numer;
+	double	t;
 
 	denom = vdot(ray->dir, plane->dir); // 광선 단위 벡터와 평면의 방향 벡터 내적 연산
 	numer = vdot(vsub(plane->coord, ray->orig), plane->dir);
@@ -36,8 +36,8 @@ t_bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec)
 	if (t > rec->tmin && t < rec->tmax)
 	{
 		rec->t = t;
-		rec->normal = vmul_t(-1, plane->dir); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
 		rec->p = ray_at(ray, t);
+		rec->normal = vmul_t(-1, plane->dir);
 		return (TRUE);
 	}
 	return (FALSE);

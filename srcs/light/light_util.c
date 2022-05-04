@@ -14,17 +14,9 @@
 
 t_color3	diffuse_calculator(t_vec3 light_dir, t_color3 light_color, t_vec3 rec_normal)
 {
-	double		kd; // Diffuse 강도
+	double		kd;
 	
-	// light_dir과 rec_normal은 단위벡터이기 때문에 두 단위 벡터의 내적 연산의 결과는 cosθ가 된다.
-	// 사이각 θ가 0~90도 일때, cosθ 값은 1 ~ 0이므로,
-	// cosθ는 θ값이 90도일 때 0, θ가 둔각이 되면 음수. 음수일 경우 0.0으로 대체.
-	// printf("%f\n", vdot(rec_normal, vunit(light_dir)));
 	kd = fmax(vdot(rec_normal, vunit(light_dir)), 0.0);
-		// return (color_init(1, 1, 1));
-	// printf("Record Normal : %f, %f, %f\n", rec_normal.x, rec_normal.y, rec_normal.z);
-	// printf("Light Direction : %f, %f, %f\n", light_dir.x, light_dir.y, light_dir.z);
-	// diffuse의 강도와 빛의 양을 곱해주면 교점에 도달한 빛의 양을 계산할 수 있다.
 	return (vmul_t(kd, vmul_t(1.0 / 255.0, light_color)));
 }
 
@@ -59,24 +51,15 @@ t_color3	get_point_light(t_scene *scene, t_light *light)
 	t_color3	specular;
 	double		brightness;
 
-	// Light Direction
-	light_dir = vsub(light->orig, scene->rec.p); // 교점과 광원까지의 거리
-	light_dir = vsub(light->orig, vsum(scene->rec.p, vmul_t(EPSILON, scene->rec.normal))); // 교점과 광원까지의 거리
+	light_dir = vsub(light->orig, scene->rec.p);
 
-	// Shadow
 	if (shadow_checker(scene->objects, light_dir, scene->rec))
 		return (color_init(0, 0, 0));
 
 	// Diffuse
-	// diffuse = color_init(0.336313, 0.940952, 0.336313);
-	// diffuse = color_init(1, 1, 1);
-	// diffuse = color_init(0.5, 0.5, 0.5);
 	diffuse = diffuse_calculator(light_dir, light->light_color, scene->rec.normal);
-	// printf("Diffuse : %f, %f, %f\n", diffuse.x, diffuse.y, diffuse.z);
-	// sleep(1);
 	
 	// Specular
-	// specular = color_init(0, 0, 0);
 	specular = specular_calculator(scene->ray.dir, light_dir, light->light_color, scene->rec.normal);
 	
 	// Brightness
