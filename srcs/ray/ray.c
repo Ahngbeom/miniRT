@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:17:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/14 16:18:33 by bahn             ###   ########.fr       */
+/*   Updated: 2022/04/28 16:07:02 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ t_color3 	ray_color(t_scene *scene)
 	{
 		scene->rec.tmin = EPSILON; // 오브젝트와 카메라 간 거리 최솟값
 		scene->rec.tmax = INFINITY; // 오브젝트와 카메라 간 거리 최댓값
-		scene->rec.front_face = 0; // 오브젝트와 카메라 간 거리 최댓값
 		if (hit(scene->objects, &scene->ray, &scene->rec) == TRUE)
 		{
-			return (phong_lighting(scene));
+			return (phong_lighting2(scene));
+			// return (vmul_t(0.5, vsum(scene->rec.normal, color_init(1, 1, 1))));
 		}
 	}
 	// 광선의 방향 단위 벡터 y축을 통해 색상 결정

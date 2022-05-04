@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/18 20:24:09 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/05/04 16:08:15 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,7 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 	else if (objects->type == SPHERE)
 		hit_result = hit_sphere(objects->element, ray, rec);
 	else if (objects->type == CYLINDER)
-	{
-		hit_result |= hit_cylinder_surface(objects->element, ray, rec);
-		hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_top);
-		hit_result |= hit_cylinder_circle(objects->element, ray, rec, ((t_cylinder*)objects->element)->coord_bot);
-	}
-	// else if (objects->type == SQUARE)	
-	// 	hit_result = hit_square(objects, ray, rec);
-	return (hit_result);
+		hit_result = hit_cylinder(objects->element, ray, rec);
+	return hit_result;
 }
+

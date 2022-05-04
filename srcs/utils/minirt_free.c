@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 20:57:16 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/04 16:39:48 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/05/04 15:26:44 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,17 @@ void	split_free(char **s)
 		i++;
 	}
 	free(s);
+}
+
+void	lstclear(t_list **lst)
+{
+	t_list	*next;
+
+	while (*lst)
+	{
+		next = (*lst)->next;
+		free((*lst)->content);
+		free(*lst);
+		*lst = next;
+	}
 }
