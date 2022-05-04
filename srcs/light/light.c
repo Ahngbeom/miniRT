@@ -74,12 +74,12 @@ t_color3	phong_lighting2(t_scene *scene)
 	while (lights)
 	{
 		light = lights->content;
-		light_dir = vsub(light->orig, scene->rec.p);
-		if (shadow_checker(scene->objects, light_dir, scene->rec))
+		light_dir = vunit(vsub(light->orig, scene->rec.p));
+		if (shadow_checker(scene->objects, vsub(light->orig, scene->rec.p), scene->rec))
 			light_color = vsum(light_color, color_init(0, 0, 0));
 		else
 		{
-			kd = fmax(vdot(scene->rec.normal, vunit(light_dir)), 0.0);
+			kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
 			diffuse = vmul_t(kd, vdiv(light->light_color, 255));
 			light_color = vsum(light_color, diffuse);
 			

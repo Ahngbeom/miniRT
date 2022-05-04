@@ -64,40 +64,11 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 		rec->normal = cy->dir;
 		set_face_normal(ray, rec);
 	}
-	// if (rec->t < INFINITY)
-	// {
-	// 	printf("%f\n", rec->t);
-	// }
 	return (TRUE);
 }
 
 double		hit_cylinder_surface(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 {
-	// double		a;
-	// double		half_b;
-	// double		c; 
-	// double		d;
-	// double		t;
-
-	// a = vlength2(vcross(ray->dir, cy->dir));
-	// half_b = vdot(vcross(ray->dir, cy->dir), vcross(vsub(ray->orig, cy->coord_bot), cy->dir));
-	// c = vlength2(vcross(vsub(ray->orig, cy->coord_bot), cy->dir)) - pow(cy->diameter / 2, 2);
-	// d = half_b * half_b - a * c;
-	// if (d < 0)
-	// 	return (INFINITY);
-	// t = (-half_b - sqrt(d)) / a;
-	// if (t < rec->tmin || t > rec->tmax)
-	// {
-	// 	t = (-half_b + sqrt(d)) / a;
-	// 	if (t < rec->tmin || t > rec->tmax)
-	// 		return (INFINITY);
-	// }
-	// if (vdot(vsub(ray_at(ray, t), cy->coord_bot), vsub(cy->coord_top, cy->coord_bot)) < 0)
-	// 	return (INFINITY);
-	// if (vdot(vsub(ray_at(ray, t), cy->coord_bot), vsub(cy->coord_top, cy->coord_bot)) > vlength2(vsub(cy->coord_top, cy->coord_bot)))
-	// 	return (INFINITY);
-	// return (t);
-
 	t_vec3	h;
 	t_vec3	w;
 	t_vec3	v;
@@ -136,25 +107,23 @@ double		hit_cylinder_surface(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 
 double		hit_cylinder_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top)
 {
-	t_point3	p;
-	t_point3	p0;
-	double		denominator;
-	t_vec3		r0_p0;
+	t_point3	disk_coord;
+	double		denom;
+	double		numer;
 	double		t;
 
 	if (is_top == TRUE)
-		p0 = cy->coord_top;
+		disk_coord = cy->coord_top;
 	else
-		p0 = cy->coord_bot;
-	denominator = vdot(cy->dir, ray->dir);
-	if (fabs(denominator) < EPSILON)
+		disk_coord = cy->coord_bot;
+	denom = vdot(cy->dir, ray->dir);
+	if (fabs(denom) < EPSILON)
 		return (INFINITY);
-	r0_p0 = vsub(p0, ray->orig);
-	t = vdot(r0_p0, cy->dir) / denominator;
+	numer = vdot(vsub(disk_coord, ray->orig), cy->dir);
+	t = numer / denom;
 	if ((t < rec->tmin || t > rec->tmax))
 		return (INFINITY);
-	p = ray_at(ray, t);
-	if (vlength2(vsub(p, p0)) > pow(cy->diameter / 2, 2))
+	if (vlength2(vsub(ray_at(ray, t), disk_coord)) > pow(cy->diameter / 2, 2))
 		return (INFINITY);
 	return (t);
 }

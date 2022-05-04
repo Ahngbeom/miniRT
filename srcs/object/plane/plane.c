@@ -31,18 +31,14 @@ t_bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec)
 	double	t; // 평면 방정식 결과 값
 
 	denom = vdot(ray->dir, plane->dir); // 광선 단위 벡터와 평면의 방향 벡터 내적 연산
-	if (denom > EPSILON) // 분모가 음수라면 t는 양수.
+	numer = vdot(vsub(plane->coord, ray->orig), plane->dir);
+	t = numer / denom;
+	if (t > rec->tmin && t < rec->tmax)
 	{
-		numer = vdot(vsub(ray->orig, plane->coord), plane->dir);
-		t = -numer / denom;
-		if (t > rec->tmin && t < rec->tmax)
-		{
-			rec->t = t;
-			rec->normal = vmul_t(-1, plane->dir); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
-			rec->p = ray_at(ray, t);
-			rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
-			return (TRUE);
-		}
+		rec->t = t;
+		rec->normal = vmul_t(-1, plane->dir); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
+		rec->p = ray_at(ray, t);
+		return (TRUE);
 	}
 	return (FALSE);
 }
