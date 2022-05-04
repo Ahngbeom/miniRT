@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_esc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:16:59 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 16:00:39 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 17:38:52 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	minirt_esc(int keycode, t_scene *scene)
 {
-	// printf("Keycode : %d\n", keycode);
 	if (keycode == 53 || keycode == 65307)
 	{
 		minirt_close(0, scene);

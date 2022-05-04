@@ -6,7 +6,7 @@
 /*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 15:02:14 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:37:11 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINIRT_STRUCTURE_H
 
 typedef struct s_vars		t_vars;
-typedef	struct s_img_data	t_img_data;
+typedef struct s_img_data	t_img_data;
 
 typedef struct s_vec3		t_vec3;
 typedef struct s_vec3		t_point3;
@@ -22,9 +22,9 @@ typedef struct s_vec3		t_color3;
 
 typedef struct s_ray		t_ray;
 
-typedef	struct s_camera		t_camera;
+typedef struct s_camera		t_camera;
 
-typedef	struct s_canvas		t_canvas;
+typedef struct s_canvas		t_canvas;
 
 typedef struct s_object		t_object;
 
@@ -71,8 +71,8 @@ struct s_ray
 
 struct s_camera
 {
-	double viewport_height;	// Viewport 세로 길이
-	double viewport_width; // Viewport 가로 길이
+	double		viewport_height; // Viewport 세로 길이
+	double		viewport_width; // Viewport 가로 길이
 
 	t_point3	orig;
 	t_vec3		horizontal; // 수평 길이 벡터
@@ -118,6 +118,10 @@ struct s_cylinder
 
 	t_point3	coord_top;
 	t_point3	coord_bot;
+
+	double		cy_t;
+	double		cy_t_disk_top;
+	double		cy_t_disk_bot;
 };
 
 struct s_square

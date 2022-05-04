@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:19:28 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 01:50:22 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 18:38:17 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+//#pragma once
 
 #ifndef MINIRT_H
 # define MINIRT_H
@@ -42,7 +42,7 @@
 # define TRUE	1
 
 typedef int	t_bool;
-typedef	int	t_object_type;
+typedef int	t_object_type;
 
 # define CAMERA		0
 # define SPHERE		1

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 13:30:16 by bahn              #+#    #+#              #
-#    Updated: 2022/04/28 15:54:29 by bahn             ###   ########.fr        #
+#    Updated: 2022/05/04 16:36:06 by jseol            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ ifeq ($(OS), Linux)
 else
 	MLX_PATH	= ./minilibx_opengl_20191021
 	MLX_FLAGS	= -Lminilibx_opengl_20191021/ -lmlx -lm -framework OpenGL -framework AppKit -O3
-	
+
 # MLX_PATH	= ./minilibx_mms_20200219
 # MLX_FLAGS	= -Lminilibx_mms_20200219/ -lmlx -lm -framework OpenGL -framework AppKit -O3
 endif
@@ -57,6 +57,8 @@ SRCS_FNAME	=	parse/get_next_line_utils.c \
 				color/color.c \
 				vector/vector.c \
 				vector/vector_operation.c \
+				vector/vector_operation2.c \
+				vector/vector_operation3.c \
 				ray/ray.c \
 				camera/camera.c \
 				canvas/canvas.c \
@@ -95,8 +97,8 @@ endif
 
 all			:	$(NAME)
 
-clean		:	
-				$(RM) $(OBJS) 
+clean		:
+				$(RM) $(OBJS)
 				$(MAKE) clean -C $(LIBFT_PATH)
 
 fclean		:	clean
