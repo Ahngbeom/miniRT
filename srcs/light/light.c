@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 22:59:36 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/05 00:31:23 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_color3	phong_lighting(t_scene *scene)
 	t_vec3		light_dir;
 	t_color3	diffuse;
 	double		kd;
-	
 	double		brightness;
 
 	light_color = color_init(0, 0, 0);
@@ -43,14 +42,14 @@ t_color3	phong_lighting(t_scene *scene)
 	{
 		light = lights->content;
 		light_dir = vunit(vsub(light->orig, scene->rec.p));
-		if (shadow_checker(scene->objects, vsub(light->orig, scene->rec.p), scene->rec))
+		if (shadow_checker(scene->objects, vsub(light->orig, scene->rec.p), \
+				scene->rec))
 			light_color = vsum(light_color, color_init(0, 0, 0));
 		else
 		{
 			kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
 			diffuse = vmul_t(kd, vdiv(light->light_color, 255));
 			light_color = vsum(light_color, diffuse);
-			
 			brightness = light->bright_ratio * LUMEN;
 			light_color = vmul_t(brightness, light_color);
 		}

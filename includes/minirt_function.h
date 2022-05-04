@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_function.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 02:31:14 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 16:16:25 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/05 01:35:08 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		minirt_pixel_put(t_img_data *data, int x, int y, int color);
 void		minirt_pixel_put_vector(t_img_data *data,	\
 				int x, int y, t_color3 color);
 t_color3	write_color(t_color3 color);
+t_color3	skyview_by_ray(t_ray *ray);
 
 // Canvas
 void		init_canvas(t_scene *scene, int width, int height);
@@ -88,7 +89,7 @@ t_color3	specular_calculator(t_vec3 ray_dir, t_vec3 light_dir,
 // Shadow
 t_bool		shadow_checker(t_object *objects, t_vec3 light_dir,
 				t_hit_record rec);
-t_bool		shadow(t_object *objects, t_ray *ray, t_hit_record *rec);
+t_bool		shading(t_object *objects, t_ray *ray, t_hit_record *rec);
 
 // Plane
 t_plane		*plane_init(t_point3 orig, t_vec3 normal);

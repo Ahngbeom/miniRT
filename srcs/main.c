@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 23:09:06 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 23:16:56 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ int	main(int argc, char const *argv[])
 	mlx_key_hook(scene.vars->win, camera_move, &scene);
 	mlx_mouse_hook(scene.vars->win, camera_zoom, &scene);
 	mlx_loop(scene.vars->mlx);
-	return 0;
+	return (0);
 }
