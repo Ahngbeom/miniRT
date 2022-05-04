@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/27 01:55:35 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 16:00:39 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 	}
 	scene->vars = ft_calloc(sizeof(t_vars), 1);
 	scene->vars->mlx = mlx_init();
+
 	scene->vars->win = mlx_new_window(scene->vars->mlx, WIDTH, HEIGHT, "miniRT");
-	
+
 	scene->vars->img_data = ft_calloc(sizeof(t_img_data), 1);
+
 	scene->vars->img_data->img = mlx_new_image(scene->vars->mlx, WIDTH, HEIGHT);
 	scene->vars->img_data->addr = mlx_get_data_addr(scene->vars->img_data->img, \
 												&scene->vars->img_data->bits_per_pixel, \
@@ -91,9 +93,9 @@ static void	init_scene(t_scene *scene, int argc, char const *argv[])
 int main(int argc, char const *argv[])
 {
 	t_scene		scene;
-	
+
 	init_scene(&scene, argc, argv);
-	
+
 	output_scene(&scene);
 
 	mlx_hook(scene.vars->win, 2, 1L << 0, minirt_esc, &scene);

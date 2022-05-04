@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:17:09 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/22 21:10:34 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 14:24:39 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec)
 			rec->t = t;
 			rec->normal = vmul_t(-1, plane->dir); // 교점의 법선 벡터 : 평면의 방향 벡터의 역벡터
 			rec->p = ray_at(ray, t);
-			rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
+			//rec->p = vsum(rec->p, vmul_t(EPSILON, rec->normal));
 			return (TRUE);
 		}
 	}

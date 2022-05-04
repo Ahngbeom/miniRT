@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 17:07:57 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/04/26 15:49:00 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 15:10:46 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	parse_sphere(t_scene *scene, char **split)
 	parse_coords(&(sphere->center), split[1]);
 	sphere->diameter = ft_atod(split[2]);
 	sphere->radius = sphere->diameter / 2.0;
-	
+
 	object = object_init(SPHERE, sphere, color_init(0, 0, 0));
 
 	parse_color3(&(object->color), split[3]);
@@ -37,7 +37,7 @@ void	parse_sphere(t_scene *scene, char **split)
 		object_add(&scene->objects, object);
 	// sphere->diameter = ft_atod(split[2]);
 	// parse_color3(&(sphere->rgb), split[3]);
-	
+
 	// scene->objects->type = SPHERE;
 	// scene->objects->element = sphere;
 	// ft_lstadd_back(&(scene->object), ft_lstnew(object));
@@ -55,18 +55,18 @@ void	parse_plane(t_scene *scene, char **split)
 	parse_coords(&(plane->coord), split[1]);
 	// parse_coords(&(plane->direction), split[2]);
 	parse_coords(&(plane->dir), split[2]);
-	
+
 	object = object_init(PLANE, plane, color_init(0, 0, 0));
-	
+
 	parse_color3(&(object->color), split[3]);
 	if (!check_color3(object->color))
 		print_error("Plane RGB must be in range [0,255]");
-	
+
 	if (scene->objects == NULL)
 		scene->objects = object;
 	else
 		object_add(&scene->objects, object);
-	
+
 	// object->type = PLANE;
 	// object->element = plane;
 	// ft_lstadd_back(&(scene->object), ft_lstnew(object));
@@ -95,7 +95,7 @@ void	parse_cylinder(t_scene *scene, char **split)
 	parse_color3(&(object->color), split[5]);
 	if (!check_color3(object->color))
 		print_error("Cylinder RGB must be in range [0,255]");
-	
+
 	if (scene->objects == NULL)
 		scene->objects = object;
 	else
