@@ -6,7 +6,7 @@
 /*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 21:24:03 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 16:07:38 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:39:08 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_color3	get_point_light(t_scene *scene, t_light *light)
 	t_vec3		light_dir;
 	t_color3	diffuse;
 	t_color3	specular;
-	double		light_len;
+	//double		light_len;
 	double		brightness;
 
 	// Light Direction

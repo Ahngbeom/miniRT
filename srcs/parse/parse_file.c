@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:52:11 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/04/04 16:51:49 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/05/04 19:07:45 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ void	print_error(char *s)
 	exit(1);
 }
 
-int		allowed_symbol(char c)
+int	allowed_symbol(char c)
 {
-	if (c == '\t' || c == ' ' || c == '\n' || c == '.' || c == ',' ||
-	(c >= '0' && c <= '9') || c == '-')
+	if (c == '\t' || c == ' ' || c == '\n' || c == '.' || c == ',' || \
+		(c >= '0' && c <= '9') || c == '-')
 		return (1);
 	return (0);
 }
 
-int		check_line(char *line)
+int	check_line(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
@@ -40,7 +40,6 @@ int		check_line(char *line)
 	}
 	return (1);
 }
-
 
 void	parse_line(t_scene *scene, char **split)
 {
@@ -73,9 +72,11 @@ void	parse_file(t_scene *scene, const char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return ;
-	while ((ret = get_next_line(fd, &line)) > 0)
+		print_error("Not found file");
+	ret = 1;
+	while (ret > 0)
 	{
+		ret = get_next_line(fd, &line);
 		split = ft_split2(line, ' ', '\t');
 		if (!check_line(line))
 			print_error("Forbidden symbol in the scene");
@@ -83,6 +84,7 @@ void	parse_file(t_scene *scene, const char *filename)
 		free(line);
 		split_free(split);
 	}
+	ret = get_next_line(fd, &line);
 	split = ft_split2(line, ' ', '\t');
 	parse_line(scene, split);
 	free(line);

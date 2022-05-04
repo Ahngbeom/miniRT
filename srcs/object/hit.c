@@ -6,7 +6,7 @@
 /*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:06:17 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 16:08:15 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:35:43 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ t_bool	hit_object(t_object *objects, t_ray *ray, t_hit_record *rec)
 		hit_result = hit_sphere(objects->element, ray, rec);
 	else if (objects->type == CYLINDER)
 		hit_result = hit_cylinder(objects->element, ray, rec);
-	return hit_result;
+	return (hit_result);
 }
-

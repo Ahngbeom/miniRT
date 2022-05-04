@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:49:39 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/04/06 21:41:03 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 16:50:49 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int		check_color3(t_color3 rgb)
+int	check_color3(t_color3 rgb)
 {
-	if (rgb.x < 0 || rgb.x > 255 || rgb.y < 0 || rgb.y > 255 || rgb.z < 0 ||
-	rgb.z > 255)
+	if (rgb.x < 0 || rgb.x > 255 || rgb.y < 0 || rgb.y > 255 || rgb.z < 0 || \
+		rgb.z > 255)
 		return (0);
 	return (1);
 }
 
 void	parse_color3(t_color3 *ret, char *color)
 {
-	char **split;
+	char	**split;
 
 	split = ft_split(color, ',');
 	if (split_size(split) != 3)

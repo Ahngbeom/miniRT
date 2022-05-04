@@ -6,7 +6,7 @@
 /*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:17:00 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 16:09:52 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/04 17:37:35 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,8 @@
 int	minirt_close(int keycode, t_scene *scene)
 {
 	(void)scene;
-	// if (scene != NULL)
-	// {
-		// mlx_destroy_image(scene->vars->mlx, scene->vars->img_data->img);
-		// mlx_destroy_window(scene->vars->mlx, scene->vars->win);
-		// nullcheck_free(scene->vars->mlx);
-	// }
-	// system("leaks miniRT");
-	if (keycode != -1) {
+	if (keycode != -1)
+	{
 		lstclear(&scene->camera);
 		lstclear(&scene->lights);
 		object_clear(&scene->objects);

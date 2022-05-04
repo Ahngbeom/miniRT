@@ -6,13 +6,13 @@
 /*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:17:09 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 14:24:39 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:04:39 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_plane		*plane_init(t_point3 orig, t_vec3 normal)
+t_plane		*plane_init(t_point3 orig, t_vec3 normal)			// 사용하지 않는 함수
 {
 	t_plane	*plane;
 

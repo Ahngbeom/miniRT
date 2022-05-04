@@ -6,7 +6,7 @@
 /*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 14:43:01 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 16:08:04 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:28:26 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal)
 	return (cy);
 }
 
-static t_vec3		cylinder_normal(t_cylinder *cy, t_hit_record *rec)
+static t_vec3	cylinder_normal(t_cylinder *cy, t_hit_record *rec)
 {
 	t_vec3	tmp;
 	t_vec3	normal;
@@ -36,7 +36,7 @@ static t_vec3		cylinder_normal(t_cylinder *cy, t_hit_record *rec)
 	return (normal);
 }
 
-t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+t_bool	hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 {
 	double		t;
 	double		t_disk_top;
@@ -53,25 +53,19 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 		rec->p = ray_at(ray, rec->t);
 		rec->normal = cylinder_normal(cy, rec);
 		set_face_normal(ray, rec);
+		return (TRUE);
 	}
+	if (t_disk_top < t_disk_bot)
+		rec->t = t_disk_top;
 	else
-	{
-		if (t_disk_top < t_disk_bot)
-			rec->t = t_disk_top;
-		else
-			rec->t = t_disk_bot;
-		rec->p = ray_at(ray, rec->t);
-		rec->normal = cy->dir;
-		set_face_normal(ray, rec);
-	}
-	// if (rec->t < INFINITY)
-	// {
-	// 	printf("%f\n", rec->t);
-	// }
+		rec->t = t_disk_bot;
+	rec->p = ray_at(ray, rec->t);
+	rec->normal = cy->dir;
+	set_face_normal(ray, rec);
 	return (TRUE);
 }
 
-double		hit_cylinder_surface(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+double	hit_cylinder_surface(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 {
 	// double		a;
 	// double		half_b;
@@ -134,7 +128,7 @@ double		hit_cylinder_surface(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	return (root);
 }
 
-double		hit_cylinder_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top)
+double	hit_cylinder_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top)
 {
 	t_point3	p;
 	t_point3	p0;
@@ -159,7 +153,7 @@ double		hit_cylinder_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool 
 	return (t);
 }
 
-t_bool		interfere_cylinder(t_cylinder *cy, t_ray *ray, double limit)
+t_bool	interfere_cylinder(t_cylinder *cy, t_ray *ray, double limit)		// 사용하지 않는 함수
 {
 	t_hit_record	rec;
 	double			r_t;
