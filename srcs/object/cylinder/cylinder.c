@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 14:43:01 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/28 16:44:03 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 22:59:58 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ t_cylinder	*cylinder_init(t_point3 orig, t_vec3 normal)
 	return (cy);
 }
 
-static t_vec3		cylinder_normal(t_cylinder *cy, t_hit_record *rec)
+static t_vec3	cylinder_normal(t_cylinder *cy, t_hit_record *rec)
 {
 	t_vec3	tmp;
 	t_vec3	normal;
-	
+
 	tmp = vsub(rec->p, cy->coord);
 	normal = vunit(vsub(tmp, vmul_t(vdot(cy->dir, tmp), cy->dir)));
 	return (normal);
 }
 
-t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+t_bool	hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 {
 	double		t;
 	double		t_disk_top;
@@ -53,7 +53,10 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 		rec->p = ray_at(ray, rec->t);
 		rec->normal = cylinder_normal(cy, rec);
 		set_face_normal(ray, rec);
+		return (TRUE);
 	}
+	if (t_disk_top < t_disk_bot)
+		rec->t = t_disk_top;
 	else
 	{
 		if (t_disk_top < t_disk_bot)
@@ -91,7 +94,7 @@ double		hit_cylinder_surface(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	double	a;
 	double	b;
 	double	discriminant;
-	
+
 	double	root;
 	
 	discriminant = cylinder_discriminant(cy, ray, &a, &b);
@@ -111,7 +114,7 @@ double		hit_cylinder_surface(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	return (root);
 }
 
-double		hit_cylinder_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top)
+double	hit_cylinder_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top)
 {
 	t_point3	disk_coord;
 	double		denom;
@@ -134,7 +137,7 @@ double		hit_cylinder_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool 
 	return (t);
 }
 
-t_bool		interfere_cylinder(t_cylinder *cy, t_ray *ray, double limit)
+t_bool	interfere_cylinder(t_cylinder *cy, t_ray *ray, double limit)		// 사용하지 않는 함수
 {
 	t_hit_record	rec;
 	double			r_t;

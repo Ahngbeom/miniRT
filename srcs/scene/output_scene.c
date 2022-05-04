@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 13:17:09 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/25 14:08:13 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 23:09:00 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void	output_scene(t_scene *scene)
 			u = (double)w / (scene->canvas.width);
 			v = (double)h / (scene->canvas.height);
 			scene->ray = ray_primary(scene->camera->content, u, v);
-			minirt_pixel_put_vector(scene->vars->img_data, w, scene->canvas.height - 1 - h, write_color(ray_color(scene)));
+			minirt_pixel_put_vector(scene->vars->img_data, w, \
+				scene->canvas.height - 1 - h, write_color(ray_color(scene)));
 			w++;
 		}
 		h--;
 	}
-	mlx_put_image_to_window(scene->vars->mlx, scene->vars->win, scene->vars->img_data->img, 0, 0);
+	mlx_put_image_to_window(scene->vars->mlx, scene->vars->win, \
+						scene->vars->img_data->img, 0, 0);
 }

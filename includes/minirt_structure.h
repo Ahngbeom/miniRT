@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_structure.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/28 16:17:45 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 18:37:11 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINIRT_STRUCTURE_H
 
 typedef struct s_vars		t_vars;
-typedef	struct s_img_data	t_img_data;
+typedef struct s_img_data	t_img_data;
 
 typedef struct s_vec3		t_vec3;
 typedef struct s_vec3		t_point3;
@@ -22,9 +22,9 @@ typedef struct s_vec3		t_color3;
 
 typedef struct s_ray		t_ray;
 
-typedef	struct s_camera		t_camera;
+typedef struct s_camera		t_camera;
 
-typedef	struct s_canvas		t_canvas;
+typedef struct s_canvas		t_canvas;
 
 typedef struct s_object		t_object;
 
@@ -71,14 +71,14 @@ struct s_ray
 
 struct s_camera
 {
-	double viewport_height;	// Viewport 세로 길이
-	double viewport_width; // Viewport 가로 길이
-	
+	double		viewport_height; // Viewport 세로 길이
+	double		viewport_width; // Viewport 가로 길이
+
 	t_point3	orig;
 	t_vec3		horizontal; // 수평 길이 벡터
 	t_vec3		vertical; // 수직 길이 벡터
 	t_vec3		lower_left_corner; // 왼쪽 아래 코너 점
-	
+
 	t_vec3		dir;
 
 	int			fov;
@@ -115,9 +115,13 @@ struct s_cylinder
 	t_vec3		dir;
 	double		diameter;
 	double		height;
-	
+
 	t_point3	coord_top;
 	t_point3	coord_bot;
+
+	double		cy_t;
+	double		cy_t_disk_top;
+	double		cy_t_disk_bot;
 };
 
 struct s_square
@@ -137,12 +141,12 @@ struct s_object
 
 struct s_hit_record
 {
-    t_point3	p;          // 교점의 좌표
-    t_vec3		normal;     // 교점에서의 법선 벡터
-    double		tmin;       // 오브젝트가 카메라 뒤쪽에 있을 경우 최소 거리
-    double		tmax;       // 오브젝트가 카메라 앞쪽에 있을 경우 최대 거리 
-    double		t;          // 광선의 원점과 교점 사이의 거리
-    int			front_face; // 광선의 방향벡터와 교점의 법선벡터 간 내적 연산하여 광선이 오브젝트에 부딪히는 면의 위치 판단
+	t_point3	p;          // 교점의 좌표
+	t_vec3		normal;     // 교점에서의 법선 벡터
+	double		tmin;       // 오브젝트가 카메라 뒤쪽에 있을 경우 최소 거리
+	double		tmax;       // 오브젝트가 카메라 앞쪽에 있을 경우 최대 거리
+	double		t;          // 광선의 원점과 교점 사이의 거리
+	int			front_face; // 광선의 방향벡터와 교점의 법선벡터 간 내적 연산하여 광선이 오브젝트에 부딪히는 면의 위치 판단
 	t_color3	albedo;
 };
 

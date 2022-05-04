@@ -6,13 +6,14 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/28 16:33:25 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 22:59:36 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_light	*light_init(t_point3 light_origin, t_color3 light_color, double bright_ratio)
+t_light	*light_init(t_point3 light_origin, t_color3 light_color, \
+												double bright_ratio)
 {
 	t_light	*light;
 
@@ -31,7 +32,6 @@ t_color3	phong_lighting(t_scene *scene)
 	t_light		*light;
 	t_color3	light_color;
 	t_vec3		light_dir;
-	
 	t_color3	diffuse;
 	double		kd;
 	
@@ -56,6 +56,7 @@ t_color3	phong_lighting(t_scene *scene)
 		}
 		lights = lights->next;
 	}
-	light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, scene->ambient.color), 255));
+	light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, \
+												scene->ambient.color), 255));
 	return (vmin(vmul(light_color, scene->rec.albedo), color_init(1, 1, 1)));
 }

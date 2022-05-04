@@ -6,16 +6,16 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:34:04 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/26 02:16:35 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 23:03:15 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_sphere	*sphere_init(t_point3 center, double diameter)
+t_sphere	*sphere_init(t_point3 center, double diameter)		// 사용하지 않는 함수
 {
 	t_sphere	*sp;
-	
+
 	sp = ft_calloc(sizeof(t_sphere), 1);
 	if (sp == NULL)
 		return (NULL);
@@ -41,7 +41,7 @@ t_bool		hit_sphere(t_sphere *sp, t_ray *ray, t_hit_record *rec)
 	double		discriminant;
 	double		root;
 
-	//	vsub(ray->orig, sp->center) : 카메라에서 시작된 광선 시작점 - 구의 중심 = 구의 중심 방향 벡터
+	// vsub(ray->orig, sp->center) : 카메라에서 시작된 광선 시작점 - 구의 중심 = 구의 중심 방향 벡터
 	a = vlength2(ray->dir);
 	half_b = vdot(vsub(ray->orig, sp->center), ray->dir);
 	c = vlength2(vsub(ray->orig, sp->center)) - pow(sp->radius, 2.0);
@@ -61,20 +61,20 @@ t_bool		hit_sphere(t_sphere *sp, t_ray *ray, t_hit_record *rec)
 
 t_bool		interfere_sphere(t_sphere *sp, t_ray *ray, double limit)
 {
-	t_vec3		oc; // 방향 벡터로 나타낸 구의 중심
-	double		a; // a 계수
-	double		half_b; // b 계수
-	double		c; // c 계수
-	double		discriminant; // 판별식
-	double		sqrtd; // 판별식에서 제곱근 식의 결과 값 저장
-	double		root; // 근의 공식 결과 값 저장. 두 근
+	t_vec3	oc; // 방향 벡터로 나타낸 구의 중심
+	double	a; // a 계수
+	double	half_b; // b 계수
+	double	c; // c 계수
+	double	discriminant; // 판별식
+	double	sqrtd; // 판별식에서 제곱근 식의 결과 값 저장
+	double	root; // 근의 공식 결과 값 저장. 두 근
 
 	oc = vsub(ray->orig, sp->center); // 카메라에서 시작된 광선 시작점 - 구의 중심 = 구의 중심 방향 벡터
 	a = vlength2(ray->dir); 			// a = D * D
 	half_b = vdot(oc, ray->dir); 		// b / 2 = D * (O - C)
 	c = vlength2(oc) - pow(sp->radius, 2.0); // c = (O - C) * (O - C) - ray^2
 	discriminant = pow(half_b, 2.0) - (a * c); // discriminant = b^2 - a * c
-	
+
 	if (discriminant < 0) // 실근이 없는 경우
 		return (FALSE);
 

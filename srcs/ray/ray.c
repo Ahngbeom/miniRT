@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 14:17:31 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/28 16:07:02 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/04 23:08:51 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_ray		ray_init(t_point3 origin, t_vec3 direction)
 {
 	t_ray	ray;
-	
+
 	ray.orig = origin;
 	ray.dir = direction;
 	return (ray);
@@ -35,11 +35,12 @@ t_ray		ray_primary(t_camera *cam, double u, double v)
 	return (ray);
 }
 
-t_color3 	ray_color(t_scene *scene)
+t_color3	ray_color(t_scene *scene)
 {
-	double			t;
+	double	t;
 
-	if (scene->objects != NULL && scene->objects->type >= 0 && scene->objects->element != NULL)
+	if (scene->objects != NULL && scene->objects->type >= 0 && \
+								scene->objects->element != NULL)
 	{
 		scene->rec.tmin = EPSILON;
 		scene->rec.tmax = INFINITY;
