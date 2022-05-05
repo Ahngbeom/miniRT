@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_close.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:17:00 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 17:37:35 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/05 11:43:43 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	minirt_close(int keycode, t_scene *scene)
 		mlx_destroy_window(scene->vars->mlx, scene->vars->win);
 		nullcheck_free(scene->vars->img_data);
 		nullcheck_free(scene->vars);
-		system("leaks miniRT");
 		exit(0);
 	}
 	else

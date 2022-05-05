@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_structure.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 18:37:11 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/05 12:11:22 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_STRUCTURE_H
 # define MINIRT_STRUCTURE_H
+
+# include "minirt.h"
+
+typedef int					t_bool;
 
 typedef struct s_vars		t_vars;
 typedef struct s_img_data	t_img_data;
@@ -26,6 +30,7 @@ typedef struct s_camera		t_camera;
 
 typedef struct s_canvas		t_canvas;
 
+typedef int					t_object_type;
 typedef struct s_object		t_object;
 
 typedef struct s_sphere		t_sphere;
@@ -51,9 +56,9 @@ struct s_img_data
 
 struct s_vars
 {
-	void		*mlx; // miniLibX 포인터
-	void		*win; // miniLibX Window 포인터
-	t_img_data	*img_data; // miniLibX Image 포인터
+	void		*mlx;
+	void		*win;
+	t_img_data	*img_data;
 };
 
 struct s_vec3
@@ -65,19 +70,19 @@ struct s_vec3
 
 struct s_ray
 {
-	t_point3	orig;	// 광선의 원점
-	t_vec3		dir;	// 광선의 방향 벡터
+	t_point3	orig;
+	t_vec3		dir;
 };
 
 struct s_camera
 {
-	double		viewport_height; // Viewport 세로 길이
-	double		viewport_width; // Viewport 가로 길이
+	double		viewport_height;
+	double		viewport_width;
 
 	t_point3	orig;
-	t_vec3		horizontal; // 수평 길이 벡터
-	t_vec3		vertical; // 수직 길이 벡터
-	t_vec3		lower_left_corner; // 왼쪽 아래 코너 점
+	t_vec3		horizontal;
+	t_vec3		vertical;
+	t_vec3		lower_left_corner;
 
 	t_vec3		dir;
 
@@ -91,9 +96,9 @@ struct s_camera
 
 struct s_canvas
 {
-	int		width; // 캔버스 너비
-	int		height; // 캔버스 높이
-	double	aspect_ratio; // 종횡비
+	int		width;
+	int		height;
+	double	aspect_ratio;
 };
 
 struct s_sphere
@@ -105,8 +110,8 @@ struct s_sphere
 
 struct s_plane
 {
-	t_point3	coord;	// 평면 상 어느 한 지점.
-	t_vec3		dir;	// 평면이 가리키는 방향, 기울임 방향 및 정도
+	t_point3	coord;
+	t_vec3		dir;
 };
 
 struct s_cylinder
@@ -141,12 +146,12 @@ struct s_object
 
 struct s_hit_record
 {
-	t_point3	p;          // 교점의 좌표
-	t_vec3		normal;     // 교점에서의 법선 벡터
-	double		tmin;       // 오브젝트가 카메라 뒤쪽에 있을 경우 최소 거리
-	double		tmax;       // 오브젝트가 카메라 앞쪽에 있을 경우 최대 거리
-	double		t;          // 광선의 원점과 교점 사이의 거리
-	int			front_face; // 광선의 방향벡터와 교점의 법선벡터 간 내적 연산하여 광선이 오브젝트에 부딪히는 면의 위치 판단
+	t_point3	p;
+	t_vec3		normal;
+	double		tmin;
+	double		tmax;
+	double		t;
+	int			front_face;
 	t_color3	albedo;
 };
 
@@ -166,16 +171,14 @@ struct s_light
 struct s_scene
 {
 	t_vars			*vars;
-	// t_camera		camera;
 	t_list			*camera;
 	t_canvas		canvas;
 	t_ray			ray;
 	t_hit_record	rec;
 
 	t_object		*objects;
-	t_ambient		ambient; // 주변 조명
-	// t_light			light; // 광원
-	t_list			*lights; // 광원
+	t_ambient		ambient;
+	t_list			*lights;
 };
 
 #endif
