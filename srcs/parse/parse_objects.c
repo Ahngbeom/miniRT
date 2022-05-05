@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 17:07:57 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/05/04 19:08:16 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/05 11:40:37 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	parse_cylinder(t_scene *scene, char **split)
 	parse_coords(&(cylinder->dir), split[2]);
 	cylinder->diameter = ft_atod(split[3]);
 	cylinder->height = ft_atod(split[4]);
-	// 원기둥의 중심점에서 원기둥의 방향에 맞게 원기둥의 높이/2 만큼 더해주거나 빼주어 원기둥의 윗면/아랫면의 좌표를 구한다.
 	cylinder->coord_top = vsum(cylinder->coord, \
 				vmul_t(cylinder->height / 2, cylinder->dir));
 	cylinder->coord_bot = vsub(cylinder->coord, \

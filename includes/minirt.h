@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:19:28 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 18:38:17 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/05 12:11:11 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//#pragma once
 
 #ifndef MINIRT_H
 # define MINIRT_H
@@ -23,6 +21,10 @@
 # include <stdio.h> // printf
 
 # include <math.h> // sqrt
+
+# include "minirt_structure.h"
+# include "minirt_function.h"
+
 # define __USE_XOPEN // M_PI
 
 # define MINIRT_PI 3.14159265358979323846
@@ -41,9 +43,6 @@
 # define FALSE	0
 # define TRUE	1
 
-typedef int	t_bool;
-typedef int	t_object_type;
-
 # define CAMERA		0
 # define SPHERE		1
 # define PLANE		2
@@ -54,7 +53,7 @@ typedef int	t_object_type;
 
 # define LUMEN		3
 
-# include "minirt_structure.h"
-# include "minirt_function.h"
+// # include "minirt_structure.h"
+// # include "minirt_function.h"
 
 #endif

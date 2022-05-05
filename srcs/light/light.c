@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:54:22 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/05 00:31:23 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/05 11:39:48 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ t_color3	phong_lighting(t_scene *scene)
 	t_light		*light;
 	t_color3	light_color;
 	t_vec3		light_dir;
-	t_color3	diffuse;
-	double		kd;
-	double		brightness;
 
 	light_color = color_init(0, 0, 0);
 	lights = scene->lights;
@@ -47,15 +44,13 @@ t_color3	phong_lighting(t_scene *scene)
 			light_color = vsum(light_color, color_init(0, 0, 0));
 		else
 		{
-			kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
-			diffuse = vmul_t(kd, vdiv(light->light_color, 255));
-			light_color = vsum(light_color, diffuse);
-			brightness = light->bright_ratio * LUMEN;
-			light_color = vmul_t(brightness, light_color);
+			light_color = vsum(light_color, \
+		diffuse_calculator(light_dir, light->light_color, scene->rec.normal));
+			light_color = vmul_t(light->bright_ratio * LUMEN, light_color);
 		}
 		lights = lights->next;
 	}
-	light_color = vsum(light_color, vdiv(vmul_t(scene->ambient.ratio, \
-												scene->ambient.color), 255));
+	light_color = vsum(light_color, \
+				vdiv(vmul_t(scene->ambient.ratio, scene->ambient.color), 255));
 	return (vmin(vmul(light_color, scene->rec.albedo), color_init(1, 1, 1)));
 }
