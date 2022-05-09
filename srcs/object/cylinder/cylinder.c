@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 14:43:01 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/05 11:59:43 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/10 00:53:51 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ double	hit_cylinder_disk(t_cylinder *cy, t_ray *ray, \
 		return (INFINITY);
 	numer = vdot(vsub(disk_coord, ray->orig), cy->dir);
 	t = numer / denom;
-	if ((t < rec->tmin || t > rec->tmax))
+	if (t < rec->tmin || t > rec->tmax)
 		return (INFINITY);
 	if (vlength2(vsub(ray_at(ray, t), disk_coord)) > pow(cy->diameter / 2, 2))
 		return (INFINITY);
