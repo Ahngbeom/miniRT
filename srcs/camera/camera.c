@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:11:41 by bahn              #+#    #+#             */
-/*   Updated: 2022/04/27 14:36:11 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/09 15:47:39 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	init_camera(t_scene *scene)
 	double		h;
 
 	lst_cam = scene->camera;
+	if (lst_cam == NULL)
+		print_error("Camera does not exist");
 	while (lst_cam != NULL)
 	{
 		cam = lst_cam->content;
@@ -47,7 +49,7 @@ void	init_camera(t_scene *scene)
 	// scene->camera.horizontal = vector_init(scene->camera.viewport_width, 0, 0); // 뷰포트 수평(너비) 길이 벡터
 	// scene->camera.vertical = vector_init(0, scene->camera.viewport_height, 0); // 뷰포트 수직(높이) 길이 벡터
 
-	
+
 	// cam = scene->camera->content;
 	// printf("Camera Info (%d)\n", ft_lstsize(scene->camera));
 	// printf("Camera View point : %f, %f, %f\n", cam->orig.x, cam->orig.y, cam->orig.z);
