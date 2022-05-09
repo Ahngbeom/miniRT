@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 17:24:07 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/05 12:11:22 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/10 00:57:42 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ struct s_sphere
 struct s_plane
 {
 	t_point3	coord;
-	t_vec3		dir;
+	t_vec3		normal;
 };
 
 struct s_cylinder

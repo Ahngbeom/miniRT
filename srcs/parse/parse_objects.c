@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 17:07:57 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/05/05 11:40:37 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/10 00:57:42 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	parse_plane(t_scene *scene, char **split)
 		print_error("Plane format: pl [origin x,y,z] [normal x,y,z] [R,G,B]");
 	plane = malloc(sizeof(t_plane));
 	parse_coords(&(plane->coord), split[1]);
-	parse_coords(&(plane->dir), split[2]);
+	parse_coords(&(plane->normal), split[2]);
 	object = object_init(PLANE, plane, color_init(0, 0, 0));
 	parse_color3(&(object->color), split[3]);
 	if (!check_color3(object->color))
