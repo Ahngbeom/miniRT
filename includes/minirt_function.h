@@ -18,7 +18,7 @@
 void		output_scene(t_scene *scene);
 
 // Exit Hooks
-int			minirt_close(int keycode, t_scene *scene);
+int			minirt_close(t_scene *scene);
 int			minirt_esc(int keycode, t_scene *scene);
 int			camera_move(int keycode, t_scene *scene);
 int			camera_zoom(int keycode, int x, int y, t_scene *scene);

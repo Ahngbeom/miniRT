@@ -12,20 +12,14 @@
 
 #include "minirt.h"
 
-int	minirt_close(int keycode, t_scene *scene)
+int	minirt_close(t_scene *scene)
 {
-	(void)scene;
-	if (keycode != -1)
-	{
-		lstclear(&scene->camera);
-		lstclear(&scene->lights);
-		object_clear(&scene->objects);
-		mlx_destroy_image(scene->vars->mlx, scene->vars->img_data->img);
-		mlx_destroy_window(scene->vars->mlx, scene->vars->win);
-		nullcheck_free(scene->vars->img_data);
-		nullcheck_free(scene->vars);
-		exit(0);
-	}
-	else
-		return (0);
+	lstclear(&scene->camera);
+	lstclear(&scene->lights);
+	object_clear(&scene->objects);
+	mlx_destroy_image(scene->vars->mlx, scene->vars->img_data->img);
+	mlx_destroy_window(scene->vars->mlx, scene->vars->win);
+	nullcheck_free(scene->vars->img_data);
+	nullcheck_free(scene->vars);
+	exit(0);
 }

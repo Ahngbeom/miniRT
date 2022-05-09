@@ -16,7 +16,7 @@ int	minirt_esc(int keycode, t_scene *scene)
 {
 	if (keycode == 53 || keycode == 65307)
 	{
-		minirt_close(0, scene);
+		minirt_close(scene);
 	}
 	return (0);
 }
