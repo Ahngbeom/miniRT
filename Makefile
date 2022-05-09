@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/14 13:30:16 by bahn              #+#    #+#              #
-#    Updated: 2022/05/04 16:36:06 by jseol            ###   ########.fr        #
+#    Updated: 2022/05/09 20:35:37 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ LIBFT_LINK		= -Llibft -lft
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror -g
+# CFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 INCFLAGS	=	-I./includes -I./libft
 
