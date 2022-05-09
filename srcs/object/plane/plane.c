@@ -25,7 +25,7 @@ t_bool	hit_plane(t_plane *plane, t_ray *ray, t_hit_record *rec)
 	{
 		rec->t = t;
 		rec->p = ray_at(ray, t);
-		rec->normal = vmul_t(-1, plane->dir);
+		rec->normal = plane->dir;
 		return (TRUE);
 	}
 	return (FALSE);
