@@ -3,26 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 12:54:42 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 23:16:56 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/09 23:08:36 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+static void	check_rtfile(const char *filename)
+{
+	char	**split;
+	int		cnt;
+
+	split = ft_split(filename, '.');
+	cnt = split_size(split);
+	if (cnt != 2)
+		print_error("Invalid filename [*.rt]");
+	if (ft_strcmp(split[0], "") == 0 || ft_strcmp(split[1], "rt") != 0)
+		print_error("Invalid filename [*.rt]");
+}
+
 static void	init_scene(t_scene *scene, int argc, char const *argv[])
 {
 	if (argc != 2)
-	{
-		printf("Invalid Arguments\n");
-		printf("./miniRT\n");
-		exit(1);
-	}
+		print_error("Invalid Arguments\n./miniRT\n");
 	scene->camera = NULL;
 	scene->lights = NULL;
 	scene->objects = NULL;
+	check_rtfile(argv[1]);
 	parse_file(scene, argv[1]);
 	scene->vars = ft_calloc(sizeof(t_vars), 1);
 	scene->vars->mlx = mlx_init();
