@@ -37,23 +37,13 @@ int	camera_zoom(int keycode, int x, int y, t_scene *scene)
 {
 	t_camera	*cam;
 
-	cam = scene->camera->content;
-	printf("mouse keycode : %d (%d, %d)\n", keycode, x, y);
 	(void)x;
 	(void)y;
+	cam = scene->camera->content;
 	if (keycode == 4)
 		cam->lower_left_corner.z -= 0.1;
 	else if (keycode == 5)
 		cam->lower_left_corner.z += 0.1;
-	else if (keycode == 1)
-	{
-		scene->ray = ray_primary(cam, (double)x / scene->canvas.width, \
-										(double)y / scene->canvas.height);
-		if (hit(scene->objects, &scene->ray, &scene->rec) == TRUE)
-			printf("TRUE\n");
-		else
-			printf("FALSE\n");
-	}
 	else
 		return (0);
 	output_scene(scene);
