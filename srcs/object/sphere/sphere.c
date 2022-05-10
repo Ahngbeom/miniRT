@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 17:34:04 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/05 11:51:31 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/10 13:57:59 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	sphere_hit_recorder(t_sphere *sp, t_ray *ray, \
 {
 	rec->t = t;
 	rec->p = ray_at(ray, rec->t);
-	rec->normal = vdiv(vsub(rec->p, sp->center), sp->radius);
+	rec->normal = vunit(vsub(rec->p, sp->center));
 	set_face_normal(ray, rec);
 }
 
