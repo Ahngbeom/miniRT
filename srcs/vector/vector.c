@@ -6,13 +6,13 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 22:47:58 by bahn              #+#    #+#             */
-/*   Updated: 2022/03/31 14:55:36 by bahn             ###   ########.fr       */
+/*   Updated: 2022/05/05 12:04:49 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec3		vector_init(double x, double y, double z) // 벡터 초기화 함수
+t_vec3	vector_init(double x, double y, double z)
 {
 	t_vec3	vec;
 
@@ -22,7 +22,7 @@ t_vec3		vector_init(double x, double y, double z) // 벡터 초기화 함수
 	return (vec);
 }
 
-t_point3	point_init(double x, double y, double z) // 포인트 벡터 초기화 함수
+t_point3	point_init(double x, double y, double z)
 {
 	t_point3	point;
 
@@ -32,7 +32,7 @@ t_point3	point_init(double x, double y, double z) // 포인트 벡터 초기화 
 	return (point);
 }
 
-t_color3		color_init(double r, double g, double b) // 색상 벡터 초기화 함수
+t_color3	color_init(double r, double g, double b)
 {
 	t_color3	color;
 

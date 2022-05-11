@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:36:07 by jaeyu             #+#    #+#             */
-/*   Updated: 2022/03/31 15:04:06 by jaeyu            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:38:36 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int		split_size(char **split)
+int	split_size(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])
@@ -32,8 +32,8 @@ static int	is_set(char c, char set1, char set2)
 
 static int	get_size(char const *s, char set1, char set2)
 {
-	int		i;
-	int		size;
+	int	i;
+	int	size;
 
 	i = 0;
 	size = 0;
@@ -53,9 +53,9 @@ static int	get_size(char const *s, char set1, char set2)
 
 static char	**putret(char **ret, char const *s, char c1, char c2)
 {
-	int		i;
-	int		cnt;
-	int		pivot;
+	int	i;
+	int	cnt;
+	int	pivot;
 
 	i = 0;
 	cnt = 0;

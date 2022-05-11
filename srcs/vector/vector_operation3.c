@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt_esc.c                                       :+:      :+:    :+:   */
+/*   vector_operation3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 14:16:59 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 17:38:52 by jseol            ###   ########.fr       */
+/*   Created: 2022/05/04 16:35:26 by jseol             #+#    #+#             */
+/*   Updated: 2022/05/05 12:04:38 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	minirt_esc(int keycode, t_scene *scene)
+t_vec3	vunit(t_vec3 v)
 {
-	if (keycode == 53 || keycode == 65307)
-	{
-		minirt_close(scene);
-	}
-	return (0);
+	double	len;
+
+	len = vlength(v);
+	v.x /= len;
+	v.y /= len;
+	v.z /= len;
+	return (v);
+}
+
+t_vec3	vmin(t_vec3 u, t_vec3 v)
+{
+	if (u.x > v.x)
+		u.x = v.x;
+	if (u.y > v.y)
+		u.y = v.y;
+	if (u.z > v.z)
+		u.z = v.z;
+	return (u);
 }

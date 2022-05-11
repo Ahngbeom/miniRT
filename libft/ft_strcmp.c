@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt_esc.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 14:16:59 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 17:38:52 by jseol            ###   ########.fr       */
+/*   Created: 2022/05/09 23:02:10 by jaeyu             #+#    #+#             */
+/*   Updated: 2022/05/09 23:10:03 by jaeyu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "libft.h"
 
-int	minirt_esc(int keycode, t_scene *scene)
+int	ft_strcmp(char *s1, char *s2)
 {
-	if (keycode == 53 || keycode == 65307)
+	int	i;
+	int	s1_len;
+	int	s2_len;
+
+	i = 0;
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	if (s1_len != s2_len)
+		return (-1);
+	while (s1[i])
 	{
-		minirt_close(scene);
+		if (s1[i] != s2[i])
+			return (-1);
+		i++;
 	}
 	return (0);
 }

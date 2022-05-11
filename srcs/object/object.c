@@ -6,7 +6,7 @@
 /*   By: jseol <jseol@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 21:08:08 by bahn              #+#    #+#             */
-/*   Updated: 2022/05/04 15:18:25 by jseol            ###   ########.fr       */
+/*   Updated: 2022/05/04 18:37:09 by jseol            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ t_object	*object_init(t_object_type type, void *element, t_color3 color)
 	new->type = type;
 	new->element = element;
 	new->color = color;
-	// new->albedo = albedo;
 	new->next = NULL;
 	return (new);
 }
 
-void		object_add(t_object **list, t_object *new)
+void	object_add(t_object **list, t_object *new)
 {
 	t_object	*ptr;
 
@@ -51,7 +50,7 @@ t_object	*object_last(t_object *list)
 	return (list);
 }
 
-void		object_clear(t_object **list)
+void	object_clear(t_object **list)
 {
 	t_object	*next;
 

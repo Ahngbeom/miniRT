@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: jaeyu <jaeyu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/21 15:47:18 by bahn              #+#    #+#              #
-#    Updated: 2022/01/23 23:38:17 by bahn             ###   ########.fr        #
+#    Updated: 2022/05/09 23:06:59 by jaeyu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ FILES		=	ft_strlen \
 				ft_strchr \
 				ft_strrchr \
 				ft_strnstr \
+				ft_strcmp \
 				ft_strncmp \
 				ft_atoi \
 				ft_isalpha \
