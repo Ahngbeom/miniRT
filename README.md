@@ -1,4 +1,5 @@
 # miniRT - jseol & bahn [![bahn's 42 miniRT Score](https://badge42.vercel.app/api/v2/cl1n6fb2j003009l0lfanbfyx/project/2468916)](https://github.com/JaeSeoKim/badge42)
+[![C/C++ CI](https://github.com/MenWhoGaveUpMath/miniRT/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/MenWhoGaveUpMath/miniRT/actions/workflows/c-cpp.yml)
 
 ## Reference
 - ### [RayTracingInOneWeekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html#overview)
