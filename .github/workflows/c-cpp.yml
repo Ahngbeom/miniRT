@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: apt install
+      run: apt install -y libx11-dev libxext-dev libbsd-dev clang
     - name: make
       run: make
     - name: make all
